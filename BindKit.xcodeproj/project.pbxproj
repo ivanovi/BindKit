@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		0CB7A32019ADC31D0020FBD5 /* BindKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CB7A31F19ADC31D0020FBD5 /* BindKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0CB7A32A19ADC31D0020FBD5 /* BindKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB7A32919ADC31D0020FBD5 /* BindKitTests.m */; };
+		0CB7A35919ADED160020FBD5 /* CREBinder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CB7A35719ADED160020FBD5 /* CREBinder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0CB7A35A19ADED160020FBD5 /* CREBinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB7A35819ADED160020FBD5 /* CREBinder.m */; };
+		0CB7A36019AE0BC20020FBD5 /* NSError+BinderKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CB7A35E19AE0BC20020FBD5 /* NSError+BinderKit.h */; };
+		0CB7A36119AE0BC20020FBD5 /* NSError+BinderKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB7A35F19AE0BC20020FBD5 /* NSError+BinderKit.m */; };
+		0CBB594219AE2FB900CED34E /* BindKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB7A31A19ADC31D0020FBD5 /* BindKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,6 +23,10 @@
 		0CB7A32519ADC31D0020FBD5 /* BindKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BindKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CB7A32819ADC31D0020FBD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0CB7A32919ADC31D0020FBD5 /* BindKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BindKitTests.m; sourceTree = "<group>"; };
+		0CB7A35719ADED160020FBD5 /* CREBinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CREBinder.h; sourceTree = "<group>"; };
+		0CB7A35819ADED160020FBD5 /* CREBinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CREBinder.m; sourceTree = "<group>"; };
+		0CB7A35E19AE0BC20020FBD5 /* NSError+BinderKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+BinderKit.h"; sourceTree = "<group>"; };
+		0CB7A35F19AE0BC20020FBD5 /* NSError+BinderKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+BinderKit.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CBB594219AE2FB900CED34E /* BindKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				0CB7A31F19ADC31D0020FBD5 /* BindKit.h */,
+				0CB7A35B19ADED1C0020FBD5 /* Binders */,
 				0CB7A31D19ADC31D0020FBD5 /* Supporting Files */,
 			);
 			path = BindKit;
@@ -90,6 +101,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0CB7A35B19ADED1C0020FBD5 /* Binders */ = {
+			isa = PBXGroup;
+			children = (
+				0CB7A35719ADED160020FBD5 /* CREBinder.h */,
+				0CB7A35819ADED160020FBD5 /* CREBinder.m */,
+				0CB7A35E19AE0BC20020FBD5 /* NSError+BinderKit.h */,
+				0CB7A35F19AE0BC20020FBD5 /* NSError+BinderKit.m */,
+			);
+			name = Binders;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -97,6 +119,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CB7A36019AE0BC20020FBD5 /* NSError+BinderKit.h in Headers */,
+				0CB7A35919ADED160020FBD5 /* CREBinder.h in Headers */,
 				0CB7A32019ADC31D0020FBD5 /* BindKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -196,6 +220,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CB7A36119AE0BC20020FBD5 /* NSError+BinderKit.m in Sources */,
+				0CB7A35A19ADED160020FBD5 /* CREBinder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,6 +274,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PUBLIC_HEADERS_FOLDER_PATH = BindKit;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -286,6 +313,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PUBLIC_HEADERS_FOLDER_PATH = BindKit;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -375,6 +403,7 @@
 				0CB7A32F19ADC31D0020FBD5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0CB7A33019ADC31D0020FBD5 /* Build configuration list for PBXNativeTarget "BindKitTests" */ = {
 			isa = XCConfigurationList;
@@ -383,6 +412,7 @@
 				0CB7A33219ADC31D0020FBD5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

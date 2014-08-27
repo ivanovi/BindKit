@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import "BindKit.h"
 
 @interface BindKitTests : XCTestCase
 
@@ -25,9 +26,19 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
+-(void)testBaseBinding{
+
+    NSMutableDictionary *aDictionary = [NSMutableDictionary new];
+    NSMutableDictionary *bDictionary = [NSMutableDictionary new];
+    
+    CREBinder *newBinder = [CREBinder binderWithMapping:@{@"propertyA":aDictionary,
+                                                          @"propertyB":bDictionary}];
+    [newBinder bind];
+    
+    [aDictionary setValue:@"testA" forKey:@"propertyA"];
+    
+    XCTAssertEqualObjects(aDictionary [@"propertyA"], bDictionary [@"propertyB"], @"Failed test");
+    
 }
 
 - (void)testPerformanceExample {

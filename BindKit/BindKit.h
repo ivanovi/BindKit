@@ -16,4 +16,4 @@ FOUNDATION_EXPORT const unsigned char BindKitVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <BindKit/PublicHeader.h>
 
-
+#import <BindKit/CREBinder.h>
