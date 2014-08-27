@@ -12,7 +12,8 @@
  Provides only BinderKit specific error descriptions based on domain and errorCode
  */
 
-extern NSString * const kCREBinderErrorDomainSetup;
+extern NSString * const kCREBinderErrorSetupDomain;
+extern NSString * const kCREBinderWarningsDomain;
 
 @interface NSError (BinderKit)
 

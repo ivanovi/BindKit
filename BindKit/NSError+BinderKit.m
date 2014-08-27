@@ -8,7 +8,8 @@
 
 #import "NSError+BinderKit.h"
 
-NSString * const kCREBinderErrorDomainSetup = @"setupErrorDomain";
+NSString * const kCREBinderErrorSetupDomain = @"binderErrorSetupErrorDomain";
+NSString * const kCREBinderWarningsDomain = @"binderErrorWarnigsDomain";
 
 @implementation NSError (BinderKit)
 
@@ -32,15 +33,22 @@ NSString * const kCREBinderErrorDomainSetup = @"setupErrorDomain";
 
 +(NSString*)errorDescriptionForDomain:(NSString*)errorDomain code:(NSInteger)errorCode{
     
-    if ([errorDomain isEqualToString:kCREBinderErrorDomainSetup]) {
+    if ([errorDomain isEqualToString:kCREBinderErrorSetupDomain]) {
         
         return [NSError errorDescriptionForSetupDomain:errorCode - 100];
+    
+    } else if ([errorDomain isEqualToString:kCREBinderWarningsDomain]){
+        
+        return [NSError errorDescriptionForSetupDomain:errorCode - 1000];
+
     }
     
     return [NSError errorDescriptionForDefaultDomain:errorCode];
 }
 
 #pragma mark - Private Methods
+
+#pragma mark - | Error Description Literals Mapping
 
 +(NSString*)errorDescriptionForSetupDomain:(NSInteger)errorCode{
     
@@ -56,6 +64,16 @@ NSString * const kCREBinderErrorDomainSetup = @"setupErrorDomain";
 
 
 +(NSString*)errorDescriptionForDefaultDomain:(NSInteger)errorCode{
+    
+    NSArray *errorDescritionsLiteralsArray =
+    @[@"Mandatory delegate method not implemented."];
+    
+    return errorDescritionsLiteralsArray [ errorCode ];
+    
+}
+
+
++(NSString*)errorDescriptionWarnings:(NSInteger)errorCode{
     
     NSArray *errorDescritionsLiteralsArray =
     @[];
