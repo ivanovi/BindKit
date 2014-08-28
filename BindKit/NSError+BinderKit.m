@@ -54,7 +54,8 @@ NSString * const kCREBinderWarningsDomain = @"binderErrorWarnigsDomain";
     
    
     NSArray *errorDescritionsLiteralsArray =
-    @[@"Adding pair using dictionaries is allowed only for one-to-one relationships (maximum two objects at a time)."];
+    @[@"Adding pair using dictionaries is allowed only for one-to-one relationships (maximum two objects at a time).",
+      @"CREBinderDefinition must be initialised with mapping dictionary."];
     
     
     return errorDescritionsLiteralsArray [ errorCode ];

@@ -10,4 +10,15 @@
 
 @interface CREBindingDefinition : NSObject
 
+@property (nonatomic, readonly) NSSet * boundObjects;
+@property (nonatomic, readonly) NSSet * keys;
+
+- (instancetype)initWithDictionary:(NSDictionary*)bindingDict;
+
+- (void)addPropertyTargetRelation:(NSDictionary*)propertyTargetDict;
+- (void)removePropertyTargetRelation: (NSString*) propertyString;
+
+- (NSDictionary*)propertyTargetRelationForProperty:(NSString*)property;
+
+
 @end

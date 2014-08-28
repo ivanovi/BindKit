@@ -10,7 +10,7 @@
 #import "CREBindingDefinition.h"
 #import "NSError+BinderKit.h"
 /**
- 
+ === General Information ===
  The binder class provides a one-to-one binding behavior for two objects (or more via additional one-to-one pairs) in both directions. It is set as observer for the values of both objects and serves as an additional layer. The instances can own other binders to account for more complex relations or multiple bindings in a given context.
  
  */
@@ -20,6 +20,7 @@
 #pragma mark - Binder delegate
 
 /**
+ === Delegation ===
    We provide delegation to serve as an entry point for the viewControllers' modification of binding behavior at run-time. The controllers normally hold most of the context information.
  */
 @protocol CREBinderDelegate <NSObject>
@@ -50,6 +51,8 @@
 
 #pragma mark - Initialization
 /**
+ == Interface related ===
+ 
  See addPair: explanation method for example structure relevant to mapDictionary.
  */
 +(instancetype)binderWithMapping:(NSDictionary*)mapDictionary;
