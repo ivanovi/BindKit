@@ -7,28 +7,21 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CREBindingDefinition.h"
 #import "NSError+BinderKit.h"
 /**
  
- The binder class provides a one-to-one binding behavior for two objects in both directions. The binder can support many pairs. It is set as observer for the values of both objects and server as an additional layer. The an example usage:
- 
-    UILabel *priceLabel = [UILabel new];
-    [priceLabel setFrame:CGRectMake(0.0, 0.0, 50.0, 20.0)]
-    
-    NSMutableDictionary *someModelObject = [NSMutableDictionary dictionary];
- 
-    CREBinder *aBinder = [CREBinder binderWithMapping:@{@"modelTextPropertyName":@"text"}];
- 
-    [aBinder addPair: @[someModelObject, priceLabel] ];
-    // add as much as you want pairs in one binder
- 
-    [aBinder bind];
- 
+ The binder class provides a one-to-one binding behavior for two objects (or more via additional one-to-one pairs) in both directions. It is set as observer for the values of both objects and serves as an additional layer. The instances can own other binders to account for more complex relations or multiple bindings in a given context.
  
  */
 
 @class CREBinder;
 
+#pragma mark - Binder delegate
+
+/**
+   We provide delegation to serve as an entry point for the viewControllers' modification of binding behavior at run-time. The controllers normally hold most of the context information.
+ */
 @protocol CREBinderDelegate <NSObject>
 
 /**
@@ -51,41 +44,55 @@
 @property (nonatomic, weak) id <CREBinderDelegate> delegate;
 @property (nonatomic, weak) CREBinder * superBinder;
 @property (nonatomic, readonly) NSArray * childBindersArray;
-@property (nonatomic, readonly) NSArray * pairs;
+@property (nonatomic, readonly) NSArray * pairs; //returns Array of Binding definition
+
 //@property (nonatomic, readonly, strong) NSDictionary *mappingDictonary; //the dictionary that sets the mapping structure. Set the property name
 
 #pragma mark - Initialization
-+(instancetype)binderWithMapping:(NSDictionary*)mapDictionary; //The dictionary that sets the mapping structure. Set the property name of one of the objects in a pair as key and the object as a value. This convinience method should be used only for one-to-one binding structure, for many-to-many, many-to-one, one-to-many use the dedicated CREBindingStructureDefinition class.
-
+/**
+ See addPair: explanation method for example structure relevant to mapDictionary.
+ */
++(instancetype)binderWithMapping:(NSDictionary*)mapDictionary;
 -(instancetype)initWithMapping:(NSDictionary*)mapDictionary;
 
 #pragma mark - Setup
 
--(void)addPair:(NSDictionary*)objectsPair;
+-(void)addBindingDefinition:(CREBindingDefinition*)bindingDefintion;
+
+/**
+ A convinience method that brings the same result as the above method (addBindingDefinition:). Use as the following example, where dictionaries stand for dummy model or other objects:
+ 
+     NSMutableDictionary *aDictionary = [NSMutableDictionary dictionaryWithObject:@"aDictionary" forKey:@"id"];
+     NSMutableDictionary *bDictionary = [NSMutableDictionary dictionaryWithObject:@"bDictionary" forKey:@"id"];
+    
+     [aBinder addPair: @{@"propertyA":aDictionary, //property and object are coupled in key value pair => the key is the property of the object
+                         @"propertyB":bDictionary}]];
+ 
+    The structure is automatically converted to CREBindingDefinition instance and added to the pairs stack. If you want remove it later from the stack you should keep its reference.
+ */
+-(CREBindingDefinition*)addPair:(NSDictionary*)objectsPair;
+-(void)removePair:(CREBindingDefinition*)removingDefinition;
+
+/**
+ Adding and removing binders to the binder stack. In the general case they are exectuted without any order.
+ */
 -(void)addBinder:(CREBinder*)childBinder;
 -(void)removeBinder:(CREBinder*)childBinder;
 -(void)removeFromSuperBinder;
 
-
-
 #pragma mark - Binding
 /**
- Binds all pairs, by setting self as observer for value changes of the source's keyPath. If
+ Binds all pairs. Sets self as observer for value changes of the source's keyPath.
  */
 -(void)bind;
 
 /**
  Removes previously added pair. Adds the pair argument and binds it.
  */
-//-(void)bindObjects:(NSArray*)pairingObjectsArray;
-
-/**
- Undinds all pairs.
- */
 -(void)unbind;
 
 /**
- The within which the actual value merge is taking place. Override this method supply custom behavior. This method is called only if the delegate is set and it returns TRUE to the call binder:shouldSetValue:forKeyPath:.
+ The method within which the actual value merge/setting is taking place. Override this method to supply custom behavior. This method is called only if the delegate returns TRUE (if set) to the call binder:shouldSetValue:forKeyPath:.
  */
 -(void)mergeValue:(id)value toTarget:(id)target withKeyPath:(NSString*)keyPath;
 

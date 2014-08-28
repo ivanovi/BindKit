@@ -12,6 +12,8 @@
     
     NSMutableArray *tempPairsArray;
     
+    BOOL isActive;
+    
 }
 
 @end
@@ -28,6 +30,8 @@
         
         tempPairsArray = [NSMutableArray new];
         [tempPairsArray addObject:mapDictionary];
+        
+        isActive = NO;
         
         
        // _mappingDictionary = mapDictionary;
@@ -78,7 +82,8 @@
                                      context:NULL];//wrong
             }
             
-            [sourceObject addObserver:self forKeyPath:propertyName options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial)context:nil];
+            [sourceObject addObserver:self
+                           forKeyPath:propertyName options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial)context:nil];
             
             
         }
@@ -113,9 +118,11 @@
 
 -(BOOL)didAddPair:(NSDictionary*)pair{
     
-    for (NSDictionary * existindPairDictionary in tempPairsArray) {
+    for (NSDictionary * existindPairDictionary in tempPairsArray)
+    {
         
-        if ([existindPairDictionary isEqualToDictionary:pair]) {
+        if ([existindPairDictionary isEqualToDictionary:pair])
+        {
             return YES;
         }
         
@@ -126,14 +133,21 @@
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
     
-    NSLog(@"value changed object %@", object);
+    if (isActive) {
+        NSLog(@"was active discontinuing loop");
+        return;
+        
+    }
+    
+   // NSLog(@"value changed object %@", object);
     
     BOOL mergeBOOL = YES;
     id newValue = [object valueForKeyPath:keyPath];
-    id targetObject = [self objectInPairWithBoundObject:object];
+    id targetObject = [self objectInPairWithBoundObject:object mapKeys:NO];
+    id targetKey = [self objectInPairWithBoundObject:keyPath mapKeys:YES];
    
     
-    if (_delegate)
+    if (_delegate) //delegation
     {
         
         if ([_delegate respondsToSelector:@selector(binder:shouldSetValue:forKeyPath:)])
@@ -157,40 +171,68 @@
     
     if (mergeBOOL)
     {
-        
-        [self mergeValue:newValue toTarget:targetObject withKeyPath:keyPath];
-        
+        isActive = YES;
+            [self mergeValue:newValue toTarget:targetObject withKeyPath:targetKey];
+        isActive = NO;
+
     }
     
 }
 
 -(void)mergeValue:(id)value toTarget:(id)target withKeyPath:(NSString *)keyPath{
     
+    if (value) {
+        
+            [target setValue:value forKeyPath:keyPath];
+    }
+    
+}
+
+-(void)unbind{
+    
+    for (NSDictionary * objectsPair in tempPairsArray) {
+        
+        for (NSString * propertyName in objectsPair) {
+            
+            id sourceObject = objectsPair [propertyName];
+            [sourceObject removeObserver:self forKeyPath:propertyName];
+            
+        }
+
+        
+    }
     
 }
 
 
+
 #pragma mark - Private methods
 
--(id)objectInPairWithBoundObject:(id)boundObject{
+-(id)objectInPairWithBoundObject:(id)boundObject mapKeys:(BOOL)shouldMapKey{
     
-    //finds the object in a pair bound with the boundObject argument
+    //finds the object or a key in a pair bound with the boundObject argument
     
     __block id returnValue = nil;
     
     for (NSDictionary *bindingPairDictionary in tempPairsArray)
     {
-        
 
         [bindingPairDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
            
-            if (! [obj isEqual:boundObject] ) {
+            id compareObject = obj;
+            if (shouldMapKey) {
                 
-                returnValue = obj;
-                *stop = YES;
+                compareObject = key;
                 
             }
             
+            if (! [compareObject isEqual:boundObject] ) {
+                
+                returnValue = compareObject;
+                *stop = YES;
+                
+            }
+
         }];
         
     }
@@ -198,10 +240,6 @@
     return returnValue;
 }
 
--(void)unbind{
-    
-    
-}
 
 -(void)dealloc{
     

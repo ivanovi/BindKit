@@ -28,14 +28,18 @@
 
 -(void)testBaseBinding{
 
-    NSMutableDictionary *aDictionary = [NSMutableDictionary new];
-    NSMutableDictionary *bDictionary = [NSMutableDictionary new];
+    NSMutableDictionary *aDictionary = [NSMutableDictionary dictionaryWithObject:@"aDictionary" forKey:@"name"];
+    NSMutableDictionary *bDictionary = [NSMutableDictionary dictionaryWithObject:@"bDictionary" forKey:@"name"];
     
     CREBinder *newBinder = [CREBinder binderWithMapping:@{@"propertyA":aDictionary,
                                                           @"propertyB":bDictionary}];
     [newBinder bind];
     
     [aDictionary setValue:@"testA" forKey:@"propertyA"];
+    [aDictionary setValue:@"testB" forKey:@"propertyA"];
+    [bDictionary setValue:@"testC" forKey:@"propertyB"];
+    
+    NSLog(@"dictionary A %@ dictionary B %@", aDictionary, bDictionary);
     
     XCTAssertEqualObjects(aDictionary [@"propertyA"], bDictionary [@"propertyB"], @"Failed test %s", __PRETTY_FUNCTION__);
     
