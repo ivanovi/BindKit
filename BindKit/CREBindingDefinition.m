@@ -11,7 +11,7 @@
 
 @interface CREBindingDefinition(){
     
-    NSMutableDictionary *holdingDictionary;
+    NSMutableSet *holderSet;
     
 }
 @end
@@ -24,7 +24,7 @@
     
     if (self) {
         
-        holdingDictionary = [NSMutableDictionary new];
+        holderSet = [NSMutableSet new];
     }
     
     return self;
@@ -33,11 +33,13 @@
 -(instancetype)initWithDictionary:(NSDictionary *)bindingDict{
     NSAssert(bindingDict, @"%s %@", __PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:101]);
     
-    self = [super init];
+    self = [self init];
     
     if (self) {
     
-        holdingDictionary = [NSMutableDictionary dictionaryWithDictionary:bindingDict];
+        CREBindingUnit *newBindingUnit = [[CREBindingUnit alloc]initWithDictionary:bindingDict];
+        [holderSet addObject: newBindingUnit];
+        
         
     }
     
@@ -49,35 +51,64 @@
 
 -(NSSet*)boundObjects{
 
-    NSAssert(holdingDictionary, @"%s %@", __PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:101]);
+    NSAssert(holderSet, @"%s %@", __PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:101]);
     
-    return [NSSet setWithArray:holdingDictionary.allValues];
+    return [self allBinderUnitValuesWithKey:@"boundObject"];
 
 }
 
 -(NSSet*)keys{
     
-    NSAssert(holdingDictionary, @"%s %@", __PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:101]);
+    NSAssert(holderSet, @"%s %@", __PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:101]);
     
-    return [NSSet setWithArray:holdingDictionary.allKeys];
+    return [self allBinderUnitValuesWithKey:@"boundObjectProperty"];
+
     
 }
 
--(void)addPropertyTargetRelation:(NSDictionary *)propertyTargetDict{
+
+- (CREBindingUnit*)addBindingUnitWithDictionary:(NSDictionary*)propertyTargetDict{
+
+    CREBindingUnit *newBinderUnit = [[CREBindingUnit alloc] initWithDictionary:propertyTargetDict];
     
-    [holdingDictionary setValuesForKeysWithDictionary:propertyTargetDict];
+    if (![self unitWithDictionaryWasAdded:propertyTargetDict]) {
+        
+        
+    }
     
+    return newBinderUnit;
 }
 
 -(NSDictionary*)propertyTargetRelationForProperty:(NSString *)property{
     
-    return @{property: holdingDictionary [property] };
-    
+    return nil;
 }
 
 -(void)removePropertyTargetRelation:(NSDictionary *)propertyTargetDict{
+ 
     
-    [holdingDictionary removeObjectForKey:propertyTargetDict];
+}
+
+-(BOOL)unitWithDictionaryWasAdded:(NSDictionary*)prospectDictionary{
+    
+
+    
+    return NO;
+}
+
+
+-(NSSet*)allBinderUnitValuesWithKey:(NSString*)binderUnitKey{
+    
+    
+    NSMutableSet *objectsSet = nil;
+    
+    for (CREBindingUnit *aBinderUnit in holderSet) {
+        
+        [objectsSet addObject:[aBinderUnit valueForKey:binderUnitKey] ];
+        
+    }
+    
+    return objectsSet;
     
 }
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CREBindingUnit.h"
 
 @interface CREBindingDefinition : NSObject
 
@@ -15,10 +16,13 @@
 
 - (instancetype)initWithDictionary:(NSDictionary*)bindingDict;
 
-- (void)addPropertyTargetRelation:(NSDictionary*)propertyTargetDict;
-- (void)removePropertyTargetRelation: (NSString*) propertyString;
+- (CREBindingUnit*)addBindingUnitWithDictionary:(NSDictionary*)propertyTargetDict;
+- (void)addBindingUnit:(CREBindingUnit*)subBindingUnit;
 
-- (NSDictionary*)propertyTargetRelationForProperty:(NSString*)property;
+- (void)removeBindingUnit:(CREBindingUnit*)bindingUnit;
+
+- (NSSet*)bindingUnitsForProperties:(NSString*)property;
+- (NSSet*)bindingUnitsForObject:(id)boundObject;
 
 
 @end
