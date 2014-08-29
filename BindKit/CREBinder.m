@@ -12,8 +12,6 @@
     
     NSMutableArray *tempPairsArray;
     
-    BOOL isActive;
-    
 }
 
 @end
@@ -31,8 +29,7 @@
         tempPairsArray = [NSMutableArray new];
         [tempPairsArray addObject:mapDictionary];
         
-        isActive = NO;
-        
+        _isLocked = NO;
         
        // _mappingDictionary = mapDictionary;
         
@@ -133,7 +130,8 @@
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
     
-    if (isActive) {
+    if (_isLocked) //protect against infinite loop when both ways binding
+    {
         NSLog(@"was active discontinuing loop");
         return;
         
@@ -171,9 +169,9 @@
     
     if (mergeBOOL)
     {
-        isActive = YES;
+        _isLocked = YES;
             [self mergeValue:newValue toTarget:targetObject withKeyPath:targetKey];
-        isActive = NO;
+        _isLocked = NO;
 
     }
     

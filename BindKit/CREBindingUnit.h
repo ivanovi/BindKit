@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "NSError+BinderKit.h"
 
+/**
+ The smallest unit of abstraction, encapsulating a object, its property and context.
+ 
+ */
+
 @interface CREBindingUnit : NSObject
 
 -(instancetype)initWithDictionary:(NSDictionary*)bindingMappingDictionary;
@@ -17,6 +22,6 @@
 @property (nonatomic, weak) id boundObjectProperty;
 //@property (nonatomic, strong) NSDictionary *bindOptionsDictionary; // redo with enumeration
 
--(BOOL)isEqualToDictionary:(NSDictionary*)dictionary;
+-(BOOL)compareWithDict:(NSDictionary*)dictionary;
 
 @end

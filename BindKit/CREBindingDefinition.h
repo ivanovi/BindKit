@@ -16,9 +16,8 @@
 
 - (instancetype)initWithDictionary:(NSDictionary*)bindingDict;
 
-- (CREBindingUnit*)addBindingUnitWithDictionary:(NSDictionary*)propertyTargetDict;
+- (CREBindingUnit*)addBindingUnitWithDictionary:(NSDictionary*)propertyTargetDict; //key => represents the property ; value => the instance
 - (void)addBindingUnit:(CREBindingUnit*)subBindingUnit;
-
 - (void)removeBindingUnit:(CREBindingUnit*)bindingUnit;
 
 - (NSSet*)bindingUnitsForProperties:(NSString*)property;

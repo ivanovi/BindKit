@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0C08D9F319B0BCD2008E27F6 /* CREBindingUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = 0C08D9F119B0BCD2008E27F6 /* CREBindingUnit.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		0C08D9F319B0BCD2008E27F6 /* CREBindingUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = 0C08D9F119B0BCD2008E27F6 /* CREBindingUnit.h */; };
 		0C08D9F419B0BCD2008E27F6 /* CREBindingUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C08D9F219B0BCD2008E27F6 /* CREBindingUnit.m */; };
 		0CB7A32019ADC31D0020FBD5 /* BindKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CB7A31F19ADC31D0020FBD5 /* BindKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0CB7A32A19ADC31D0020FBD5 /* BindKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB7A32919ADC31D0020FBD5 /* BindKitTests.m */; };

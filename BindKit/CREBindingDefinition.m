@@ -62,7 +62,6 @@
     NSAssert(holderSet, @"%s %@", __PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:101]);
     
     return [self allBinderUnitValuesWithKey:@"boundObjectProperty"];
-
     
 }
 
@@ -73,7 +72,8 @@
     
     if (![self unitWithDictionaryWasAdded:propertyTargetDict]) {
         
-        
+        [holderSet addObject:newBinderUnit];
+    
     }
     
     return newBinderUnit;
@@ -84,12 +84,15 @@
     return nil;
 }
 
--(void)removePropertyTargetRelation:(NSDictionary *)propertyTargetDict{
+- (void)removeBindingUnit:(CREBindingUnit*)bindingUnit{
  
+    [holderSet removeObject:bindingUnit];
     
 }
 
 -(BOOL)unitWithDictionaryWasAdded:(NSDictionary*)prospectDictionary{
+    
+    
     
 
     

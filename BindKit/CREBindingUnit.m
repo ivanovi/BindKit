@@ -10,16 +10,26 @@
 
 @implementation CREBindingUnit
 
-
+//TODO: Re
 -(instancetype)initWithDictionary:(NSDictionary *)bindingMappingDictionary{
     NSAssert(bindingMappingDictionary.count == 1, @"%s %@",__PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:102]);
-    self = [super init];
+
+#ifndef DEBUG
     
+    NSAssert([bindingMappingDictionary.allValues.lastObject respondsToSelector:NSSelectorFromString(bindingMappingDictionary.allKeys.lastObject;)],
+             @"%s %@", __PRETTY_FUNCTION__ , [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain
+                                                                           code:103]);
+#endif
+
+    self = [super init];
     if (self) {
-        
-        _boundObject = bindingMappingDictionary.allValues.lastObject;
-        _boundObjectProperty = bindingMappingDictionary.allKeys.lastObject;
-        
+    
+        if ([_boundObject respondsToSelector:NSSelectorFromString(_boundObjectProperty)]) {
+            
+            _boundObject = bindingMappingDictionary.allValues.lastObject;
+            _boundObjectProperty = bindingMappingDictionary.allKeys.lastObject;
+            
+        }
         
     }
     
@@ -27,23 +37,18 @@
 }
 
 
--(BOOL)isEqualToDictionary:(NSDictionary *)dictionary{
-    
+
+
+-(BOOL)compareWithDict:(NSDictionary *)dictionary{
     
     __block BOOL comparisonResult = NO;
-    __block void (^simpleStopBlock)(BOOL*, BOOL) = ^(BOOL*stop, BOOL compare){
-        *stop = YES;
-        compare = YES;
-    };
     
     [dictionary enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         
-        if ([key isEqual: _boundObjectProperty])
-            simpleStopBlock(stop, comparisonResult);
+        if ([key isEqual: _boundObjectProperty] ||
+            [obj isEqual: _boundObject])
+            comparisonResult = YES;
         
-        if ([obj isEqual: _boundObject])
-            simpleStopBlock(stop, comparisonResult);
-    
     }];
     
     return comparisonResult;

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "CREBindingDefinition.h"
 #import "NSError+BinderKit.h"
+
 /**
  === General Information ===
  The binder class provides a one-to-one binding behavior for two objects (or more via additional one-to-one pairs) in both directions. It is set as observer for the values of both objects and serves as an additional layer. The instances can own other binders to account for more complex relations or multiple bindings in a given context.
@@ -44,14 +45,15 @@
 
 @property (nonatomic, weak) id <CREBinderDelegate> delegate;
 @property (nonatomic, weak) CREBinder * superBinder;
-@property (nonatomic, readonly) NSArray * childBindersArray;
-@property (nonatomic, readonly) NSArray * pairs; //returns Array of Binding definition
+@property (nonatomic, readonly) NSArray * childBinders;
+@property (nonatomic, readonly) NSArray * bindingDefinitions; //returns Array of Binding definition
+@property (nonatomic, readonly) BOOL isLocked;
 
 //@property (nonatomic, readonly, strong) NSDictionary *mappingDictonary; //the dictionary that sets the mapping structure. Set the property name
 
 #pragma mark - Initialization
 /**
- == Interface related ===
+ == Interface ==
  
  See addPair: explanation method for example structure relevant to mapDictionary.
  */
