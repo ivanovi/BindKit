@@ -10,33 +10,27 @@
 
 @implementation CREBindingUnit
 
-//TODO: Re
+
 -(instancetype)initWithDictionary:(NSDictionary *)bindingMappingDictionary{
     NSAssert(bindingMappingDictionary.count == 1, @"%s %@",__PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:102]);
-
-#ifndef DEBUG
-    
-    NSAssert([bindingMappingDictionary.allValues.lastObject respondsToSelector:NSSelectorFromString(bindingMappingDictionary.allKeys.lastObject;)],
-             @"%s %@", __PRETTY_FUNCTION__ , [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain
-                                                                           code:103]);
-#endif
-
     self = [super init];
-    if (self) {
     
-        if ([_boundObject respondsToSelector:NSSelectorFromString(_boundObjectProperty)]) {
+    if (self) {
+        
+        _boundObject = bindingMappingDictionary.allValues.lastObject;
+        _boundObjectProperty = bindingMappingDictionary.allKeys.lastObject;
+
+        if (![_boundObject isKindOfClass:[NSDictionary class]]) { //unit tests use dictionary
             
-            _boundObject = bindingMappingDictionary.allValues.lastObject;
-            _boundObjectProperty = bindingMappingDictionary.allKeys.lastObject;
-            
+            NSAssert([_boundObject respondsToSelector:NSSelectorFromString(_boundObjectProperty)],
+                     @"%s %@", __PRETTY_FUNCTION__ , [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain
+                                                                                   code:103]);
         }
         
     }
     
     return self;
 }
-
-
 
 
 -(BOOL)compareWithDict:(NSDictionary *)dictionary{

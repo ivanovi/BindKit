@@ -14,10 +14,11 @@
 
 @interface BindKitTests : XCTestCase  {
  
-    NSDictionary * aDictionary, *bDictionary;
-    NSString *aTestValue, *bTestValue, *cTestValue;
-    NSString *aProperty, *bProperty;
+    NSDictionary * aDictionary, *bDictionary, *cDictionary;
+    NSDictionary * aTestMappingDictionary;
     
+    NSString *aTestValue, *bTestValue, *cTestValue;
+    NSString *aProperty, *bProperty, *cProperty;;
     
 }
 
@@ -31,9 +32,14 @@
     
     aDictionary = [self baseDictionaryWithName:@"aDictionary"];
     bDictionary = [self baseDictionaryWithName:@"bDictionary"];
+    cDictionary = [self baseDictionaryWithName:@"cDictionary"];
 
     [self baseTestValues];
     [self baseProperties];
+    
+    aTestMappingDictionary = @{aProperty:aDictionary,
+                               bProperty:bDictionary};
+
     
 }
 
@@ -42,34 +48,30 @@
     [super tearDown];
 }
 
+#pragma mark - CREBinder: Base binding
+
 -(void)testBaseBinding{
     
     
-    CREBinder *newBinder = [CREBinder binderWithMapping:@{aProperty:aDictionary,
-                                                          bProperty:bDictionary}];
+    CREBinder *newBinder = [CREBinder binderWithMapping: aTestMappingDictionary];
     [newBinder bind];
     
     [aDictionary setValue:aTestValue forKey:aProperty];
-    
     XCTAssertEqualObjects(aDictionary [aProperty], bDictionary [bProperty], @"Failed test %s", __PRETTY_FUNCTION__);
 
     [aDictionary setValue:bTestValue forKey:aProperty];
-    
     XCTAssertEqualObjects(aDictionary [aProperty], bDictionary [bProperty], @"Failed test %s", __PRETTY_FUNCTION__);
 
     [bDictionary setValue:cTestValue forKey:bProperty];
-    
     XCTAssertEqualObjects(aDictionary [aProperty], bDictionary [bProperty], @"Failed test %s", __PRETTY_FUNCTION__);
 
-    
     NSLog(@"dictionary A %@ dictionary B %@", aDictionary, bDictionary);
     
 }
 
 -(void)testBaseBindingNegative{
     
-    CREBinder *newBinder = [CREBinder binderWithMapping:@{aProperty:aDictionary,
-                                                          bProperty:bDictionary}];
+    CREBinder *newBinder = [CREBinder binderWithMapping:aTestMappingDictionary];
     [newBinder bind];
 
     [aDictionary setValue:aTestValue forKey:aProperty];
@@ -87,6 +89,8 @@
 
 
 }
+
+#pragma mark - CREBindingUnit
 
 -(void)testBindingUnitComparisons{
     
@@ -108,31 +112,58 @@
     CREBindingUnit *testUnit = [[CREBindingUnit alloc]initWithDictionary:@{aProperty:aDictionary}];
     
     XCTAssert(testUnit, @"BindingUnit initializaiton failed");
-    XCTAssert([testUnit.boundObject isEqual: aDictionary], @"BindingUnit property setup failed at initialization");
-    XCTAssert([testUnit.boundObjectProperty isEqual: aProperty], @"BindingUnit property setup failed at initialization");
-    
+    XCTAssertTrue([testUnit.boundObject isEqual: aDictionary], @"BindingUnit property setup failed at initialization for boundObject");
+    XCTAssertTrue([testUnit.boundObjectProperty isEqual: aProperty], @"BindingUnit property setup failed at initialization for property");
 
-    
 }
 
 -(void)testBindingUnitInitializationNegative{
     
     UILabel *aLabel = [UILabel new];
-    CREBindingUnit *testUnit = [[CREBindingUnit alloc]initWithDictionary:@{aProperty:aLabel}];
-    
-    XCTAssert( (!testUnit.boundObjectProperty && !testUnit.boundObject), @"BindingUnit initializaiton negative test failed");
+    XCTAssertThrows( [[CREBindingUnit alloc]initWithDictionary:@{aProperty:aLabel}], @"BindingUnit initializaiton negative test failed");
     
 }
 
 
+#pragma mark - CREBindingDefinition
 
+- (void)testBindingDefintionInit{
+    
+    CREBindingDefinition *aDefinition = [[CREBindingDefinition alloc] initWithDictionary:aTestMappingDictionary];
+    
+    for (CREBindingUnit *aBindingUnit in aDefinition.bindingUnits)
+    {
+       
+        XCTAssertTrue( [aTestMappingDictionary [aBindingUnit.boundObjectProperty] isEqual: aBindingUnit.boundObject],
+                      @"BindingDefinition test failed");
+        
+    }
+    
+}
 
+- (void)testBindingDefintionAddBindingUnit{
+    
+    CREBindingDefinition *aDefinition = [[CREBindingDefinition alloc] initWithDictionary:aTestMappingDictionary];
+    CREBindingUnit *bindingUnit = [[CREBindingUnit alloc] initWithDictionary:@{cProperty: cDictionary}];
+    
+    
+    
+    
+    
+    
+    
+}
+
+-(void)testBindingDefinitionAddBindingUnitWithDictionary{
+    
+    
+}
 
 #pragma mark - Support
 
 -(NSDictionary*)baseDictionaryWithName:(NSString*)name{
     
-    return [NSDictionary dictionaryWithObject:name
+    return [NSMutableDictionary dictionaryWithObject:name
                                        forKey:@"name"];
 }
 
@@ -148,6 +179,7 @@
     
     aProperty = @"propertyA";
     bProperty = @"propertyB";
+    cProperty = @"propertyC";
     
 }
 

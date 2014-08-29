@@ -35,11 +35,15 @@
     
     self = [self init];
     
-    if (self) {
-    
-        CREBindingUnit *newBindingUnit = [[CREBindingUnit alloc]initWithDictionary:bindingDict];
-        [holderSet addObject: newBindingUnit];
+    if (self)
+    {
         
+        for (NSString *key in bindingDict) {
+            
+            CREBindingUnit *newBindingUnit = [[CREBindingUnit alloc]initWithDictionary:@{key:bindingDict[key]}];
+            [holderSet addObject: newBindingUnit];
+            
+        }
         
     }
     
@@ -65,13 +69,22 @@
     
 }
 
+-(NSSet*)bindingUnits{
+    
+    NSAssert(holderSet, @"%s %@", __PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:101]);
+    
+    return [NSSet setWithSet:holderSet];
+    
+}
 
 - (CREBindingUnit*)addBindingUnitWithDictionary:(NSDictionary*)propertyTargetDict{
 
-    CREBindingUnit *newBinderUnit = [[CREBindingUnit alloc] initWithDictionary:propertyTargetDict];
+    CREBindingUnit *newBinderUnit = [self bindingUnitForDictionary:propertyTargetDict];
     
-    if (![self unitWithDictionaryWasAdded:propertyTargetDict]) {
+    if (!newBinderUnit)
+    {
         
+        newBinderUnit = [[CREBindingUnit alloc] initWithDictionary:propertyTargetDict];
         [holderSet addObject:newBinderUnit];
     
     }
@@ -90,13 +103,22 @@
     
 }
 
--(BOOL)unitWithDictionaryWasAdded:(NSDictionary*)prospectDictionary{
+-(CREBindingUnit*)bindingUnitForDictionary:(NSDictionary*)prospectDictionary{
     
+    CREBindingUnit *aUnit = nil;
     
+    for (CREBindingUnit *aBinderUnit in holderSet)
+    {
+        
+        if ([aBinderUnit compareWithDict:prospectDictionary])
+        {
+            aUnit = aBinderUnit;
+            break;
+        }
+        
+    }
     
-
-    
-    return NO;
+    return aUnit;
 }
 
 

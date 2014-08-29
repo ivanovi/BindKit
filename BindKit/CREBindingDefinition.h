@@ -13,6 +13,7 @@
 
 @property (nonatomic, readonly) NSSet * boundObjects;
 @property (nonatomic, readonly) NSSet * keys;
+@property (nonatomic, readonly) NSSet * bindingUnits;
 
 - (instancetype)initWithDictionary:(NSDictionary*)bindingDict;
 
