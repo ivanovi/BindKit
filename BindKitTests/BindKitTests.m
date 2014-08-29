@@ -129,7 +129,7 @@
 
 - (void)testBindingDefintionInit{
     
-    CREBindingDefinition *aDefinition = [[CREBindingDefinition alloc] initWithDictionary:aTestMappingDictionary];
+    CREBindingTransaction *aDefinition = [[CREBindingTransaction alloc] initWithDictionary:aTestMappingDictionary];
     
     for (CREBindingUnit *aBindingUnit in aDefinition.bindingUnits)
     {
@@ -143,7 +143,7 @@
 
 - (void)testBindingDefintionAddBindingUnit{
     
-    CREBindingDefinition *aDefinition = [[CREBindingDefinition alloc] initWithDictionary:aTestMappingDictionary];
+    CREBindingTransaction *aDefinition = [[CREBindingTransaction alloc] initWithDictionary:aTestMappingDictionary];
     CREBindingUnit *bindingUnit = [[CREBindingUnit alloc] initWithDictionary:@{cProperty: cDictionary}];
     
     

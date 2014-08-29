@@ -6,17 +6,17 @@
 //  Copyright (c) 2014 Creatub Ltd. All rights reserved.
 //
 
-#import "CREBindingDefinition.h"
+#import "CREBindingTransaction.h"
 #import "NSError+BinderKit.h"
 
-@interface CREBindingDefinition(){
+@interface CREBindingTransaction(){
     
     NSMutableSet *holderSet;
     
 }
 @end
 
-@implementation CREBindingDefinition
+@implementation CREBindingTransaction
 
 
 -(instancetype)init{

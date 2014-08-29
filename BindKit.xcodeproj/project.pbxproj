@@ -16,8 +16,8 @@
 		0CB7A36019AE0BC20020FBD5 /* NSError+BinderKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CB7A35E19AE0BC20020FBD5 /* NSError+BinderKit.h */; };
 		0CB7A36119AE0BC20020FBD5 /* NSError+BinderKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB7A35F19AE0BC20020FBD5 /* NSError+BinderKit.m */; };
 		0CBB594219AE2FB900CED34E /* BindKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB7A31A19ADC31D0020FBD5 /* BindKit.framework */; };
-		0CBE0E8219AF7644007AE6DD /* CREBindingDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CBE0E8019AF7644007AE6DD /* CREBindingDefinition.h */; };
-		0CBE0E8319AF7644007AE6DD /* CREBindingDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBE0E8119AF7644007AE6DD /* CREBindingDefinition.m */; };
+		0CBE0E8219AF7644007AE6DD /* CREBindingTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CBE0E8019AF7644007AE6DD /* CREBindingTransaction.h */; };
+		0CBE0E8319AF7644007AE6DD /* CREBindingTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBE0E8119AF7644007AE6DD /* CREBindingTransaction.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,8 +33,8 @@
 		0CB7A35819ADED160020FBD5 /* CREBinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CREBinder.m; sourceTree = "<group>"; };
 		0CB7A35E19AE0BC20020FBD5 /* NSError+BinderKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+BinderKit.h"; sourceTree = "<group>"; };
 		0CB7A35F19AE0BC20020FBD5 /* NSError+BinderKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+BinderKit.m"; sourceTree = "<group>"; };
-		0CBE0E8019AF7644007AE6DD /* CREBindingDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CREBindingDefinition.h; sourceTree = "<group>"; };
-		0CBE0E8119AF7644007AE6DD /* CREBindingDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CREBindingDefinition.m; sourceTree = "<group>"; };
+		0CBE0E8019AF7644007AE6DD /* CREBindingTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CREBindingTransaction.h; sourceTree = "<group>"; };
+		0CBE0E8119AF7644007AE6DD /* CREBindingTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CREBindingTransaction.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,8 +114,8 @@
 			children = (
 				0CB7A35719ADED160020FBD5 /* CREBinder.h */,
 				0CB7A35819ADED160020FBD5 /* CREBinder.m */,
-				0CBE0E8019AF7644007AE6DD /* CREBindingDefinition.h */,
-				0CBE0E8119AF7644007AE6DD /* CREBindingDefinition.m */,
+				0CBE0E8019AF7644007AE6DD /* CREBindingTransaction.h */,
+				0CBE0E8119AF7644007AE6DD /* CREBindingTransaction.m */,
 				0CB7A35E19AE0BC20020FBD5 /* NSError+BinderKit.h */,
 				0CB7A35F19AE0BC20020FBD5 /* NSError+BinderKit.m */,
 				0C08D9F119B0BCD2008E27F6 /* CREBindingUnit.h */,
@@ -134,7 +134,7 @@
 				0CB7A36019AE0BC20020FBD5 /* NSError+BinderKit.h in Headers */,
 				0CB7A35919ADED160020FBD5 /* CREBinder.h in Headers */,
 				0C08D9F319B0BCD2008E27F6 /* CREBindingUnit.h in Headers */,
-				0CBE0E8219AF7644007AE6DD /* CREBindingDefinition.h in Headers */,
+				0CBE0E8219AF7644007AE6DD /* CREBindingTransaction.h in Headers */,
 				0CB7A32019ADC31D0020FBD5 /* BindKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -237,7 +237,7 @@
 				0C08D9F419B0BCD2008E27F6 /* CREBindingUnit.m in Sources */,
 				0CB7A36119AE0BC20020FBD5 /* NSError+BinderKit.m in Sources */,
 				0CB7A35A19ADED160020FBD5 /* CREBinder.m in Sources */,
-				0CBE0E8319AF7644007AE6DD /* CREBindingDefinition.m in Sources */,
+				0CBE0E8319AF7644007AE6DD /* CREBindingTransaction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

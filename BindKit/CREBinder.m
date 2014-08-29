@@ -47,7 +47,7 @@
 }
 
 
--(CREBindingDefinition*)addPair:(NSDictionary *)objectsPair{
+-(CREBindingTransaction*)addPair:(NSDictionary *)objectsPair{
     NSAssert(objectsPair.count == 0,@"%s %@",__PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:0]);
     
     

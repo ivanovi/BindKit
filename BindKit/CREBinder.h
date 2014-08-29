@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CREBindingDefinition.h"
+#import "CREBindingTransaction.h"
 #import "NSError+BinderKit.h"
 
 /**
@@ -62,7 +62,7 @@
 
 #pragma mark - Setup
 
--(void)addBindingDefinition:(CREBindingDefinition*)bindingDefintion;
+-(void)addBindingDefinition:(CREBindingTransaction*)bindingDefintion;
 
 /**
  A convinience method that brings the same result as the above method (addBindingDefinition:). Use as the following example, where dictionaries stand for dummy model or other objects:
@@ -75,8 +75,8 @@
  
     The structure is automatically converted to CREBindingDefinition instance and added to the pairs stack. If you want remove it later from the stack you should keep its reference.
  */
--(CREBindingDefinition*)addPair:(NSDictionary*)objectsPair;
--(void)removePair:(CREBindingDefinition*)removingDefinition;
+-(CREBindingTransaction*)addPair:(NSDictionary*)objectsPair;
+-(void)removePair:(CREBindingTransaction*)removingDefinition;
 
 /**
  Adding and removing binders to the binder stack. In the general case they are exectuted without any order.

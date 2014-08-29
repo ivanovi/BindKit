@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "CREBindingUnit.h"
 
-@interface CREBindingDefinition : NSObject
+@interface CREBindingTransaction : NSObject
 
 @property (nonatomic, readonly) NSSet * boundObjects;
 @property (nonatomic, readonly) NSSet * keys;
