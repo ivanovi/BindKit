@@ -44,7 +44,7 @@
 @interface CREBinder : NSObject
 
 @property (nonatomic, weak) id <CREBinderDelegate> delegate;
-@property (nonatomic, weak) CREBinder * superBinder;
+@property (nonatomic, weak, readonly) CREBinder * superBinder;
 @property (nonatomic, readonly) NSArray * childBinders;
 @property (nonatomic, readonly) NSArray * bindingDefinitions; //returns Array of Binding definition
 @property (nonatomic, readonly) BOOL isLocked;
@@ -60,9 +60,15 @@
 +(instancetype)binderWithMapping:(NSDictionary*)mapDictionary;
 -(instancetype)initWithMapping:(NSDictionary*)mapDictionary;
 
++(instancetype)binderWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
+-(instancetype)initWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
+
+
 #pragma mark - Setup
 
--(void)addBindingDefinition:(CREBindingTransaction*)bindingDefintion;
+
+
+-(void)addTransaction:(CREBindingTransaction*)bindingTransaction;
 
 /**
  A convinience method that brings the same result as the above method (addBindingDefinition:). Use as the following example, where dictionaries stand for dummy model or other objects:
@@ -75,8 +81,8 @@
  
     The structure is automatically converted to CREBindingDefinition instance and added to the pairs stack. If you want remove it later from the stack you should keep its reference.
  */
--(CREBindingTransaction*)addPair:(NSDictionary*)objectsPair;
--(void)removePair:(CREBindingTransaction*)removingDefinition;
+//-(CREBindingTransaction*)addPair:(NSDictionary*)objectsPair;
+-(void)removeTransaction:(CREBindingTransaction*)removingTransaction;
 
 /**
  Adding and removing binders to the binder stack. In the general case they are exectuted without any order.

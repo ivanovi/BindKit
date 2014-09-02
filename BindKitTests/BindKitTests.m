@@ -11,6 +11,7 @@
 #import "BindKit.h"
 #import "CREBindingUnit.h"
 
+//TODO: Add more descriptive errors
 
 @interface BindKitTests : XCTestCase  {
  
@@ -57,13 +58,13 @@
     [newBinder bind];
     
     [aDictionary setValue:aTestValue forKey:aProperty];
-    XCTAssertEqualObjects(aDictionary [aProperty], bDictionary [bProperty], @"Failed test %s", __PRETTY_FUNCTION__);
+    XCTAssertEqualObjects(aDictionary [aProperty], bDictionary [bProperty], @"Failed base test %s", __PRETTY_FUNCTION__);
 
     [aDictionary setValue:bTestValue forKey:aProperty];
-    XCTAssertEqualObjects(aDictionary [aProperty], bDictionary [bProperty], @"Failed test %s", __PRETTY_FUNCTION__);
+    XCTAssertEqualObjects(aDictionary [aProperty], bDictionary [bProperty], @"Failed base test %s", __PRETTY_FUNCTION__);
 
     [bDictionary setValue:cTestValue forKey:bProperty];
-    XCTAssertEqualObjects(aDictionary [aProperty], bDictionary [bProperty], @"Failed test %s", __PRETTY_FUNCTION__);
+    XCTAssertEqualObjects(aDictionary [aProperty], bDictionary [bProperty], @"Failed base test %s", __PRETTY_FUNCTION__);
 
     NSLog(@"dictionary A %@ dictionary B %@", aDictionary, bDictionary);
     
@@ -125,7 +126,7 @@
 }
 
 
-#pragma mark - CREBindingDefinition
+#pragma mark - CREBindintTransaction
 
 - (void)testBindingDefintionInit{
     
@@ -143,19 +144,75 @@
 
 - (void)testBindingDefintionAddBindingUnit{
     
-    CREBindingTransaction *aDefinition = [[CREBindingTransaction alloc] initWithDictionary:aTestMappingDictionary];
+    CREBindingTransaction *aDefinition = [CREBindingTransaction new];
     CREBindingUnit *bindingUnit = [[CREBindingUnit alloc] initWithDictionary:@{cProperty: cDictionary}];
     
+    [aDefinition addBindingUnit:bindingUnit];
+
+    for (CREBindingUnit *aBindingUnit in aDefinition.bindingUnits)
+    {
+        
+        [self assertBindingUnit:aBindingUnit withBindingUnit:bindingUnit];
+        
+    }
+    
+    CREBindingUnit *secondUnit = [[CREBindingUnit alloc]initWithDictionary:@{aProperty:aDictionary}];
+    
+    [aDefinition addBindingUnit:secondUnit];
+    
+    NSSet *helpSet = [NSSet setWithObjects:secondUnit,bindingUnit, nil];
     
     
+    for ( CREBindingUnit *aBindingUnit in helpSet)
+    {
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"boundObjectProperty == %@", aBindingUnit.boundObjectProperty];
+        NSSet *resultArray = [aDefinition.bindingUnits filteredSetUsingPredicate:predicate];
+        
+        CREBindingUnit *fetchedUnit = resultArray.anyObject;
+        
+        [self assertBindingUnit:fetchedUnit withBindingUnit:aBindingUnit];
+    }
     
-    
-    
-    
+     
 }
 
 -(void)testBindingDefinitionAddBindingUnitWithDictionary{
     
+    CREBindingTransaction *aDefinition = [CREBindingTransaction new];
+    NSDictionary *baseDictionary = @{cProperty: cDictionary};
+    
+    [aDefinition addBindingUnitWithDictionary: baseDictionary];
+    
+    for (CREBindingUnit *aBindingUnit in aDefinition.bindingUnits)
+    {
+        
+        XCTAssertTrue( [baseDictionary.allKeys.lastObject isEqual:aBindingUnit.boundObjectProperty], @"Failed addinig bindingUnit with dict" );
+        XCTAssertTrue( [baseDictionary.allValues.lastObject isEqual:aBindingUnit.boundObject], @"Failed addinig bindingUnit with dict" );
+        
+    }
+    
+   
+    NSDictionary *secondDict = @{aProperty: aDictionary};
+    
+    [aDefinition addBindingUnitWithDictionary:secondDict];
+    
+    NSSet *helpSet = [NSSet setWithObjects:baseDictionary,secondDict, nil];
+    
+    
+    for ( NSDictionary *aDict in helpSet)
+    {
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"boundObjectProperty == %@", aDict.allKeys.lastObject];
+        NSSet *resultArray = [aDefinition.bindingUnits filteredSetUsingPredicate:predicate];
+        
+        CREBindingUnit *fetchedUnit = resultArray.anyObject;
+        
+        XCTAssertTrue( [aDict.allKeys.lastObject isEqual:fetchedUnit.boundObjectProperty], @"Failed addinig bindingUnit with dict second time" );
+        XCTAssertTrue( [aDict.allValues.lastObject isEqual:fetchedUnit.boundObject], @"Failed addinig bindingUnit with dict second time" );
+        
+    }
+
     
 }
 
@@ -180,6 +237,13 @@
     aProperty = @"propertyA";
     bProperty = @"propertyB";
     cProperty = @"propertyC";
+    
+}
+
+-(void)assertBindingUnit:(CREBindingUnit*)oneUnit withBindingUnit:(CREBindingUnit*)secondUnit{
+    
+    XCTAssertTrue( [oneUnit.boundObject isEqual:secondUnit.boundObject], @"Failed addinig bindingUnit" );
+    XCTAssertTrue( [oneUnit.boundObjectProperty isEqual:secondUnit.boundObjectProperty], @"Failed addinig bindingUnit" );
     
 }
 

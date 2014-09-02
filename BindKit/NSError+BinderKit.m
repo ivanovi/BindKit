@@ -57,7 +57,8 @@ NSString * const kCREBinderWarningsDomain = @"binderErrorWarnigsDomain";
     @[@"Adding pair using dictionaries is allowed only for one-to-one relationships (maximum two objects at a time).",
       @"CREBinderDefinition must be initialised with mapping dictionary.",
       @"INTERNAL - BindingUnit: Instance can be initialized with only one property : instance pair.",
-      @"INTERNAL - BindingUnit: Bounding Object does contain added property."];
+      @"INTERNAL - BindingUnit: Bounding Object does contain added property.",
+      @"Each property-name in the 'property' array must correspond to a matching sourceObject."];
     
     
     return errorDescritionsLiteralsArray [ errorCode ];

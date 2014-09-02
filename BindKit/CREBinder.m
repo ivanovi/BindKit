@@ -24,14 +24,15 @@
 -(instancetype)initWithMapping:(NSDictionary *)mapDictionary{
     self = [super init];
     
-    if (self) {
+    if (self)
+    {
         
         tempPairsArray = [NSMutableArray new];
-        [tempPairsArray addObject:mapDictionary];
+        
+        CREBindingTransaction *aTransaction = [[CREBindingTransaction alloc] initWithDictionary:mapDictionary];
+        [tempPairsArray addObject:aTransaction];
         
         _isLocked = NO;
-        
-       // _mappingDictionary = mapDictionary;
         
     }
     
@@ -47,46 +48,101 @@
 }
 
 
--(CREBindingTransaction*)addPair:(NSDictionary *)objectsPair{
-    NSAssert(objectsPair.count == 0,@"%s %@",__PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:0]);
++(instancetype)binderWithProperties:(NSArray *)propertiesArray sourceObjects:(NSArray *)objectsArray{
     
+    return [[self alloc]initWithProperties:propertiesArray sourceObjects:objectsArray];
+}
+
+
+-(instancetype)initWithProperties:(NSArray *)propertiesArray sourceObjects:(NSArray *)objectsArray{
     
-    if (![self didAddPair:objectsPair]) {
+    NSAssert(propertiesArray, @"Properties must be passed as an array. %@", [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:104]);
+    NSAssert(objectsArray, @"Objects must be passed as an array. %@", [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:104]);
+    NSAssert(propertiesArray.count == objectsArray.count, @"Properties' array count is different from the objects' array count. %@", [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:104]);
+    
+    self = [super init];
+    
+    if (self)
+    {
+        tempPairsArray = [NSMutableArray new];
+        CREBindingTransaction *initialTransaction = [CREBindingTransaction new];
+        [tempPairsArray addObject:initialTransaction];
         
-        [tempPairsArray addObject:objectsPair];
+        for (int i = 0 ; i < propertiesArray.count ; i ++) {
+            
+            id sourceObject = objectsArray [i] ;
+            NSString * propertyName = propertiesArray [i];
+            
+            NSAssert([sourceObject respondsToSelector:NSSelectorFromString(propertyName)], @"Source object does not respond to matched property. %@", [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:104]);
+
+            
+            CREBindingUnit *aUnit = [[CREBindingUnit alloc] initWithDictionary:@{ propertyName : sourceObject }];
+            [initialTransaction addBindingUnit:aUnit];
+            
+        }
+        
         
     }
-  
-    return nil;
+    
+    return self;
 }
+
+
+#pragma mark - Managing composites / child relations
+//
+//-(CREBindingTransaction*)addPair:(NSDictionary *)objectsPair to {
+//    NSAssert(objectsPair.count == 1,@"%s %@",__PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:100]);
+//    
+//    
+//    if (![self didAddPair:objectsPair])
+//    {
+//        
+////        [tempPairsArray addObject:objectsPair];
+//        
+//        
+//        
+//        
+//    }
+//  
+//    return nil;
+//}
 
 
 -(void)bind{
     
-    
-    for (NSDictionary *objectsPair in tempPairsArray) {
+    for (CREBindingTransaction *aTransaction in tempPairsArray) {
         
-        for (NSString * propertyName in objectsPair) {
+        NSSet *transactionUnitSet = aTransaction.bindingUnits;
+        
+        for (CREBindingUnit *aUnit in transactionUnitSet) {
             
-            id sourceObject = objectsPair [propertyName];
-            id value = [objectsPair [propertyName]  valueForKeyPath: propertyName];
+            NSString *propertyName = aUnit.boundObjectProperty;
+            void *context = (__bridge void *)aUnit;
             
-            if (value)
-            {
+            id sourceObject = aUnit.boundObject;
+            id value = [sourceObject valueForKey:propertyName];
+            
+            
+            if (value) {
                 
                 [self observeValueForKeyPath:propertyName ofObject:sourceObject
-                                      change:nil //against Liskov principle
-                                     context:NULL];//wrong
+                                      change:nil context:context];
+                
             }
             
-            [sourceObject addObserver:self
-                           forKeyPath:propertyName options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial)context:nil];
-            
+            [sourceObject addObserver:self forKeyPath:propertyName
+                              options:NSKeyValueObservingOptionNew context:context];
             
         }
-        
     }
     
+    
+    for (CREBinder *subBinder in _childBinders)
+    {
+        
+        [subBinder bind];
+        
+    }
 }
 
 -(void)bindPair:(NSArray *)pairArray{
@@ -113,90 +169,129 @@
 #pragma mark - Private Methods
 
 
--(BOOL)didAddPair:(NSDictionary*)pair{
-    
-    for (NSDictionary * existindPairDictionary in tempPairsArray)
-    {
-        
-        if ([existindPairDictionary isEqualToDictionary:pair])
-        {
-            return YES;
-        }
-        
-    }
-    
-    return NO;
-}
+//-(BOOL)didAddPair:(NSDictionary*)pair{
+//    
+////    for (NSDictionary * existindPairDictionary in tempPairsArray)
+////    {
+////        
+////        if ([existindPairDictionary isEqualToDictionary:pair])
+////        {
+////            return YES;
+////        }
+////        
+////    }
+////    
+////    return NO;
+//
+//
+//
+//
+//}
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
     
     if (_isLocked) //protect against infinite loop when both ways binding
     {
-        NSLog(@"was active discontinuing loop");
+        NSLog(@"Binder is locked. Discontinuing loop.");
         return;
         
     }
-    
    // NSLog(@"value changed object %@", object);
     
-    BOOL mergeBOOL = YES;
-    id newValue = [object valueForKeyPath:keyPath];
-    id targetObject = [self objectInPairWithBoundObject:object mapKeys:NO];
-    id targetKey = [self objectInPairWithBoundObject:keyPath mapKeys:YES];
-   
     
-    if (_delegate) //delegation
-    {
+    
+    CREBindingUnit *bindingUnit = (__bridge CREBindingUnit*)context;
+    NSSet *peerUnitSet = bindingUnit.transaction.bindingUnits;
+    
+    
+    for ( CREBindingUnit *notifyUnit in peerUnitSet) {
         
-        if ([_delegate respondsToSelector:@selector(binder:shouldSetValue:forKeyPath:)])
-        {
-            mergeBOOL = [_delegate binder:self shouldSetValue:newValue forKeyPath:keyPath];
-        }else
-        {
-            NSLog(@"Warnig %@", [NSError errorDescriptionForDomain:kCREBinderWarningsDomain code:1000]);
+        if ([notifyUnit isEqual:bindingUnit]) {
+            continue;
         }
+        
+        
+        BOOL mergeBOOL = YES;
+        id newValue = [object valueForKeyPath:keyPath];
+        id targetObject =  notifyUnit.boundObject; // [self objectInPairWithBoundObject:object mapKeys:NO];
+        id targetKey =  notifyUnit.boundObjectProperty; //[self objectInPairWithBoundObject:keyPath mapKeys:YES];
+        
+        if (_delegate) //delegation
+        {
+            
+            if ([_delegate respondsToSelector:@selector(binder:shouldSetValue:forKeyPath:)])
+            {
+                mergeBOOL = [_delegate binder:self shouldSetValue:newValue forKeyPath:keyPath];
+            }else
+            {
+                NSLog(@"Warnig %@", [NSError errorDescriptionForDomain:kCREBinderWarningsDomain code:1000]);
+            }
+            if (mergeBOOL)
+            {
+                
+                if([_delegate respondsToSelector:@selector(binder:willSetValue:forKeyPath:inObject:)])
+                {
+                    [_delegate binder:self willSetValue:newValue forKeyPath:keyPath inObject:object];
+                }
+                
+            }
+        } //end delegation
+        
+        
         if (mergeBOOL)
         {
-            
-            if([_delegate respondsToSelector:@selector(binder:willSetValue:forKeyPath:inObject:)])
-            {
-                [_delegate binder:self willSetValue:newValue forKeyPath:keyPath inObject:object];
-            }
+            _isLocked = YES;
+            [self mergeValue:newValue toTarget:targetObject withKeyPath:targetKey];
+            _isLocked = NO;
             
         }
-    } //end delegation
-    
-    
-    if (mergeBOOL)
-    {
-        _isLocked = YES;
-            [self mergeValue:newValue toTarget:targetObject withKeyPath:targetKey];
-        _isLocked = NO;
 
+        
+        
     }
+    
     
 }
 
 -(void)mergeValue:(id)value toTarget:(id)target withKeyPath:(NSString *)keyPath{
     
-    if (value) {
-        
-            [target setValue:value forKeyPath:keyPath];
+    if (value)
+    {
+        [target setValue:value forKeyPath:keyPath];
     }
     
 }
 
 -(void)unbind{
     
-    for (NSDictionary * objectsPair in tempPairsArray) {
+//    for (NSDictionary * objectsPair in tempPairsArray) {
+//        
+//        for (NSString * propertyName in objectsPair) {
+//            
+//            id sourceObject = objectsPair [propertyName];
+//            [sourceObject removeObserver:self forKeyPath:propertyName];
+//            
+//        }
+//
+//        
+//    }
+    
+    for (CREBindingTransaction *transaction in tempPairsArray) {
         
-        for (NSString * propertyName in objectsPair) {
+        for ( CREBindingUnit *unit in transaction.bindingUnits ) {
             
-            id sourceObject = objectsPair [propertyName];
-            [sourceObject removeObserver:self forKeyPath:propertyName];
+            [unit.boundObject removeObserver:self forKeyPath:unit.boundObjectProperty];
             
         }
-
+        
+        
+    }
+    
+    
+    for (CREBinder *subBinder in _childBinders)
+    {
+        
+        [subBinder unbind];
         
     }
     

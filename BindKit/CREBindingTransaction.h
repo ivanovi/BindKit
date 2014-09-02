@@ -9,16 +9,27 @@
 #import <Foundation/Foundation.h>
 #import "CREBindingUnit.h"
 
+typedef NS_ENUM(NSUInteger, CREBindingTransactionDirection) {
+    
+    CREBindingTransactionDirectionBothWays,
+    CREBindingTransactionDirectionOneWay,
+    CREBindingTransactionDirectionChained,
+    
+};
+
 @interface CREBindingTransaction : NSObject
 
 @property (nonatomic, readonly) NSSet * boundObjects;
 @property (nonatomic, readonly) NSSet * keys;
-@property (nonatomic, readonly) NSSet * bindingUnits;
+@property (nonatomic, readonly) NSSet * bindingUnits; //immediate/current units
+@property (nonatomic, readonly) CREBindingTransactionDirection directionType;
 
 - (instancetype)initWithDictionary:(NSDictionary*)bindingDict;
 
 - (CREBindingUnit*)addBindingUnitWithDictionary:(NSDictionary*)propertyTargetDict; //key => represents the property ; value => the instance
 - (void)addBindingUnit:(CREBindingUnit*)subBindingUnit;
+- (void)addSourceBindingUnit:(CREBindingUnit*)sourceUnit;
+
 - (void)removeBindingUnit:(CREBindingUnit*)bindingUnit;
 
 - (NSSet*)bindingUnitsForProperties:(NSString*)property;

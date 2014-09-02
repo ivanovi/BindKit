@@ -11,13 +11,13 @@
 
 @interface CREBindingTransaction(){
     
-    NSMutableSet *holderSet;
-    
+    NSMutableSet * holderSet;
+    __weak CREBindingUnit * sourceUnit;
 }
+
 @end
 
 @implementation CREBindingTransaction
-
 
 -(instancetype)init{
     self = [super init];
@@ -25,6 +25,7 @@
     if (self) {
         
         holderSet = [NSMutableSet new];
+        _directionType = CREBindingTransactionDirectionBothWays;
     }
     
     return self;
@@ -37,11 +38,12 @@
     
     if (self)
     {
+        _directionType = CREBindingTransactionDirectionBothWays;
         
         for (NSString *key in bindingDict) {
             
             CREBindingUnit *newBindingUnit = [[CREBindingUnit alloc]initWithDictionary:@{key:bindingDict[key]}];
-            [holderSet addObject: newBindingUnit];
+            [self addBindingUnit:newBindingUnit];
             
         }
         
@@ -77,6 +79,8 @@
     
 }
 
+#pragma mark - Binding Units
+
 - (CREBindingUnit*)addBindingUnitWithDictionary:(NSDictionary*)propertyTargetDict{
 
     CREBindingUnit *newBinderUnit = [self bindingUnitForDictionary:propertyTargetDict];
@@ -86,10 +90,33 @@
         
         newBinderUnit = [[CREBindingUnit alloc] initWithDictionary:propertyTargetDict];
         [holderSet addObject:newBinderUnit];
+        [newBinderUnit setTransaction:self];
+
     
     }
     
     return newBinderUnit;
+}
+
+- (void)addBindingUnit:(CREBindingUnit*)subBindingUnit{
+    
+    if (![holderSet containsObject:subBindingUnit])
+    {
+        
+        [holderSet addObject:subBindingUnit];
+        [subBindingUnit setTransaction:self];
+        
+    }
+    
+}
+
+-(void)addSourceBindingUnit:(CREBindingUnit *)sourceBindingUnit{
+    
+    [self addSourceBindingUnit:sourceBindingUnit];
+    
+    _directionType = CREBindingTransactionDirectionOneWay;
+    sourceUnit = sourceBindingUnit;
+    
 }
 
 -(NSDictionary*)propertyTargetRelationForProperty:(NSString *)property{
@@ -100,6 +127,12 @@
 - (void)removeBindingUnit:(CREBindingUnit*)bindingUnit{
  
     [holderSet removeObject:bindingUnit];
+    
+    if ([bindingUnit isEqual:sourceUnit]) {
+        
+        sourceUnit = nil;
+        
+    }
     
 }
 
