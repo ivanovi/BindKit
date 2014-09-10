@@ -18,6 +18,8 @@
 		0CBB594219AE2FB900CED34E /* BindKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB7A31A19ADC31D0020FBD5 /* BindKit.framework */; };
 		0CBE0E8219AF7644007AE6DD /* CREBindingTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CBE0E8019AF7644007AE6DD /* CREBindingTransaction.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0CBE0E8319AF7644007AE6DD /* CREBindingTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBE0E8119AF7644007AE6DD /* CREBindingTransaction.m */; };
+		0CDE521219B639BE00412662 /* CRERemoteBindingTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDE521019B639BE00412662 /* CRERemoteBindingTransaction.h */; };
+		0CDE521319B639BE00412662 /* CRERemoteBindingTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDE521119B639BE00412662 /* CRERemoteBindingTransaction.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +37,8 @@
 		0CB7A35F19AE0BC20020FBD5 /* NSError+BinderKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+BinderKit.m"; sourceTree = "<group>"; };
 		0CBE0E8019AF7644007AE6DD /* CREBindingTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CREBindingTransaction.h; sourceTree = "<group>"; };
 		0CBE0E8119AF7644007AE6DD /* CREBindingTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CREBindingTransaction.m; sourceTree = "<group>"; };
+		0CDE521019B639BE00412662 /* CRERemoteBindingTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRERemoteBindingTransaction.h; sourceTree = "<group>"; };
+		0CDE521119B639BE00412662 /* CRERemoteBindingTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRERemoteBindingTransaction.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +120,8 @@
 				0CB7A35819ADED160020FBD5 /* CREBinder.m */,
 				0CBE0E8019AF7644007AE6DD /* CREBindingTransaction.h */,
 				0CBE0E8119AF7644007AE6DD /* CREBindingTransaction.m */,
+				0CDE521019B639BE00412662 /* CRERemoteBindingTransaction.h */,
+				0CDE521119B639BE00412662 /* CRERemoteBindingTransaction.m */,
 				0CB7A35E19AE0BC20020FBD5 /* NSError+BinderKit.h */,
 				0CB7A35F19AE0BC20020FBD5 /* NSError+BinderKit.m */,
 				0C08D9F119B0BCD2008E27F6 /* CREBindingUnit.h */,
@@ -131,6 +137,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CDE521219B639BE00412662 /* CRERemoteBindingTransaction.h in Headers */,
 				0CB7A35919ADED160020FBD5 /* CREBinder.h in Headers */,
 				0CBE0E8219AF7644007AE6DD /* CREBindingTransaction.h in Headers */,
 				0CB7A36019AE0BC20020FBD5 /* NSError+BinderKit.h in Headers */,
@@ -238,6 +245,7 @@
 				0CB7A36119AE0BC20020FBD5 /* NSError+BinderKit.m in Sources */,
 				0CB7A35A19ADED160020FBD5 /* CREBinder.m in Sources */,
 				0CBE0E8319AF7644007AE6DD /* CREBindingTransaction.m in Sources */,
+				0CDE521319B639BE00412662 /* CRERemoteBindingTransaction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

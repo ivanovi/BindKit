@@ -10,6 +10,7 @@
 
 NSString * const kCREBinderErrorSetupDomain = @"binderErrorSetupErrorDomain";
 NSString * const kCREBinderWarningsDomain = @"binderErrorWarnigsDomain";
+NSString * const kCREBinderErrorInternalDomain = @"binderErrorLogicDomain";
 
 @implementation NSError (BinderKit)
 
@@ -39,8 +40,13 @@ NSString * const kCREBinderWarningsDomain = @"binderErrorWarnigsDomain";
     
     } else if ([errorDomain isEqualToString:kCREBinderWarningsDomain]){
         
-        return [NSError errorDescriptionForSetupDomain:errorCode - 1000];
+        return [NSError errorDescriptionWarnings:errorCode - 1000];
 
+    } else if ([errorDomain isEqualToString:kCREBinderWarningsDomain]){
+        
+        return [NSError errorDescriptionLogic:errorCode - 2000];
+
+        
     }
     
     return [NSError errorDescriptionForDefaultDomain:errorCode];
@@ -84,5 +90,14 @@ NSString * const kCREBinderWarningsDomain = @"binderErrorWarnigsDomain";
     
     return errorDescritionsLiteralsArray [ errorCode ];
     
+}
+
++(NSString*)errorDescriptionLogic:(NSInteger)errorCode{
+    
+    NSArray *errorDescritionsLiteralsArray =
+    @[@"Received request to merge unit that was not added to any transaction",
+      @"A binding unit can be assigned to only one transaction."];
+    
+    return errorDescritionsLiteralsArray [ errorCode ];
 }
 @end

@@ -14,6 +14,7 @@
 
 extern NSString * const kCREBinderErrorSetupDomain;
 extern NSString * const kCREBinderWarningsDomain;
+extern NSString * const kCREBinderErrorInternalDomain;
 
 @interface NSError (BinderKit)
 

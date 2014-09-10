@@ -17,7 +17,11 @@ typedef NS_ENUM(NSUInteger, CREBindingTransactionDirection) {
     
 };
 
-@interface CREBindingTransaction : NSObject
+@interface CREBindingTransaction : NSObject{
+    
+    __weak CREBindingUnit * sourceUnit;
+    
+}
 
 @property (nonatomic, readonly) NSSet * boundObjects;
 @property (nonatomic, readonly) NSSet * keys;
@@ -35,5 +39,7 @@ typedef NS_ENUM(NSUInteger, CREBindingTransactionDirection) {
 - (NSSet*)bindingUnitsForProperties:(NSString*)property;
 - (NSSet*)bindingUnitsForObject:(id)boundObject;
 
+-(void)mergeValue:(id)value toTarget:(CREBindingUnit*)target;
+-(BOOL)containsUnit:(CREBindingUnit*)unit;
 
 @end

@@ -10,7 +10,7 @@
 
 @interface CREBinder(){
     
-    NSMutableArray *tempPairsArray;
+    NSMutableArray *transactionsArray;
     
 }
 
@@ -27,10 +27,10 @@
     if (self)
     {
         
-        tempPairsArray = [NSMutableArray new];
+        transactionsArray = [NSMutableArray new];
         
         CREBindingTransaction *aTransaction = [[CREBindingTransaction alloc] initWithDictionary:mapDictionary];
-        [tempPairsArray addObject:aTransaction];
+        [transactionsArray addObject:aTransaction];
         
         _isLocked = NO;
         
@@ -64,9 +64,9 @@
     
     if (self)
     {
-        tempPairsArray = [NSMutableArray new];
+        transactionsArray = [NSMutableArray new];
         CREBindingTransaction *initialTransaction = [CREBindingTransaction new];
-        [tempPairsArray addObject:initialTransaction];
+        [transactionsArray addObject:initialTransaction];
         
         for (int i = 0 ; i < propertiesArray.count ; i ++) {
             
@@ -110,7 +110,7 @@
 
 -(void)bind{
     
-    for (CREBindingTransaction *aTransaction in tempPairsArray) {
+    for (CREBindingTransaction *aTransaction in transactionsArray) {
         
         NSSet *transactionUnitSet = aTransaction.bindingUnits;
         
@@ -152,10 +152,10 @@
 
 -(NSArray*)pairs{
     
-    if (tempPairsArray)
+    if (transactionsArray)
     {
         
-        return [NSArray arrayWithArray:tempPairsArray];
+        return [NSArray arrayWithArray:transactionsArray];
         
     }
     return nil;
@@ -213,8 +213,8 @@
         
         BOOL mergeBOOL = YES;
         id newValue = [object valueForKeyPath:keyPath];
-        id targetObject =  notifyUnit.boundObject; // [self objectInPairWithBoundObject:object mapKeys:NO];
-        id targetKey =  notifyUnit.boundObjectProperty; //[self objectInPairWithBoundObject:keyPath mapKeys:YES];
+//        id targetObject =  notifyUnit.boundObject; // [self objectInPairWithBoundObject:object mapKeys:NO];
+//        id targetKey =  notifyUnit.boundObjectProperty; //[self objectInPairWithBoundObject:keyPath mapKeys:YES];
         
         if (_delegate) //delegation
         {
@@ -241,7 +241,7 @@
         if (mergeBOOL)
         {
             _isLocked = YES;
-            [self mergeValue:newValue toTarget:targetObject withKeyPath:targetKey];
+                [self mergeValue:newValue toTarget:notifyUnit];
             _isLocked = NO;
             
         }
@@ -253,11 +253,26 @@
     
 }
 
--(void)mergeValue:(id)value toTarget:(id)target withKeyPath:(NSString *)keyPath{
+-(void)mergeValue:(id)value toTarget:(CREBindingUnit*)target{
     
     if (value)
     {
-        [target setValue:value forKeyPath:keyPath];
+
+        int assertionHelper = 0;
+        for (CREBindingTransaction *aTransaction in transactionsArray)
+        {
+            
+            if ([aTransaction containsUnit:target])
+            {
+                [aTransaction mergeValue:value toTarget:target];
+                assertionHelper ++;
+            }
+            
+        }
+   
+        NSAssert(assertionHelper != 0, @"Error:%@ Function: %s", [NSError errorDescriptionForDomain:kCREBinderErrorInternalDomain code:2000], __PRETTY_FUNCTION__);
+        NSAssert(assertionHelper == 1, @"Error:%@ Function: %s", [NSError errorDescriptionForDomain:kCREBinderErrorInternalDomain code:2001], __PRETTY_FUNCTION__);
+    
     }
     
 }
@@ -276,7 +291,7 @@
 //        
 //    }
     
-    for (CREBindingTransaction *transaction in tempPairsArray) {
+    for (CREBindingTransaction *transaction in transactionsArray) {
         
         for ( CREBindingUnit *unit in transaction.bindingUnits ) {
             
@@ -307,7 +322,7 @@
     
     __block id returnValue = nil;
     
-    for (NSDictionary *bindingPairDictionary in tempPairsArray)
+    for (NSDictionary *bindingPairDictionary in transactionsArray)
     {
 
         [bindingPairDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {

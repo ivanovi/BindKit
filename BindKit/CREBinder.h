@@ -105,6 +105,6 @@
 /**
  The method within which the actual value merge/setting is taking place. Override this method to supply custom behavior. This method is called only if the delegate returns TRUE (if set) to the call binder:shouldSetValue:forKeyPath:.
  */
--(void)mergeValue:(id)value toTarget:(id)target withKeyPath:(NSString*)keyPath;
+
 
 @end

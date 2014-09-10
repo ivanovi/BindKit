@@ -12,7 +12,7 @@
 @interface CREBindingTransaction(){
     
     NSMutableSet * holderSet;
-    __weak CREBindingUnit * sourceUnit;
+    
 }
 
 @end
@@ -169,4 +169,24 @@
     return objectsSet;
     
 }
+
+-(BOOL)containsUnit:(CREBindingUnit *)unit{
+    
+    return [holderSet containsObject:unit];
+    
+    
+}
+
+#pragma mark - Merge
+
+-(void)mergeValue:(id)value toTarget:(CREBindingUnit *)target{
+    
+    NSAssert(value, @"Value in %s not set", __PRETTY_FUNCTION__);
+
+    [target.boundObject setValue:value forKey:target.boundObjectProperty];
+    
+    
+}
+
+
 @end
