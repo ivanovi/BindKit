@@ -25,7 +25,7 @@ typedef NS_ENUM(NSUInteger, CREBindingTransactionDirection) {
 
 @property (nonatomic, readonly) NSSet * boundObjects;
 @property (nonatomic, readonly) NSSet * keys;
-@property (nonatomic, readonly) NSSet * bindingUnits; //immediate/current units
+@property (nonatomic, readonly) NSArray * bindingUnits; //immediate/current units
 @property (nonatomic, readonly) CREBindingTransactionDirection directionType;
 
 //- (instancetype)initWithDictionary:(NSDictionary*)bindingDict;
@@ -34,7 +34,7 @@ typedef NS_ENUM(NSUInteger, CREBindingTransactionDirection) {
 
 - (CREBindingUnit*)addBindingUnitWithDictionary:(NSDictionary*)propertyTargetDict; //key => represents the property ; value => the instance
 - (void)addBindingUnit:(CREBindingUnit*)subBindingUnit;
-- (void)addSourceBindingUnit:(CREBindingUnit*)sourceUnit;
+- (void)setSourceBindingUnit:(CREBindingUnit*)sourceUnit;
 
 - (void)removeBindingUnit:(CREBindingUnit*)bindingUnit;
 

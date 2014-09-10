@@ -130,7 +130,7 @@
     
     for (CREBindingTransaction *aTransaction in transactionsArray) {
         
-        NSSet *transactionUnitSet = aTransaction.bindingUnits;
+        NSArray *transactionUnitSet = aTransaction.bindingUnits;
         
         for (CREBindingUnit *aUnit in transactionUnitSet) {
             
@@ -219,7 +219,7 @@
     
     
     CREBindingUnit *bindingUnit = (__bridge CREBindingUnit*)context;
-    NSSet *peerUnitSet = bindingUnit.transaction.bindingUnits;
+    NSArray *peerUnitSet = bindingUnit.transaction.bindingUnits;
     
     
     for ( CREBindingUnit *notifyUnit in peerUnitSet) {

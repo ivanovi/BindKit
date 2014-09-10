@@ -167,9 +167,9 @@
     {
         
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"boundObjectProperty == %@", aBindingUnit.boundObjectProperty];
-        NSSet *resultArray = [aDefinition.bindingUnits filteredSetUsingPredicate:predicate];
+        NSArray *resultArray = [aDefinition.bindingUnits filteredArrayUsingPredicate:predicate];
         
-        CREBindingUnit *fetchedUnit = resultArray.anyObject;
+        CREBindingUnit *fetchedUnit = resultArray.lastObject;
         
         [self assertBindingUnit:fetchedUnit withBindingUnit:aBindingUnit];
     }
@@ -204,9 +204,9 @@
     {
         
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"boundObjectProperty == %@", aDict.allKeys.lastObject];
-        NSSet *resultArray = [aDefinition.bindingUnits filteredSetUsingPredicate:predicate];
+        NSArray *resultArray = [aDefinition.bindingUnits filteredArrayUsingPredicate:predicate];
         
-        CREBindingUnit *fetchedUnit = resultArray.anyObject;
+        CREBindingUnit *fetchedUnit = resultArray.lastObject;
         
         XCTAssertTrue( [aDict.allKeys.lastObject isEqual:fetchedUnit.boundObjectProperty], @"Failed addinig bindingUnit with dict second time" );
         XCTAssertTrue( [aDict.allValues.lastObject isEqual:fetchedUnit.boundObject], @"Failed addinig bindingUnit with dict second time" );

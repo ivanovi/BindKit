@@ -28,11 +28,24 @@
 //    
 //}
 
--(CREBindingTransactionDirection)directionType{
+-(instancetype)initWithProperties:(NSArray *)propertiesArray sourceObjects:(NSArray *)objectsArray{
+    self = [super initWithProperties:propertiesArray sourceObjects:objectsArray];
     
-    return CREBindingTransactionDirectionOneWay;
+    if (self) {
+        
+        [self setSourceBindingUnit:self.bindingUnits[0] ];
+        
+        
+    }
     
+    return self;
 }
+
+//-(CREBindingTransactionDirection)directionType{
+//    
+//    return CREBindingTransactionDirectionOneWay;
+//    
+//}
 
 
 @end

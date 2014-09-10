@@ -11,7 +11,7 @@
 
 @interface CREBindingTransaction(){
     
-    NSMutableSet * holderSet;
+    NSMutableArray * holderSet;
     
 }
 
@@ -24,7 +24,7 @@
     
     if (self) {
         
-        holderSet = [NSMutableSet new];
+        holderSet = [NSMutableArray new];
         _directionType = CREBindingTransactionDirectionBothWays;
     }
     
@@ -96,11 +96,11 @@
     
 }
 
--(NSSet*)bindingUnits{
+-(NSArray*)bindingUnits{
     
     NSAssert(holderSet, @"%s %@", __PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:101]);
     
-    return [NSSet setWithSet:holderSet];
+    return [NSArray arrayWithArray:holderSet];
     
 }
 
@@ -135,9 +135,9 @@
     
 }
 
--(void)addSourceBindingUnit:(CREBindingUnit *)sourceBindingUnit{
+-(void)setSourceBindingUnit:(CREBindingUnit *)sourceBindingUnit{
     
-    [self addSourceBindingUnit:sourceBindingUnit];
+   // [self addSourceBindingUnit:sourceBindingUnit];
     
     _directionType = CREBindingTransactionDirectionOneWay;
     sourceUnit = sourceBindingUnit;
