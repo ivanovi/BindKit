@@ -58,8 +58,12 @@
             
             if (!connectionError) {
                 
-                NSLog(@"received response with value set %@", value);
+               
                 
+                NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+                
+                
+                NSLog(@"received response with value set %@", array);
                 
             }else{
                 //handle error

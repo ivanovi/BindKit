@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 #import "CRERemoteBinder.h"
+#import "CREBindTestHelper.h"
 
 @interface BindKitRemoteTests : XCTestCase{
     
@@ -18,6 +19,9 @@
     
     NSString *aTestValue, *bTestValue, *cTestValue;
     NSString *aProperty, *bProperty, *cProperty;;
+    
+    CREBindTestHelper *helper;
+    
     
 }
 
@@ -30,15 +34,16 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     
-    aDictionary = [self baseDictionaryWithName:@"aDictionary"];
-    bDictionary = [self baseDictionaryWithName:@"bDictionary"];
-    cDictionary = [self baseDictionaryWithName:@"cDictionary"];
+    helper = [[CREBindTestHelper alloc] initForRemoteTests];
+    
+    aDictionary = helper.aDictionary;
+    bDictionary = helper.bDictionary;
+    cDictionary = helper.cDictionary;
     
     [self baseTestValues];
     [self baseProperties];
     
-    aTestMappingDictionary = @{aProperty:aDictionary,
-                               bProperty:bDictionary};
+    aTestMappingDictionary = helper.aTestMappingDictionary;
 
 }
 
@@ -79,33 +84,22 @@
     XCTAssert(YES, @"Pass");
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
-}
 
 
--(NSDictionary*)baseDictionaryWithName:(NSString*)name{
-    
-    return [NSMutableDictionary dictionaryWithObject:name
-                                              forKey:@"name"];
-}
 
 -(void)baseTestValues{
     
-    aTestValue = @"http://jsonplaceholder.typicode.com/posts";
-    bTestValue = @"bTest";
-    cTestValue = @"cTest";
+    aTestValue = helper.aTestValue;
+    bTestValue = helper.bTestValue;
+    cTestValue = helper.cTestValue;
     
 }
 
 -(void)baseProperties{
     
-    aProperty = @"propertyA";
-    bProperty = @"propertyB";
-    cProperty = @"propertyC";
+    aProperty = helper.aProperty;
+    bProperty = helper.bProperty;
+    cProperty = helper.cProperty;
     
 }
 

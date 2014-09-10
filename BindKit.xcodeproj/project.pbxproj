@@ -23,6 +23,7 @@
 		0CBE0E8319AF7644007AE6DD /* CREBindingTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBE0E8119AF7644007AE6DD /* CREBindingTransaction.m */; };
 		0CDE521219B639BE00412662 /* CRERemoteBindingTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDE521019B639BE00412662 /* CRERemoteBindingTransaction.h */; };
 		0CDE521319B639BE00412662 /* CRERemoteBindingTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDE521119B639BE00412662 /* CRERemoteBindingTransaction.m */; };
+		0CF7B40919C09AAF001E1678 /* CREBindTestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7B40519C0940B001E1678 /* CREBindTestHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,8 @@
 		0CBE0E8119AF7644007AE6DD /* CREBindingTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CREBindingTransaction.m; sourceTree = "<group>"; };
 		0CDE521019B639BE00412662 /* CRERemoteBindingTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRERemoteBindingTransaction.h; sourceTree = "<group>"; };
 		0CDE521119B639BE00412662 /* CRERemoteBindingTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRERemoteBindingTransaction.m; sourceTree = "<group>"; };
+		0CF7B40419C0940B001E1678 /* CREBindTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CREBindTestHelper.h; path = BindKitTests/CREBindTestHelper.h; sourceTree = SOURCE_ROOT; };
+		0CF7B40519C0940B001E1678 /* CREBindTestHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CREBindTestHelper.m; path = BindKitTests/CREBindTestHelper.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +121,7 @@
 			children = (
 				0CB7A32919ADC31D0020FBD5 /* BindKitTests.m */,
 				0C25CB0919C0618700A5DC40 /* BindKitRemoteTests.m */,
+				0CF7B40719C09414001E1678 /* Help */,
 				0CB7A32719ADC31D0020FBD5 /* Supporting Files */,
 			);
 			path = BindKitTests;
@@ -145,6 +149,15 @@
 				0C08D9F219B0BCD2008E27F6 /* CREBindingUnit.m */,
 			);
 			name = Binders;
+			sourceTree = "<group>";
+		};
+		0CF7B40719C09414001E1678 /* Help */ = {
+			isa = PBXGroup;
+			children = (
+				0CF7B40419C0940B001E1678 /* CREBindTestHelper.h */,
+				0CF7B40519C0940B001E1678 /* CREBindTestHelper.m */,
+			);
+			name = Help;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -272,6 +285,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CF7B40919C09AAF001E1678 /* CREBindTestHelper.m in Sources */,
 				0CB7A32A19ADC31D0020FBD5 /* BindKitTests.m in Sources */,
 				0C25CB0A19C0618700A5DC40 /* BindKitRemoteTests.m in Sources */,
 			);

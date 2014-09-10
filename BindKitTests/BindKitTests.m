@@ -10,6 +10,7 @@
 #import <XCTest/XCTest.h>
 #import "BindKit.h"
 #import "CREBindingUnit.h"
+#import "CREBindTestHelper.h"
 
 //TODO: Add more descriptive errors
 
@@ -21,6 +22,8 @@
     NSString *aTestValue, *bTestValue, *cTestValue;
     NSString *aProperty, *bProperty, *cProperty;;
     
+    CREBindTestHelper *helper;
+    
 }
 
 @end
@@ -31,15 +34,16 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     
-    aDictionary = [self baseDictionaryWithName:@"aDictionary"];
-    bDictionary = [self baseDictionaryWithName:@"bDictionary"];
-    cDictionary = [self baseDictionaryWithName:@"cDictionary"];
-
+    helper = [CREBindTestHelper new];
+    
+    aDictionary = helper.aDictionary;
+    bDictionary = helper.bDictionary;
+    cDictionary = helper.cDictionary;
+    
     [self baseTestValues];
     [self baseProperties];
     
-    aTestMappingDictionary = @{aProperty:aDictionary,
-                               bProperty:bDictionary};
+    aTestMappingDictionary = helper.aTestMappingDictionary;
 
     
 }
@@ -218,25 +222,20 @@
 
 #pragma mark - Support
 
--(NSDictionary*)baseDictionaryWithName:(NSString*)name{
-    
-    return [NSMutableDictionary dictionaryWithObject:name
-                                       forKey:@"name"];
-}
 
 -(void)baseTestValues{
-
-    aTestValue = @"aTest";
-    bTestValue = @"bTest";
-    cTestValue = @"cTest";
+    
+    aTestValue = helper.aTestValue;
+    bTestValue = helper.bTestValue;
+    cTestValue = helper.cTestValue;
     
 }
 
 -(void)baseProperties{
     
-    aProperty = @"propertyA";
-    bProperty = @"propertyB";
-    cProperty = @"propertyC";
+    aProperty = helper.aProperty;
+    bProperty = helper.bProperty;
+    cProperty = helper.cProperty;
     
 }
 
