@@ -54,7 +54,7 @@
 -(void)testBaseBinding{
     
     
-    CREBinder *newBinder = [CREBinder binderWithMapping: aTestMappingDictionary];
+    CREBinder *newBinder = [CREBinder binderWithProperties:@[aProperty, bProperty] sourceObjects:@[aDictionary, bDictionary]];
     [newBinder bind];
     
     [aDictionary setValue:aTestValue forKey:aProperty];
@@ -72,7 +72,7 @@
 
 -(void)testBaseBindingNegative{
     
-    CREBinder *newBinder = [CREBinder binderWithMapping:aTestMappingDictionary];
+    CREBinder *newBinder = [CREBinder binderWithProperties:@[aProperty, bProperty] sourceObjects:@[aDictionary, bDictionary]];
     [newBinder bind];
 
     [aDictionary setValue:aTestValue forKey:aProperty];

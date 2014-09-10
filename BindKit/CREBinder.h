@@ -57,8 +57,8 @@
  
  See addPair: explanation method for example structure relevant to mapDictionary.
  */
-+(instancetype)binderWithMapping:(NSDictionary*)mapDictionary;
--(instancetype)initWithMapping:(NSDictionary*)mapDictionary;
+//+(instancetype)binderWithMapping:(NSDictionary*)mapDictionary;
+//-(instancetype)initWithMapping:(NSDictionary*)mapDictionary;
 
 +(instancetype)binderWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
 -(instancetype)initWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
@@ -105,6 +105,8 @@
 /**
  The method within which the actual value merge/setting is taking place. Override this method to supply custom behavior. This method is called only if the delegate returns TRUE (if set) to the call binder:shouldSetValue:forKeyPath:.
  */
+
+-(CREBindingTransaction*)createTransactionWithMapping:(NSDictionary*)mappingDict;
 
 
 @end

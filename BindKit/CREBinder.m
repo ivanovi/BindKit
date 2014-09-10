@@ -20,32 +20,32 @@
 
 
 #pragma mark - Public Methods
-
--(instancetype)initWithMapping:(NSDictionary *)mapDictionary{
-    self = [super init];
-    
-    if (self)
-    {
-        
-        transactionsArray = [NSMutableArray new];
-        
-        CREBindingTransaction *aTransaction = [[CREBindingTransaction alloc] initWithDictionary:mapDictionary];
-        [transactionsArray addObject:aTransaction];
-        
-        _isLocked = NO;
-        
-    }
-    
-    return self;
-    
-}
-
-
-+(instancetype)binderWithMapping:(NSDictionary *)mapDictionary{
-    
-    return [[self alloc] initWithMapping:mapDictionary];
-    
-}
+//
+//-(instancetype)initWithMapping:(NSDictionary *)mapDictionary{
+//    self = [super init];
+//    
+//    if (self)
+//    {
+//        
+//        transactionsArray = [NSMutableArray new];
+//        
+//        CREBindingTransaction *aTransaction = [self createTransactionWithMapping:mapDictionary];
+//        [transactionsArray addObject:aTransaction];
+//        
+//        _isLocked = NO;
+//        
+//    }
+//    
+//    return self;
+//    
+//}
+//
+//
+//+(instancetype)binderWithMapping:(NSDictionary *)mapDictionary{
+//    
+//    return [[self alloc] initWithMapping:mapDictionary];
+//    
+//}
 
 
 +(instancetype)binderWithProperties:(NSArray *)propertiesArray sourceObjects:(NSArray *)objectsArray{
@@ -65,7 +65,8 @@
     if (self)
     {
         transactionsArray = [NSMutableArray new];
-        CREBindingTransaction *initialTransaction = [CREBindingTransaction new];
+        CREBindingTransaction *initialTransaction = [self createTransactionWithMapping:nil];
+        
         [transactionsArray addObject:initialTransaction];
         
         for (int i = 0 ; i < propertiesArray.count ; i ++) {
@@ -73,7 +74,11 @@
             id sourceObject = objectsArray [i] ;
             NSString * propertyName = propertiesArray [i];
             
-            NSAssert([sourceObject respondsToSelector:NSSelectorFromString(propertyName)], @"Source object does not respond to matched property. %@", [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:104]);
+            if (![sourceObject isKindOfClass:[NSDictionary class]]) {
+                NSAssert([sourceObject respondsToSelector:NSSelectorFromString(propertyName)], @"Source object does not respond to matched property. %@", [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:104]);
+            }
+            
+            
 
             
             CREBindingUnit *aUnit = [[CREBindingUnit alloc] initWithDictionary:@{ propertyName : sourceObject }];
@@ -85,6 +90,19 @@
     }
     
     return self;
+}
+
+
+-(CREBindingTransaction*)createTransactionWithMapping:(NSDictionary *)mappingDict{
+    
+    if (!mappingDict) {
+        
+        return [CREBindingTransaction new];
+        
+    }
+    
+    return [[CREBindingTransaction alloc]initWithDictionary:mappingDict];
+    
 }
 
 

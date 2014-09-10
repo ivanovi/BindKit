@@ -11,18 +11,28 @@
 @implementation CRERemoteBindingTransaction
 
 
-//-(instancetype)initWithDictionary:(NSDictionary *)bindingDict{
-//    self = [super initWithDictionary:bindingDict];
-//    
-//    if (self) {
-//        
-//        sourceUnit = 
-//        
-//    }
-//    
-//    return self;
-//    
-//}
+-(instancetype)initWithDictionary:(NSDictionary *)bindingDict{
+    self = [super initWithDictionary:bindingDict];
+    
+    if (self) {
+      
+     
+        if (bindingDict) {
+            
+        }
+      
+        
+    }
+    
+    return self;
+    
+}
+
+-(CREBindingTransactionDirection)directionType{
+    
+    return CREBindingTransactionDirectionOneWay;
+    
+}
 
 
 @end
