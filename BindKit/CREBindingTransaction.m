@@ -31,27 +31,52 @@
     return self;
 }
 
--(instancetype)initWithDictionary:(NSDictionary *)bindingDict{
-    NSAssert(bindingDict, @"%s %@", __PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:101]);
-    
+-(instancetype)initWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray{
     self = [self init];
     
-    if (self)
-    {
-        _directionType = CREBindingTransactionDirectionBothWays;
+    if (self) {
         
-        for (NSString *key in bindingDict) {
+        for (int i = 0 ; i < propertiesArray.count ; i++)
+        {
             
-            CREBindingUnit *newBindingUnit = [[CREBindingUnit alloc]initWithDictionary:@{key:bindingDict[key]}];
-            [self addBindingUnit:newBindingUnit];
+            NSString *property = propertiesArray [i];
+            id sourceObject = objectsArray [i];
+            
+            CREBindingUnit *aUnit = [[CREBindingUnit alloc] initWithDictionary:@{property : sourceObject}];
+            
+            [self addBindingUnit:aUnit];
+            
             
         }
+        
         
     }
     
     return self;
     
 }
+
+//-(instancetype)initWithDictionary:(NSDictionary *)bindingDict{
+//    NSAssert(bindingDict, @"%s %@", __PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:101]);
+//    
+//    self = [self init];
+//    
+//    if (self)
+//    {
+//        _directionType = CREBindingTransactionDirectionBothWays;
+//        
+//        for (NSString *key in bindingDict) {
+//            
+//            CREBindingUnit *newBindingUnit = [[CREBindingUnit alloc]initWithDictionary:@{key:bindingDict[key]}];
+//            [self addBindingUnit:newBindingUnit];
+//            
+//        }
+//        
+//    }
+//    
+//    return self;
+//    
+//}
 
 #pragma mark - Getters of readonly objects
 

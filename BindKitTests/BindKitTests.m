@@ -130,7 +130,7 @@
 
 - (void)testBindingDefintionInit{
     
-    CREBindingTransaction *aDefinition = [[CREBindingTransaction alloc] initWithDictionary:aTestMappingDictionary];
+    CREBindingTransaction *aDefinition = [[CREBindingTransaction alloc] initWithProperties:@[aProperty, bProperty] sourceObjects:@[aDictionary, bDictionary]];
     
     for (CREBindingUnit *aBindingUnit in aDefinition.bindingUnits)
     {

@@ -65,7 +65,7 @@
     if (self)
     {
         transactionsArray = [NSMutableArray new];
-        CREBindingTransaction *initialTransaction = [self createTransactionWithMapping:nil];
+        CREBindingTransaction *initialTransaction = [self createTransactionWithProperties:propertiesArray sourceObjects:objectsArray];
         
         [transactionsArray addObject:initialTransaction];
         
@@ -93,15 +93,15 @@
 }
 
 
--(CREBindingTransaction*)createTransactionWithMapping:(NSDictionary *)mappingDict{
+-(CREBindingTransaction*)createTransactionWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray{
     
-    if (!mappingDict) {
+    if (!propertiesArray || !objectsArray) {
         
         return [CREBindingTransaction new];
         
     }
     
-    return [[CREBindingTransaction alloc]initWithDictionary:mappingDict];
+    return [[CREBindingTransaction alloc] initWithProperties:propertiesArray sourceObjects:objectsArray];
     
 }
 

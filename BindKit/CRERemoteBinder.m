@@ -12,9 +12,9 @@
 @implementation CRERemoteBinder
 
 
--(CREBindingTransaction*)createTransactionWithMapping:(NSDictionary *)mappingDict{
+-(CREBindingTransaction*)createTransactionWithProperties:(NSArray *)propertiesArray sourceObjects:(NSArray *)objectsArray{
     
-    return [[CRERemoteBindingTransaction alloc]initWithDictionary:mappingDict];
+    return [[CRERemoteBindingTransaction alloc]initWithProperties:propertiesArray sourceObjects:objectsArray];
         
 }
 
