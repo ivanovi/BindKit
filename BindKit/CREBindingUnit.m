@@ -48,4 +48,10 @@
     return comparisonResult;
     
 }
+
+-(id)value{
+    
+    return [_boundObject valueForKeyPath:(NSString*)_boundObjectProperty];
+    
+}
 @end

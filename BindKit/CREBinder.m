@@ -168,7 +168,7 @@
     
 }
 
--(NSArray*)pairs{
+-(NSArray*)transactions{
     
     if (transactionsArray)
     {
@@ -275,22 +275,9 @@
     
     if (value)
     {
-
-        int assertionHelper = 0;
-        for (CREBindingTransaction *aTransaction in transactionsArray)
-        {
+        
+        [target.transaction mergeValue:value toTarget:target];
             
-            if ([aTransaction containsUnit:target])
-            {
-                [aTransaction mergeValue:value toTarget:target];
-                assertionHelper ++;
-            }
-            
-        }
-   
-        NSAssert(assertionHelper != 0, @"Error:%@ Function: %s", [NSError errorDescriptionForDomain:kCREBinderErrorInternalDomain code:2000], __PRETTY_FUNCTION__);
-        NSAssert(assertionHelper == 1, @"Error:%@ Function: %s", [NSError errorDescriptionForDomain:kCREBinderErrorInternalDomain code:2001], __PRETTY_FUNCTION__);
-    
     }
     
 }

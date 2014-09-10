@@ -11,6 +11,7 @@
 		0C08D9F419B0BCD2008E27F6 /* CREBindingUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C08D9F219B0BCD2008E27F6 /* CREBindingUnit.m */; };
 		0C25CB0719C04BD300A5DC40 /* CRERemoteBinder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0C25CB0519C04BD200A5DC40 /* CRERemoteBinder.h */; };
 		0C25CB0819C04BD300A5DC40 /* CRERemoteBinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C25CB0619C04BD200A5DC40 /* CRERemoteBinder.m */; };
+		0C25CB0A19C0618700A5DC40 /* BindKitRemoteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C25CB0919C0618700A5DC40 /* BindKitRemoteTests.m */; };
 		0CB7A32019ADC31D0020FBD5 /* BindKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CB7A31F19ADC31D0020FBD5 /* BindKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0CB7A32A19ADC31D0020FBD5 /* BindKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB7A32919ADC31D0020FBD5 /* BindKitTests.m */; };
 		0CB7A35919ADED160020FBD5 /* CREBinder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CB7A35719ADED160020FBD5 /* CREBinder.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -29,6 +30,7 @@
 		0C08D9F219B0BCD2008E27F6 /* CREBindingUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CREBindingUnit.m; sourceTree = "<group>"; };
 		0C25CB0519C04BD200A5DC40 /* CRERemoteBinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRERemoteBinder.h; sourceTree = "<group>"; };
 		0C25CB0619C04BD200A5DC40 /* CRERemoteBinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRERemoteBinder.m; sourceTree = "<group>"; };
+		0C25CB0919C0618700A5DC40 /* BindKitRemoteTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindKitRemoteTests.m; sourceTree = "<group>"; };
 		0CB7A31A19ADC31D0020FBD5 /* BindKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BindKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CB7A31E19ADC31D0020FBD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0CB7A31F19ADC31D0020FBD5 /* BindKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BindKit.h; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				0CB7A32919ADC31D0020FBD5 /* BindKitTests.m */,
+				0C25CB0919C0618700A5DC40 /* BindKitRemoteTests.m */,
 				0CB7A32719ADC31D0020FBD5 /* Supporting Files */,
 			);
 			path = BindKitTests;
@@ -270,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0CB7A32A19ADC31D0020FBD5 /* BindKitTests.m in Sources */,
+				0C25CB0A19C0618700A5DC40 /* BindKitRemoteTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

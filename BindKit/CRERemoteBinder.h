@@ -7,6 +7,7 @@
 //
 
 #import <BindKit/BindKit.h>
+#import "CRERemoteBindingTransaction.h"
 
 @interface CRERemoteBinder : CREBinder
 

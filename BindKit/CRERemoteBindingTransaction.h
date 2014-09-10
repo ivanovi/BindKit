@@ -8,6 +8,16 @@
 
 #import <BindKit/BindKit.h>
 
-@interface CRERemoteBindingTransaction : CREBindingTransaction
+
+typedef void (^CRERemoteBinderCallBack)(id newValue, CREBindingUnit *unit, NSError *error);
+
+
+@interface CRERemoteBindingTransaction : CREBindingTransaction  <NSURLConnectionDataDelegate>
+
+
+
+@property (nonatomic, readwrite, copy) CRERemoteBinderCallBack callBack;
+
+
 
 @end

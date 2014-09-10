@@ -64,7 +64,8 @@ NSString * const kCREBinderErrorInternalDomain = @"binderErrorLogicDomain";
       @"CREBinderDefinition must be initialised with mapping dictionary.",
       @"INTERNAL - BindingUnit: Instance can be initialized with only one property : instance pair.",
       @"INTERNAL - BindingUnit: Bounding Object does contain added property.",
-      @"Each property-name in the 'property' array must correspond to a matching sourceObject."];
+      @"Each property-name in the 'property' array must correspond to a matching sourceObject.",
+      @"RemoteBinder's source property can be either NSString or NSUrl instance."];
     
     
     return errorDescritionsLiteralsArray [ errorCode ];

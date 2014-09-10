@@ -46,7 +46,7 @@
 @property (nonatomic, weak) id <CREBinderDelegate> delegate;
 @property (nonatomic, weak, readonly) CREBinder * superBinder;
 @property (nonatomic, readonly) NSArray * childBinders;
-@property (nonatomic, readonly) NSArray * bindingDefinitions; //returns Array of Binding definition
+@property (nonatomic, readonly) NSArray * transactions; //returns Array of Binding definition
 @property (nonatomic, readonly) BOOL isLocked;
 
 //@property (nonatomic, readonly, strong) NSDictionary *mappingDictonary; //the dictionary that sets the mapping structure. Set the property name

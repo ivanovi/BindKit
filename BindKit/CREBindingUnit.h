@@ -22,6 +22,8 @@
 
 @property (nonatomic, weak) id boundObject;
 @property (nonatomic, weak) id boundObjectProperty;
+@property (nonatomic, weak) id remoteProperty;
+@property (nonatomic, weak) id value;
 @property (nonatomic, weak) CREBindingTransaction *transaction;
 
 //@property (nonatomic, strong) NSDictionary *bindOptionsDictionary; // redo with enumeration
