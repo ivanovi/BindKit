@@ -69,22 +69,22 @@
         
         [transactionsArray addObject:initialTransaction];
         
-        for (int i = 0 ; i < propertiesArray.count ; i ++) {
-            
-            id sourceObject = objectsArray [i] ;
-            NSString * propertyName = propertiesArray [i];
-            
-            if (![sourceObject isKindOfClass:[NSDictionary class]]) {
-                NSAssert([sourceObject respondsToSelector:NSSelectorFromString(propertyName)], @"Source object does not respond to matched property. %@", [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:104]);
-            }
-            
-            
-
-            
-            CREBindingUnit *aUnit = [[CREBindingUnit alloc] initWithDictionary:@{ propertyName : sourceObject }];
-            [initialTransaction addBindingUnit:aUnit];
-            
-        }
+//        for (int i = 0 ; i < propertiesArray.count ; i ++) {
+//            
+//            id sourceObject = objectsArray [i] ;
+//            NSString * propertyName = propertiesArray [i];
+//            
+//            if (![sourceObject isKindOfClass:[NSDictionary class]]) {
+//                NSAssert([sourceObject respondsToSelector:NSSelectorFromString(propertyName)], @"Source object does not respond to matched property. %@", [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:104]);
+//            }
+//            
+//            
+//
+//            
+//            CREBindingUnit *aUnit = [[CREBindingUnit alloc] initWithDictionary:@{ propertyName : sourceObject }];
+//            [initialTransaction addBindingUnit:aUnit];
+//            
+//        }
         
         
     }
@@ -141,7 +141,8 @@
             id value = [sourceObject valueForKey:propertyName];
             
             
-            if (value) {
+            if (value)
+            {
                 
                 [self observeValueForKeyPath:propertyName ofObject:sourceObject
                                       change:nil context:context];

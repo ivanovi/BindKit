@@ -6,7 +6,9 @@
 //  Copyright (c) 2014 Creatub Ltd. All rights reserved.
 //
 
-#import <BindKit/BindKit.h>
+#import "CREBindingTransaction.h"
+#import <Social/Social.h>
+#import <Accounts/Accounts.h>
 
 /**
  This class binds key-value pairs (CREBindingUnit) to an url. The url is assumed to by in a property and is passed again as a key-value pair (CREBindingUnit).
@@ -17,17 +19,33 @@
  */
 
 
+typedef NS_ENUM(NSUInteger, CREBinderRequestType) {
+    CREBinderRequestTypeURL,
+    CREBinderRequestTypeFacebook,
+    CREBinderRequestTypeTwitter,
+    CREBinderRequestTypeWeibo,
+    CREBinderRequestTypeTencentWeibo,
+};
+
+@class CRERemoteBindingTransaction;
+
+@protocol CREBinderRequestFactory <NSObject>
+
+-(id)bindTransaction:(CRERemoteBindingTransaction*)bindingTransaction forURL:(NSURL*)url unit:(CREBindingUnit*)unit parameters:(NSDictionary*)params;
+
+@end
+
 typedef void (^CRERemoteBinderCallBack)(id newValue, CREBindingUnit *unit, NSError *error);
 
 
-@interface CRERemoteBindingTransaction : CREBindingTransaction  <NSURLConnectionDataDelegate>
+@interface CRERemoteBindingTransaction : CREBindingTransaction 
 
 /**
  Pass pre-configured SLRequest => a request to Facebook / Twitter / Waebo
  or standard NSURLRequest. If the request property is not set, 
  */
-
-@property (nonatomic, strong) id request;
+@property (nonatomic, weak) id <CREBinderRequestFactory> requestFactory;
+@property (nonatomic, readonly) CREBinderRequestType requestType;
 @property (nonatomic, readwrite, copy) CRERemoteBinderCallBack callBack;
 
 

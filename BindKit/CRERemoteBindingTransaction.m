@@ -13,6 +13,7 @@
 @interface CRERemoteBindingTransaction(){
     
     NSURL *urlContainer;
+    id remoteRequest;
     
 }
 
@@ -70,16 +71,10 @@
             
             if (!connectionError) {
                 
-                NSDictionary *receivedDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-                NSString *remoteKey = sourceUnit.remoteProperty ? sourceUnit.remoteProperty : sourceUnit.boundObjectProperty;
-                
-                newValue = [receivedDictionary valueForKey:remoteKey];
-                
+                newValue = [self handleResponse:data urlResponse:response targetUnit:target];
                 NSAssert(newValue, @"no newValue");
                 
                 [target.boundObject setValue:newValue forKey:target.boundObjectProperty];
-                
-                NSLog(@"received response with value set %@", receivedDictionary);
                 
             }else{
                 //handle error
@@ -106,7 +101,6 @@
 -(void)executeRequest:(id)request withCallBack:(void (^)(NSURLResponse *response,
                                                          NSData *data,
                                                          NSError *connectionError)) completionHandler{
-    
     [self assertRequest:request];
     
     if ([request isKindOfClass:[NSURLRequest class]] ) {
@@ -147,6 +141,7 @@
 
 -(void)assertRequest:(id)request{
     
+    NSAssert(request, @"__Fix request factory must return a valid request");
     NSAssert( ( [request isKindOfClass:[NSURLRequest class]] || [request isKindOfClass:[SLRequest class]] ), @"__FIX Supporting only SLRequest and NSURLRequest");
     
 }
@@ -172,10 +167,21 @@
     
     [self resolveRequestAdderss:requestAddress];
     
-    if (_request) {
+    
+    if ([_requestFactory respondsToSelector:@selector(bindTransaction:forURL:unit:parameters:)])
+    {
+        
+      id receivedRequest = [_requestFactory bindTransaction:self forURL:urlContainer unit:sourceUnit parameters:nil];
+      [self assertRequest:receivedRequest];
+       
+      return receivedRequest;
+        
+    }
+    
+    if (remoteRequest) {
         
         //copying the request with the new request address
-        return [self requestWithRequest:_request];
+        return [self requestWithRequest:remoteRequest];
         
     }else{
         
@@ -188,7 +194,17 @@
 
 -(id)requestWithRequest:(id)request{
     //
+    
+    if (_requestFactory) {
+        
+        return remoteRequest;
+        
+    }
+    
     [self assertRequest:request];
+    
+    
+    
     
     if ([request isKindOfClass:[SLRequest class]]) {
         
@@ -232,6 +248,33 @@
     
     return nil;
     
+}
+
+-(id)handleResponse:(NSData*)responseData urlResponse:(NSURLResponse*)response targetUnit:(CREBindingUnit*)targetUnit{
+    
+    NSString *mimeType = response.MIMEType;
+    id newValue = nil;
+    NSDictionary *receivedDictionary = nil;
+    
+    if ([mimeType containsString:@"image"])
+    {
+        
+        newValue = responseData;
+        
+    }else{
+        
+        
+        receivedDictionary = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:nil];
+        NSString *remoteKey = targetUnit.remoteProperty ? targetUnit.remoteProperty : targetUnit.boundObjectProperty;
+        
+        newValue = [receivedDictionary valueForKey:remoteKey];
+        
+        
+    }
+    
+    NSAssert(newValue, @"New value not set receivedDict %@ mimeType %@", receivedDictionary, mimeType);
+    
+    return newValue;
 }
 
 

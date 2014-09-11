@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		0C08D9F319B0BCD2008E27F6 /* CREBindingUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = 0C08D9F119B0BCD2008E27F6 /* CREBindingUnit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0C08D9F419B0BCD2008E27F6 /* CREBindingUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C08D9F219B0BCD2008E27F6 /* CREBindingUnit.m */; };
-		0C25CB0719C04BD300A5DC40 /* CRERemoteBinder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0C25CB0519C04BD200A5DC40 /* CRERemoteBinder.h */; };
+		0C25CB0719C04BD300A5DC40 /* CRERemoteBinder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0C25CB0519C04BD200A5DC40 /* CRERemoteBinder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0C25CB0819C04BD300A5DC40 /* CRERemoteBinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C25CB0619C04BD200A5DC40 /* CRERemoteBinder.m */; };
 		0C25CB0A19C0618700A5DC40 /* BindKitRemoteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C25CB0919C0618700A5DC40 /* BindKitRemoteTests.m */; };
 		0C9DB16019C181A6003548FC /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C9DB15F19C181A6003548FC /* Social.framework */; };
@@ -23,7 +23,7 @@
 		0CBB594219AE2FB900CED34E /* BindKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB7A31A19ADC31D0020FBD5 /* BindKit.framework */; };
 		0CBE0E8219AF7644007AE6DD /* CREBindingTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CBE0E8019AF7644007AE6DD /* CREBindingTransaction.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0CBE0E8319AF7644007AE6DD /* CREBindingTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBE0E8119AF7644007AE6DD /* CREBindingTransaction.m */; };
-		0CDE521219B639BE00412662 /* CRERemoteBindingTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDE521019B639BE00412662 /* CRERemoteBindingTransaction.h */; };
+		0CDE521219B639BE00412662 /* CRERemoteBindingTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDE521019B639BE00412662 /* CRERemoteBindingTransaction.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0CDE521319B639BE00412662 /* CRERemoteBindingTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDE521119B639BE00412662 /* CRERemoteBindingTransaction.m */; };
 		0CF7B40919C09AAF001E1678 /* CREBindTestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7B40519C0940B001E1678 /* CREBindTestHelper.m */; };
 /* End PBXBuildFile section */
@@ -175,12 +175,12 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0CDE521219B639BE00412662 /* CRERemoteBindingTransaction.h in Headers */,
 				0CB7A35919ADED160020FBD5 /* CREBinder.h in Headers */,
 				0CBE0E8219AF7644007AE6DD /* CREBindingTransaction.h in Headers */,
 				0CB7A36019AE0BC20020FBD5 /* NSError+BinderKit.h in Headers */,
 				0C25CB0719C04BD300A5DC40 /* CRERemoteBinder.h in Headers */,
 				0C08D9F319B0BCD2008E27F6 /* CREBindingUnit.h in Headers */,
+				0CDE521219B639BE00412662 /* CRERemoteBindingTransaction.h in Headers */,
 				0CB7A32019ADC31D0020FBD5 /* BindKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
