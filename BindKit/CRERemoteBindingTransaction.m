@@ -7,6 +7,16 @@
 //
 
 #import "CRERemoteBindingTransaction.h"
+#import <Social/Social.h>
+#import <Accounts/Accounts.h>
+
+@interface CRERemoteBindingTransaction(){
+    
+    NSURL *urlContainer;
+    
+}
+
+@end
 
 @implementation CRERemoteBindingTransaction
 
@@ -28,6 +38,8 @@
 //    
 //}
 
+#pragma mark - Overrides
+
 -(instancetype)initWithProperties:(NSArray *)propertiesArray sourceObjects:(NSArray *)objectsArray{
     self = [super initWithProperties:propertiesArray sourceObjects:objectsArray];
     
@@ -38,8 +50,6 @@
         
         [self assertSource];
         
-        
-       
     }
     
     return self;
@@ -52,30 +62,35 @@
     if (![target isEqual:sourceUnit])
     {
         
-        NSURLRequest *request = [self remoteItemRequest:sourceUnit.value];
+        NSURLRequest *request = [self createRequest:sourceUnit.value];
         
-        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        [self executeRequest:request withCallBack:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            
+            id newValue = nil;
             
             if (!connectionError) {
                 
-               
+                NSDictionary *receivedDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+                NSString *remoteKey = sourceUnit.remoteProperty ? sourceUnit.remoteProperty : sourceUnit.boundObjectProperty;
                 
-                NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+                newValue = [receivedDictionary valueForKey:remoteKey];
                 
+                NSAssert(newValue, @"no newValue");
                 
-                NSLog(@"received response with value set %@", array);
+                [target.boundObject setValue:newValue forKey:target.boundObjectProperty];
+                
+                NSLog(@"received response with value set %@", receivedDictionary);
                 
             }else{
                 //handle error
                 
-                  NSLog(@"received response with value set %@", [connectionError localizedDescription]);
+                NSLog(@"received response with value set %@", [connectionError localizedDescription]);
                 
             }
             
-            
             if (_callBack) {
                 
-                _callBack(value, target, connectionError);
+                _callBack(newValue, target, connectionError);
                 
             }
             
@@ -88,23 +103,54 @@
     
 }
 
-
-
--(NSURLRequest*)remoteItemRequest:(id)requestAddress{
+-(void)executeRequest:(id)request withCallBack:(void (^)(NSURLResponse *response,
+                                                         NSData *data,
+                                                         NSError *connectionError)) completionHandler{
     
+    [self assertRequest:request];
+    
+    if ([request isKindOfClass:[NSURLRequest class]] ) {
+        
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler: completionHandler];
+        
+    }else if ( [request isKindOfClass:[SLRequest class]] ){
+        
+        [(SLRequest*)request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
+            
+            completionHandler (urlResponse,responseData,error);
+            
+        }];
+        
+    }
+    
+    
+    
+}
+
+
+-(void)resolveRequestAdderss:(id)requestAddress{
     
     if ([requestAddress isKindOfClass: [NSString class] ]) {
         
-        return [NSURLRequest requestWithURL: [NSURL URLWithString:requestAddress] ];
+        urlContainer = [NSURL URLWithString:requestAddress] ;
         
     }else{
         
-        return [NSURLRequest requestWithURL: requestAddress];
+        urlContainer = requestAddress;
         
     }
     
     
 }
+
+#pragma mark - Assertions
+
+-(void)assertRequest:(id)request{
+    
+    NSAssert( ( [request isKindOfClass:[NSURLRequest class]] || [request isKindOfClass:[SLRequest class]] ), @"__FIX Supporting only SLRequest and NSURLRequest");
+    
+}
+
 
 -(void)assertSource{
     
@@ -117,11 +163,76 @@
     
 }
 
-#pragma mark - NSURLConnection Delegate
+
+#pragma mark - Custom requests
 
 
+-(NSURLRequest*)createRequest:(id)requestAddress{
+    
+    
+    [self resolveRequestAdderss:requestAddress];
+    
+    if (_request) {
+        
+        //copying the request with the new request address
+        return [self requestWithRequest:_request];
+        
+    }else{
+        
+        return [NSURLRequest requestWithURL:urlContainer];
+        
+    }
+    
+}
 
-#pragma mark - NSURLConnectionDataDelegate
+
+-(id)requestWithRequest:(id)request{
+    //
+    [self assertRequest:request];
+    
+    if ([request isKindOfClass:[SLRequest class]]) {
+        
+        SLRequest *initialRequest = request;
+        
+        return [SLRequest requestForServiceType:[self resolveAcountServiceToSLserviceWithAccount:initialRequest.account.accountType.identifier]
+                                  requestMethod:initialRequest.requestMethod
+                                            URL:urlContainer
+                                     parameters:initialRequest.parameters];
+        
+    }else if ([request isKindOfClass:[NSURLRequest class]]){
+        
+        NSURLRequest *initialRequest = request;
+        
+        return [NSURLRequest requestWithURL:urlContainer cachePolicy:initialRequest.cachePolicy timeoutInterval:initialRequest.timeoutInterval];
+    }
+    
+    return nil;
+}
+
+
+-(NSString*)resolveAcountServiceToSLserviceWithAccount:(NSString*)accountIdentifier{
+    
+    if ([accountIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
+        
+        return SLServiceTypeFacebook;
+        
+    }else if ([accountIdentifier isEqualToString:ACAccountTypeIdentifierSinaWeibo]){
+        
+        return SLServiceTypeSinaWeibo;
+        
+    }else if ([accountIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]){
+        
+        return SLServiceTypeTwitter;
+        
+    }else if ([accountIdentifier isEqualToString:ACAccountTypeIdentifierTencentWeibo]){
+        
+        return SLServiceTypeTencentWeibo;
+        
+    }
+    
+    return nil;
+    
+}
 
 
 //-(CREBindingTransactionDirection)directionType{
