@@ -46,8 +46,9 @@
 @property (nonatomic, weak) id <CREBinderDelegate> delegate;
 @property (nonatomic, weak, readonly) CREBinder * superBinder;
 @property (nonatomic, readonly) NSArray * childBinders;
-@property (nonatomic, readonly) NSArray * transactions; //returns Array of Binding definition
+@property (nonatomic, readonly) NSArray * transactions; 
 @property (nonatomic, readonly) BOOL isLocked;
+@property (nonatomic, readonly) BOOL isBound;
 
 //@property (nonatomic, readonly, strong) NSDictionary *mappingDictonary; //the dictionary that sets the mapping structure. Set the property name
 
@@ -88,6 +89,7 @@
  Adding and removing binders to the binder stack. In the general case they are exectuted without any order.
  */
 -(void)addBinder:(CREBinder*)childBinder;
+
 -(void)removeBinder:(CREBinder*)childBinder;
 -(void)removeFromSuperBinder;
 

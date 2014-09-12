@@ -11,6 +11,7 @@
 @interface CREBinder(){
     
     NSMutableArray *transactionsArray;
+    NSMutableArray *childBinders;
     
 }
 
@@ -65,27 +66,12 @@
     if (self)
     {
         transactionsArray = [NSMutableArray new];
-        CREBindingTransaction *initialTransaction = [self createTransactionWithProperties:propertiesArray sourceObjects:objectsArray];
         
+        CREBindingTransaction *initialTransaction = [self createTransactionWithProperties:propertiesArray sourceObjects:objectsArray];
         [transactionsArray addObject:initialTransaction];
         
-//        for (int i = 0 ; i < propertiesArray.count ; i ++) {
-//            
-//            id sourceObject = objectsArray [i] ;
-//            NSString * propertyName = propertiesArray [i];
-//            
-//            if (![sourceObject isKindOfClass:[NSDictionary class]]) {
-//                NSAssert([sourceObject respondsToSelector:NSSelectorFromString(propertyName)], @"Source object does not respond to matched property. %@", [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:104]);
-//            }
-//            
-//            
-//
-//            
-//            CREBindingUnit *aUnit = [[CREBindingUnit alloc] initWithDictionary:@{ propertyName : sourceObject }];
-//            [initialTransaction addBindingUnit:aUnit];
-//            
-//        }
-        
+        _isBound = NO;
+
         
     }
     
@@ -148,12 +134,14 @@
     }
     
     
-    for (CREBinder *subBinder in _childBinders)
+    for (CREBinder *subBinder in childBinders)
     {
         
         [subBinder bind];
         
     }
+    
+    _isBound = YES;
 }
 
 //-(void)bindPair:(NSArray *)pairArray{
@@ -184,7 +172,7 @@
     
     CREBindingTransaction *theTransaction = unit.transaction;
     NSString *properyName = unit.boundObjectProperty;
-    id sourceObject = unit.boundObjectProperty;
+    id sourceObject = unit.boundObject;
     void *context = (__bridge void *)unit;
     
     if (value)
@@ -305,18 +293,11 @@
 }
 
 -(void)unbind{
-    
-//    for (NSDictionary * objectsPair in tempPairsArray) {
-//        
-//        for (NSString * propertyName in objectsPair) {
-//            
-//            id sourceObject = objectsPair [propertyName];
-//            [sourceObject removeObserver:self forKeyPath:propertyName];
-//            
-//        }
-//
-//        
-//    }
+
+    if (!_isBound)
+    {
+        return;
+    }
     
     for (CREBindingTransaction *transaction in transactionsArray) {
         
@@ -329,17 +310,47 @@
         
     }
     
-    
-    for (CREBinder *subBinder in _childBinders)
+    for (CREBinder *subBinder in childBinders)
     {
         
         [subBinder unbind];
         
     }
     
+    _isBound = NO;
+    
 }
 
+-(void)addBinder:(CREBinder *)childBinder{
+    
+    
+    if (!childBinders) {
+        childBinders = [NSMutableArray new];
+    }
+    
+    if (![childBinders containsObject:childBinder]) {
+        
+        [childBinders addObject:childBinder];
+        
+    }
+    
+}
 
+-(void)removeBinder:(CREBinder *)childBinder{
+    
+    [childBinders removeObject:childBinder];
+    
+}
+
+-(NSArray*)childBinders{
+    
+    if (childBinders) {
+        return [NSArray arrayWithArray:childBinders];
+    }else{
+        return nil;
+    }
+    
+}
 
 #pragma mark - Private methods
 
