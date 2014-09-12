@@ -60,6 +60,12 @@
     
     [self assertSource];
     
+    if ([self.valueTransformer respondsToSelector:@selector(bindTransaction:willModify:withValue:)]) {
+        
+        value = [self.valueTransformer bindTransaction:self willModify:target withValue:value];
+        
+    }
+    
     if (![target isEqual:sourceUnit])
     {
         
@@ -72,7 +78,7 @@
             if (!connectionError) {
                 
                 newValue = [self handleResponse:data urlResponse:response targetUnit:target];
-                NSAssert(newValue, @"no newValue");
+                NSAssert(newValue, @"__FIX no newValue");
                 
                 [target.boundObject setValue:newValue forKey:target.boundObjectProperty];
                 
@@ -141,8 +147,9 @@
 
 -(void)assertRequest:(id)request{
     
-    NSAssert(request, @"__Fix request factory must return a valid request");
-    NSAssert( ( [request isKindOfClass:[NSURLRequest class]] || [request isKindOfClass:[SLRequest class]] ), @"__FIX Supporting only SLRequest and NSURLRequest");
+    NSAssert(request, @"__FIX request factory must return a valid request");
+    NSAssert( ( [request isKindOfClass:[NSURLRequest class]] ||
+               [request isKindOfClass:[SLRequest class]] ), @"__FIX Supporting only SLRequest and NSURLRequest");
     
 }
 

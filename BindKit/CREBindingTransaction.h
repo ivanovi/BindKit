@@ -9,6 +9,23 @@
 #import <Foundation/Foundation.h>
 #import "CREBindingUnit.h"
 
+
+@class CREBindingTransaction;
+
+@protocol CREValueTransformerProtocol <NSObject>
+
+//Value transformer object must resturn transformed value //not nil
+-(id)bindTransaction:(CREBindingTransaction*)transaction willModify:(CREBindingUnit*)unit withValue:(id)value;
+
+@end
+
+@protocol CREPlaceholderProtocol <NSObject>
+
+//Placeholder object must return placeholder value //not nil
+-(id)bindTransaction:(CREBindingTransaction*)transaction requiresPlaceholderValuesForUnit:(CREBindingUnit*)unit;
+
+@end
+
 typedef NS_ENUM(NSUInteger, CREBindingTransactionDirection) {
     
     CREBindingTransactionDirectionBothWays,
@@ -16,6 +33,7 @@ typedef NS_ENUM(NSUInteger, CREBindingTransactionDirection) {
     CREBindingTransactionDirectionChained,
     
 };
+
 
 @interface CREBindingTransaction : NSObject{
     
@@ -27,6 +45,8 @@ typedef NS_ENUM(NSUInteger, CREBindingTransactionDirection) {
 @property (nonatomic, readonly) NSSet * keys;
 @property (nonatomic, readonly) NSArray * bindingUnits; //immediate/current units
 @property (nonatomic, readonly) CREBindingTransactionDirection directionType;
+@property (nonatomic, weak) id <CREValueTransformerProtocol> valueTransformer;
+@property (nonatomic, weak) id <CREPlaceholderProtocol> placeholder;
 
 //- (instancetype)initWithDictionary:(NSDictionary*)bindingDict;
 - (instancetype)initWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;

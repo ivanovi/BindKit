@@ -206,7 +206,13 @@
 
 -(void)mergeValue:(id)value toTarget:(CREBindingUnit *)target{
     
-    NSAssert(value, @"Value in %s not set", __PRETTY_FUNCTION__);
+    if ([_valueTransformer respondsToSelector:@selector(bindTransaction:willModify:withValue:)]) {
+        
+        value = [_valueTransformer bindTransaction:self willModify:target withValue:value];
+        
+    }
+    
+    NSAssert(value, @"__FIX Value in %s not set", __PRETTY_FUNCTION__);
 
     [target.boundObject setValue:value forKey:target.boundObjectProperty];
     

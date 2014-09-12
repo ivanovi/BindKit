@@ -136,18 +136,10 @@
             
             NSString *propertyName = aUnit.boundObjectProperty;
             void *context = (__bridge void *)aUnit;
-            
             id sourceObject = aUnit.boundObject;
             id value = [sourceObject valueForKey:propertyName];
             
-            
-            if (value)
-            {
-                
-                [self observeValueForKeyPath:propertyName ofObject:sourceObject
-                                      change:nil context:context];
-                
-            }
+            [self handleInitialValue:value unit:aUnit];
             
             [sourceObject addObserver:self forKeyPath:propertyName
                               options:NSKeyValueObservingOptionNew context:context];
@@ -164,10 +156,10 @@
     }
 }
 
--(void)bindPair:(NSArray *)pairArray{
-    
-    
-}
+//-(void)bindPair:(NSArray *)pairArray{
+//    
+//    
+//}
 
 -(NSArray*)transactions{
     
@@ -188,11 +180,40 @@
 #pragma mark - Private Methods
 
 
+-(void)handleInitialValue:(id)value unit:(CREBindingUnit*)unit{
+    
+    CREBindingTransaction *theTransaction = unit.transaction;
+    NSString *properyName = unit.boundObjectProperty;
+    id sourceObject = unit.boundObjectProperty;
+    void *context = (__bridge void *)unit;
+    
+    if (value)
+    {
+        
+        [self observeValueForKeyPath:properyName ofObject:sourceObject
+                              change:nil context:context];
+        
+    }else{
+        
+        if ([theTransaction.placeholder respondsToSelector:@selector(bindTransaction:requiresPlaceholderValuesForUnit:)]) {
+            
+            
+            value = [theTransaction.placeholder bindTransaction:theTransaction requiresPlaceholderValuesForUnit:unit];
+            
+            [self observeValueForKeyPath:properyName ofObject:sourceObject
+                                  change:nil context:context];
+        }
+        
+    }
+    
+    
+}
+
 //-(BOOL)didAddPair:(NSDictionary*)pair{
-//    
+//
 ////    for (NSDictionary * existindPairDictionary in tempPairsArray)
 ////    {
-////        
+////
 ////        if ([existindPairDictionary isEqualToDictionary:pair])
 ////        {
 ////            return YES;
