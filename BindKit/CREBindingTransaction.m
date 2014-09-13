@@ -78,6 +78,103 @@
 //    
 //}
 
+
+
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    
+    if (_isLocked) //protect against infinite loop when both ways binding
+    {
+        NSLog(@"Binder is locked. Discontinuing loop.");
+        return;
+        
+    }
+    // NSLog(@"value changed object %@", object);
+    
+    
+    
+    CREBindingUnit *bindingUnit = (__bridge CREBindingUnit*)context;
+    NSArray *peerUnitSet = bindingUnit.transaction.bindingUnits;
+    
+    
+    for ( CREBindingUnit *notifyUnit in peerUnitSet) {
+        
+        if ([notifyUnit isEqual:bindingUnit]) {
+            continue;
+        }
+        
+        
+        BOOL mergeBOOL = YES;
+        id newValue = [object valueForKeyPath:keyPath];
+        //        id targetObject =  notifyUnit.boundObject; // [self objectInPairWithBoundObject:object mapKeys:NO];
+        //        id targetKey =  notifyUnit.boundObjectProperty; //[self objectInPairWithBoundObject:keyPath mapKeys:YES];
+        
+        if (_delegate) //delegation
+        {
+            
+            if ([_delegate respondsToSelector:@selector(bindTransaction:shouldSetValue:forKeyPath:)])
+            {
+                mergeBOOL = [_delegate bindTransaction:self shouldSetValue:newValue forKeyPath:keyPath];
+            }else
+            {
+                NSLog(@"Warnig %@", [NSError errorDescriptionForDomain:kCREBinderWarningsDomain code:1000]);
+            }
+            if (mergeBOOL)
+            {
+                
+                if([_delegate respondsToSelector:@selector(bindTransaction:willSetValue:forKeyPath:inObject:)])
+                {
+                    [_delegate bindTransaction:self willSetValue:newValue forKeyPath:keyPath inObject:object];
+                }
+                
+            }
+        } //end delegation
+        
+        
+        if (mergeBOOL)
+        {
+            _isLocked = YES;
+                [self mergeValue:newValue toTarget:notifyUnit];
+            _isLocked = NO;
+            
+        }
+        
+        
+        
+    }
+    
+}
+
+
+-(void)handleInitialValue:(id)value unit:(CREBindingUnit*)unit{
+    
+    NSString *properyName = unit.boundObjectProperty;
+    id sourceObject = unit.boundObject;
+    void *context = (__bridge void *)unit;
+    
+    if (value)
+    {
+        
+        [self observeValueForKeyPath:properyName ofObject:sourceObject
+                              change:nil context:context];
+        
+    }else{
+        
+        if ([self.placeholder respondsToSelector:@selector(bindTransaction:requiresPlaceholderValuesForUnit:)]) {
+            
+            
+            value = [self.placeholder bindTransaction:self requiresPlaceholderValuesForUnit:unit];
+            
+            [self observeValueForKeyPath:properyName ofObject:sourceObject
+                                  change:nil context:context];
+        }
+        
+    }
+    
+    
+}
+
+
 #pragma mark - Getters of readonly objects
 
 -(NSSet*)boundObjects{

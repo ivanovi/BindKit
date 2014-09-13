@@ -20,30 +20,11 @@
 
 #pragma mark - Binder delegate
 
-/**
- === Delegation ===
-   We provide delegation to serve as an entry point for the viewControllers' modification of binding behavior at run-time. The controllers normally hold most of the context information.
- */
-@protocol CREBinderDelegate <NSObject>
 
-/**
- The below method is called after a value has been changed in one of the objects in a pair. If TRUE is returned the mergeValue:toTarget:withKeyPath: is called (which you can override to provide custom merge behavior, e.g. animation, transitions etc. ).
- */
--(BOOL)binder:(CREBinder*)binder shouldSetValue:(id)value forKeyPath:(NSString*)keyPath;
-
-@optional
-
-/**
- The below method is called after binder:shouldSetValue:forKeyPath: has returned TRUE and before mergeValue:toTarget:withKeyPath:
- Here you can do value transformations to map types, proper formatting etc., if needed.
- */
--(void)binder:(CREBinder*)binder willSetValue:(id)value forKeyPath:(NSString*)keyPath inObject:(id)targetObject;
-
-@end
 
 @interface CREBinder : NSObject
 
-@property (nonatomic, weak) id <CREBinderDelegate> delegate;
+//@property (nonatomic, weak) id <CREBinderDelegate> delegate;
 @property (nonatomic, weak, readonly) CREBinder * superBinder;
 @property (nonatomic, readonly) NSArray * childBinders;
 @property (nonatomic, readonly) NSArray * transactions; 

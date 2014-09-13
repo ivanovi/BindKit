@@ -125,9 +125,9 @@
             id sourceObject = aUnit.boundObject;
             id value = [sourceObject valueForKey:propertyName];
             
-            [self handleInitialValue:value unit:aUnit];
+            [aTransaction handleInitialValue:value unit:aUnit];
             
-            [sourceObject addObserver:self forKeyPath:propertyName
+            [sourceObject addObserver:aTransaction forKeyPath:propertyName
                               options:NSKeyValueObservingOptionNew context:context];
             
         }
@@ -168,34 +168,6 @@
 #pragma mark - Private Methods
 
 
--(void)handleInitialValue:(id)value unit:(CREBindingUnit*)unit{
-    
-    CREBindingTransaction *theTransaction = unit.transaction;
-    NSString *properyName = unit.boundObjectProperty;
-    id sourceObject = unit.boundObject;
-    void *context = (__bridge void *)unit;
-    
-    if (value)
-    {
-        
-        [self observeValueForKeyPath:properyName ofObject:sourceObject
-                              change:nil context:context];
-        
-    }else{
-        
-        if ([theTransaction.placeholder respondsToSelector:@selector(bindTransaction:requiresPlaceholderValuesForUnit:)]) {
-            
-            
-            value = [theTransaction.placeholder bindTransaction:theTransaction requiresPlaceholderValuesForUnit:unit];
-            
-            [self observeValueForKeyPath:properyName ofObject:sourceObject
-                                  change:nil context:context];
-        }
-        
-    }
-    
-    
-}
 
 //-(BOOL)didAddPair:(NSDictionary*)pair{
 //
@@ -216,70 +188,70 @@
 //
 //}
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-    
-    if (_isLocked) //protect against infinite loop when both ways binding
-    {
-        NSLog(@"Binder is locked. Discontinuing loop.");
-        return;
-        
-    }
-   // NSLog(@"value changed object %@", object);
-    
-    
-    
-    CREBindingUnit *bindingUnit = (__bridge CREBindingUnit*)context;
-    NSArray *peerUnitSet = bindingUnit.transaction.bindingUnits;
-    
-    
-    for ( CREBindingUnit *notifyUnit in peerUnitSet) {
-        
-        if ([notifyUnit isEqual:bindingUnit]) {
-            continue;
-        }
-        
-        
-        BOOL mergeBOOL = YES;
-        id newValue = [object valueForKeyPath:keyPath];
-//        id targetObject =  notifyUnit.boundObject; // [self objectInPairWithBoundObject:object mapKeys:NO];
-//        id targetKey =  notifyUnit.boundObjectProperty; //[self objectInPairWithBoundObject:keyPath mapKeys:YES];
-        
-        if (_delegate) //delegation
-        {
-            
-            if ([_delegate respondsToSelector:@selector(binder:shouldSetValue:forKeyPath:)])
-            {
-                mergeBOOL = [_delegate binder:self shouldSetValue:newValue forKeyPath:keyPath];
-            }else
-            {
-                NSLog(@"Warnig %@", [NSError errorDescriptionForDomain:kCREBinderWarningsDomain code:1000]);
-            }
-            if (mergeBOOL)
-            {
-                
-                if([_delegate respondsToSelector:@selector(binder:willSetValue:forKeyPath:inObject:)])
-                {
-                    [_delegate binder:self willSetValue:newValue forKeyPath:keyPath inObject:object];
-                }
-                
-            }
-        } //end delegation
-        
-        
-        if (mergeBOOL)
-        {
-            _isLocked = YES;
-                [self mergeValue:newValue toTarget:notifyUnit];
-            _isLocked = NO;
-            
-        }
-
-        
-        
-    }
-    
-    
-}
+//-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+//    
+//    if (_isLocked) //protect against infinite loop when both ways binding
+//    {
+//        NSLog(@"Binder is locked. Discontinuing loop.");
+//        return;
+//        
+//    }
+//   // NSLog(@"value changed object %@", object);
+//    
+//    
+//    
+//    CREBindingUnit *bindingUnit = (__bridge CREBindingUnit*)context;
+//    NSArray *peerUnitSet = bindingUnit.transaction.bindingUnits;
+//    
+//    
+//    for ( CREBindingUnit *notifyUnit in peerUnitSet) {
+//        
+//        if ([notifyUnit isEqual:bindingUnit]) {
+//            continue;
+//        }
+//        
+//        
+//        BOOL mergeBOOL = YES;
+//        id newValue = [object valueForKeyPath:keyPath];
+////        id targetObject =  notifyUnit.boundObject; // [self objectInPairWithBoundObject:object mapKeys:NO];
+////        id targetKey =  notifyUnit.boundObjectProperty; //[self objectInPairWithBoundObject:keyPath mapKeys:YES];
+//        
+//        if (_delegate) //delegation
+//        {
+//            
+//            if ([_delegate respondsToSelector:@selector(binder:shouldSetValue:forKeyPath:)])
+//            {
+//                mergeBOOL = [_delegate binder:self shouldSetValue:newValue forKeyPath:keyPath];
+//            }else
+//            {
+//                NSLog(@"Warnig %@", [NSError errorDescriptionForDomain:kCREBinderWarningsDomain code:1000]);
+//            }
+//            if (mergeBOOL)
+//            {
+//                
+//                if([_delegate respondsToSelector:@selector(binder:willSetValue:forKeyPath:inObject:)])
+//                {
+//                    [_delegate binder:self willSetValue:newValue forKeyPath:keyPath inObject:object];
+//                }
+//                
+//            }
+//        } //end delegation
+//        
+//        
+//        if (mergeBOOL)
+//        {
+//            _isLocked = YES;
+//                [self mergeValue:newValue toTarget:notifyUnit];
+//            _isLocked = NO;
+//            
+//        }
+//
+//        
+//        
+//    }
+//    
+//    
+//}
 
 -(void)mergeValue:(id)value toTarget:(CREBindingUnit*)target{
     
@@ -303,7 +275,7 @@
         
         for ( CREBindingUnit *unit in transaction.bindingUnits ) {
             
-            [unit.boundObject removeObserver:self forKeyPath:unit.boundObjectProperty];
+            [unit.boundObject removeObserver:transaction forKeyPath:unit.boundObjectProperty];
             
         }
         
