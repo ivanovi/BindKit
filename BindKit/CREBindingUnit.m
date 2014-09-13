@@ -22,9 +22,12 @@
 
         if (![_boundObject isKindOfClass:[NSDictionary class]]) { //unit tests use dictionary
             
-            NSAssert([_boundObject respondsToSelector:NSSelectorFromString(_boundObjectProperty)],
-                     @"%s %@", __PRETTY_FUNCTION__ , [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain
-                                                                                   code:103]);
+           //TODO: Introspect keypath
+            
+            
+//            NSAssert([_boundObject respondsToSelector:NSSelectorFromString(_boundObjectProperty)],
+//                     @"%s %@", __PRETTY_FUNCTION__ , [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain
+//                                                                                   code:103]);
         }
         
     }

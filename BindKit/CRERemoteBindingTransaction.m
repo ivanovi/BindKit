@@ -80,12 +80,19 @@
                 newValue = [self handleResponse:data urlResponse:response targetUnit:target];
                 NSAssert(newValue, @"__FIX no newValue");
                 
-                [target.boundObject setValue:newValue forKey:target.boundObjectProperty];
+                NSLog(@"image received %@", sourceUnit.value);
+                dispatch_async(dispatch_get_main_queue(), ^{
+            
+                    [target.boundObject setValue:newValue forKeyPath:target.boundObjectProperty];
+                    
+                });
+                
+                
                 
             }else{
                 //handle error
                 
-                NSLog(@"received response with value set %@", [connectionError localizedDescription]);
+                NSLog(@"received ERROR response with value set %@ url %@", [connectionError localizedDescription], sourceUnit.value);
                 
             }
             
@@ -159,7 +166,7 @@
     if (sourceUnit.value)
     {
         
-        NSAssert( ([sourceUnit.value isKindOfClass: [NSString class] ] || [sourceUnit.value isKindOfClass: [NSString class] ] ), @"%s Error: %@", __PRETTY_FUNCTION__ , [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:105] );
+        NSAssert( ([sourceUnit.value isKindOfClass: [NSString class] ] || [sourceUnit.value isKindOfClass: [NSString class] ] ), @"%s Error: %@ Source unit %@", __PRETTY_FUNCTION__ , [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:105], sourceUnit.value );
         
     }
     
@@ -263,7 +270,7 @@
     id newValue = nil;
     NSDictionary *receivedDictionary = nil;
     
-    if ([mimeType containsString:@"image"])
+    if ([mimeType rangeOfString:@"image"].location != NSNotFound)
     {
         
         newValue = responseData;

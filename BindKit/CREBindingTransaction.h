@@ -37,7 +37,7 @@ typedef NS_ENUM(NSUInteger, CREBindingTransactionDirection) {
 
 @interface CREBindingTransaction : NSObject{
     
-    __weak CREBindingUnit * sourceUnit;
+     CREBindingUnit * sourceUnit;
     
 }
 

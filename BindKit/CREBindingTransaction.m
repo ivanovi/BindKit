@@ -212,9 +212,10 @@
         
     }
     
+    
     NSAssert(value, @"__FIX Value in %s not set", __PRETTY_FUNCTION__);
 
-    [target.boundObject setValue:value forKey:target.boundObjectProperty];
+    [target.boundObject setValue:value forKeyPath:target.boundObjectProperty];
     
     
 }

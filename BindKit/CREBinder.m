@@ -92,25 +92,7 @@
 }
 
 
-#pragma mark - Managing composites / child relations
-//
-//-(CREBindingTransaction*)addPair:(NSDictionary *)objectsPair to {
-//    NSAssert(objectsPair.count == 1,@"%s %@",__PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:100]);
-//    
-//    
-//    if (![self didAddPair:objectsPair])
-//    {
-//        
-////        [tempPairsArray addObject:objectsPair];
-//        
-//        
-//        
-//        
-//    }
-//  
-//    return nil;
-//}
-
+#pragma mark - Bind/unbind
 
 -(void)bind{
     
@@ -118,12 +100,16 @@
         
         NSArray *transactionUnitSet = aTransaction.bindingUnits;
         
-        for (CREBindingUnit *aUnit in transactionUnitSet) {
+        for (CREBindingUnit *aUnit in transactionUnitSet)
+        {
             
             NSString *propertyName = aUnit.boundObjectProperty;
             void *context = (__bridge void *)aUnit;
             id sourceObject = aUnit.boundObject;
-            id value = [sourceObject valueForKey:propertyName];
+            id value = [sourceObject valueForKeyPath:propertyName];
+            
+            
+            //TODO: Resolve conflict when both have values and none is source
             
             [self handleInitialValue:value unit:aUnit];
             
@@ -144,10 +130,40 @@
     _isBound = YES;
 }
 
+-(void)unbind{
+    
+    if (!_isBound)
+    {
+        return;
+    }
+    
+    for (CREBindingTransaction *transaction in transactionsArray) {
+        
+        for ( CREBindingUnit *unit in transaction.bindingUnits ) {
+            
+            [unit.boundObject removeObserver:self forKeyPath:unit.boundObjectProperty];
+            
+        }
+        
+        
+    }
+    
+    for (CREBinder *subBinder in childBinders)
+    {
+        
+        [subBinder unbind];
+        
+    }
+    
+    _isBound = NO;
+    
+}
+
 //-(void)bindPair:(NSArray *)pairArray{
 //    
 //    
 //}
+#pragma mark - Transactions compositions
 
 -(NSArray*)transactions{
     
@@ -160,12 +176,25 @@
     return nil;
 }
 
-//-(void)bindWithSource:(id)source target:(id)target{
-//    
-//    
-//}
 
-#pragma mark - Private Methods
+-(void)addTransaction:(CREBindingTransaction *)bindingTransaction{
+    
+    if (![transactionsArray containsObject:bindingTransaction])
+    {
+        
+        [transactionsArray addObject:bindingTransaction];
+        
+    }
+    
+    
+}
+
+-(void)removeTransaction:(CREBindingTransaction *)removingTransaction{
+    
+    [transactionsArray removeObject:removingTransaction];
+    
+}
+
 
 
 -(void)handleInitialValue:(id)value unit:(CREBindingUnit*)unit{
@@ -220,7 +249,7 @@
     
     if (_isLocked) //protect against infinite loop when both ways binding
     {
-        NSLog(@"Binder is locked. Discontinuing loop.");
+      //  NSLog(@"Binder is locked. Discontinuing loop.");
         return;
         
     }
@@ -292,34 +321,7 @@
     
 }
 
--(void)unbind{
-
-    if (!_isBound)
-    {
-        return;
-    }
-    
-    for (CREBindingTransaction *transaction in transactionsArray) {
-        
-        for ( CREBindingUnit *unit in transaction.bindingUnits ) {
-            
-            [unit.boundObject removeObserver:self forKeyPath:unit.boundObjectProperty];
-            
-        }
-        
-        
-    }
-    
-    for (CREBinder *subBinder in childBinders)
-    {
-        
-        [subBinder unbind];
-        
-    }
-    
-    _isBound = NO;
-    
-}
+#pragma mark - Managing composites / child relations
 
 -(void)addBinder:(CREBinder *)childBinder{
     
