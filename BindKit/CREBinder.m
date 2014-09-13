@@ -111,9 +111,9 @@
             
             //TODO: Resolve conflict when both have values and none is source
             
-            [self handleInitialValue:value unit:aUnit];
+            [aTransaction handleInitialValue:value unit:aUnit];
             
-            [sourceObject addObserver:self forKeyPath:propertyName
+            [sourceObject addObserver:aTransaction forKeyPath:propertyName
                               options:NSKeyValueObservingOptionNew context:context];
             
         }
@@ -197,34 +197,6 @@
 
 
 
--(void)handleInitialValue:(id)value unit:(CREBindingUnit*)unit{
-    
-    CREBindingTransaction *theTransaction = unit.transaction;
-    NSString *properyName = unit.boundObjectProperty;
-    id sourceObject = unit.boundObject;
-    void *context = (__bridge void *)unit;
-    
-    if (value)
-    {
-        
-        [self observeValueForKeyPath:properyName ofObject:sourceObject
-                              change:nil context:context];
-        
-    }else{
-        
-        if ([theTransaction.placeholder respondsToSelector:@selector(bindTransaction:requiresPlaceholderValuesForUnit:)]) {
-            
-            
-            value = [theTransaction.placeholder bindTransaction:theTransaction requiresPlaceholderValuesForUnit:unit];
-            
-            [self observeValueForKeyPath:properyName ofObject:sourceObject
-                                  change:nil context:context];
-        }
-        
-    }
-    
-    
-}
 
 //-(BOOL)didAddPair:(NSDictionary*)pair{
 //
