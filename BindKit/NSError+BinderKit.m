@@ -87,7 +87,7 @@ NSString * const kCREBinderErrorInternalDomain = @"binderErrorLogicDomain";
 +(NSString*)errorDescriptionWarnings:(NSInteger)errorCode{
     
     NSArray *errorDescritionsLiteralsArray =
-    @[];
+    @[@"Called setValue:ForKeyPath: with value of nil."];
     
     return errorDescritionsLiteralsArray [ errorCode ];
     

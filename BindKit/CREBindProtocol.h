@@ -11,12 +11,12 @@
 
 
 /**
- Binds all pairs. Sets self as observer for value changes of the source's keyPath.
+ Binds composite binders and transactions. Sets self as observer for value changes of the source's keyPath.
  */
 -(void)bind;
 
 /**
- Removes previously added pair. Adds the pair argument and binds it.
+ Unbinds all observers. 
  */
 -(void)unbind;
 

@@ -58,58 +58,33 @@
     
 }
 
-//-(instancetype)initWithDictionary:(NSDictionary *)bindingDict{
-//    NSAssert(bindingDict, @"%s %@", __PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:101]);
-//    
-//    self = [self init];
-//    
-//    if (self)
-//    {
-//        _directionType = CREBindingTransactionDirectionBothWays;
-//        
-//        for (NSString *key in bindingDict) {
-//            
-//            CREBindingUnit *newBindingUnit = [[CREBindingUnit alloc]initWithDictionary:@{key:bindingDict[key]}];
-//            [self addBindingUnit:newBindingUnit];
-//            
-//        }
-//        
-//    }
-//    
-//    return self;
-//    
-//}
 
 
 
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
     
-    if (_isLocked) //protect against infinite loop when both ways binding
+   if (_isLocked) //protect against infinite loop when both ways binding
     {
-   //   NSLog(@"Binder is locked. Discontinuing loop. %@ newValue %@",keyPath, [object valueForKeyPath:keyPath]);
+
         return;
-        
     }
-    // NSLog(@"value changed object %@", object);
-    
-    
-    
+
     CREBindingUnit *bindingUnit = (__bridge CREBindingUnit*)context;
     NSArray *peerUnitSet = bindingUnit.transaction.bindingUnits;
-    
+    BOOL mergeBOOL = YES;
     
     for ( CREBindingUnit *notifyUnit in peerUnitSet) {
         
-        if ([notifyUnit isEqual:bindingUnit]) {
-            continue;
-        }
-        
-        
-        BOOL mergeBOOL = YES;
         id newValue = [object valueForKeyPath:keyPath];
-        //        id targetObject =  notifyUnit.boundObject; // [self objectInPairWithBoundObject:object mapKeys:NO];
-        //        id targetKey =  notifyUnit.boundObjectProperty; //[self objectInPairWithBoundObject:keyPath mapKeys:YES];
+        
+        if ([notifyUnit isEqual:bindingUnit] ||
+            [notifyUnit.value isEqual:newValue] ||
+            !newValue){
+            
+            continue;
+            
+        }
         
         if (_delegate) //delegation
         {
@@ -132,16 +107,16 @@
             }
         } //end delegation
         
-        
         if (mergeBOOL)
         {
+            
             _isLocked = YES;
+
                 [self mergeValue:newValue toTarget:notifyUnit];
+            
             _isLocked = NO;
             
         }
-        
-        
         
     }
     
@@ -162,11 +137,11 @@
         
     }else{
         
-        if ([self.placeholder respondsToSelector:@selector(bindTransaction:requiresPlaceholderValuesForUnit:)]) {
+        if ([self.placeholder respondsToSelector:@selector(bindTransaction:requiresPlaceholderValuesForUnit:)])
+        {
             
             
             value = [self.placeholder bindTransaction:self requiresPlaceholderValuesForUnit:unit];
-            
             [self observeValueForKeyPath:properyName ofObject:sourceObject
                                   change:nil context:context];
         }
@@ -318,14 +293,19 @@
         
     }
     
-    NSLog(@"value set %@", value);
+    NSLog(@"setting value %@ in target %@", value, target);
     
-   // NSAssert(value, @"__FIX Value in %s not set", __PRETTY_FUNCTION__);
-
-    [target.boundObject setValue:value forKeyPath:target.boundObjectProperty];
-    
-    //[self setValue:value forObject:target.boundObject withKeypath:target.boundObjectProperty];
-    
+    if (value)
+    {
+        
+        [target.boundObject setValue:value forKeyPath:target.boundObjectProperty];
+        
+    }else
+    {
+        
+        NSLog(@"Warnining in %s. %@", __PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderWarningsDomain code:1000]);
+        
+    }
     
 }
 
@@ -345,8 +325,6 @@
     
     if (_isBound)
         return;
-        
-    
     
     if (self.directionType == CREBindingTransactionDirectionOneWay)
     {
@@ -366,15 +344,12 @@
     
     _isBound = YES;
 
-    
 }
 
 -(void)unbind{
     
     if (!_isBound)
         return;
-    
-    
     
     if (self.directionType == CREBindingTransactionDirectionOneWay)
     {
@@ -402,7 +377,6 @@
     id sourceObject = unit.boundObject;
     id sourceValue = [sourceObject valueForKeyPath:sourceKeyPath];
     
-    
     [self handleInitialValue:sourceValue unit:unit];
     
     [sourceObject addObserver:self forKeyPath:sourceKeyPath options:NSKeyValueObservingOptionNew context:(__bridge void *)unit];
@@ -412,7 +386,6 @@
 -(void)unbindWithSource:(CREBindingUnit*)unit{
     
     [unit.boundObject removeObserver:self forKeyPath:unit.boundObjectProperty];
-    
     
 }
 

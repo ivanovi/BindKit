@@ -25,7 +25,7 @@
 @interface CREBinder : NSObject <CREBindProtocol>
 
 //@property (nonatomic, weak) id <CREBinderDelegate> delegate;
-@property (nonatomic, weak, readonly) CREBinder * superBinder;
+@property (nonatomic, readonly) CREBinder * superBinder;
 @property (nonatomic, readonly) NSArray * childBinders;
 @property (nonatomic, readonly) NSArray * transactions; 
 @property (nonatomic, readonly) BOOL isLocked;
@@ -50,39 +50,18 @@
 #pragma mark - Setup
 
 
-
 -(void)addTransaction:(CREBindingTransaction*)bindingTransaction;
-
-/**
- A convinience method that brings the same result as the above method (addBindingDefinition:). Use as the following example, where dictionaries stand for dummy model or other objects:
- 
-     NSMutableDictionary *aDictionary = [NSMutableDictionary dictionaryWithObject:@"aDictionary" forKey:@"id"];
-     NSMutableDictionary *bDictionary = [NSMutableDictionary dictionaryWithObject:@"bDictionary" forKey:@"id"];
-    
-     [aBinder addPair: @{@"propertyA":aDictionary, //property and object are coupled in key value pair => the key is the property of the object
-                         @"propertyB":bDictionary}]];
- 
-    The structure is automatically converted to CREBindingDefinition instance and added to the pairs stack. If you want remove it later from the stack you should keep its reference.
- */
-//-(CREBindingTransaction*)addPair:(NSDictionary*)objectsPair;
 -(void)removeTransaction:(CREBindingTransaction*)removingTransaction;
 
 /**
  Adding and removing binders to the binder stack. In the general case they are exectuted without any order.
  */
 -(void)addBinder:(CREBinder*)childBinder;
-
 -(void)removeBinder:(CREBinder*)childBinder;
 -(void)removeFromSuperBinder;
 
 #pragma mark - Binding
 
-
-/**
- The method within which the actual value merge/setting is taking place. Override this method to supply custom behavior. This method is called only if the delegate returns TRUE (if set) to the call binder:shouldSetValue:forKeyPath:.
- */
-
 -(CREBindingTransaction*)createTransactionWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
-
 
 @end

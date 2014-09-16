@@ -315,14 +315,16 @@
 -(void)addBinder:(CREBinder *)childBinder{
     
     
-    if (!childBinders) {
+    if (!childBinders)
+    {
         childBinders = [NSMutableArray new];
     }
     
-    if (![childBinders containsObject:childBinder]) {
+    if (![childBinders containsObject:childBinder])
+    {
         
         [childBinders addObject:childBinder];
-        
+        [childBinder performSelector:@selector(setSuperBinder:) withObject:self afterDelay:0];
     }
     
 }
@@ -330,7 +332,16 @@
 -(void)removeBinder:(CREBinder *)childBinder{
     
     [childBinders removeObject:childBinder];
+    [childBinder removeFromSuperBinder];
+}
+
+-(void)removeFromSuperBinder{
     
+    if (_superBinder) {
+        
+        [self performSelector:@selector(setSuperBinder:) withObject:nil afterDelay:0];
+        
+    }
 }
 
 -(NSArray*)childBinders{
@@ -344,6 +355,18 @@
 }
 
 #pragma mark - Private methods
+
+-(void)setSuperBinder:(CREBinder *)superBinder{
+    
+    if (![_superBinder isEqual:superBinder])
+    {
+        
+        _superBinder = superBinder;
+    
+    }
+    
+    
+}
 
 -(id)objectInPairWithBoundObject:(id)boundObject mapKeys:(BOOL)shouldMapKey{
     
