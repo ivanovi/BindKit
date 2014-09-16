@@ -25,7 +25,9 @@
     if (self) {
         
         holderSet = [NSMutableArray new];
+        
         _directionType = CREBindingTransactionDirectionBothWays;
+        _isBound = NO;
     }
     
     return self;
@@ -85,7 +87,7 @@
     
     if (_isLocked) //protect against infinite loop when both ways binding
     {
-        NSLog(@"Binder is locked. Discontinuing loop.");
+   //   NSLog(@"Binder is locked. Discontinuing loop. %@ newValue %@",keyPath, [object valueForKeyPath:keyPath]);
         return;
         
     }
@@ -241,6 +243,12 @@
     
 }
 
+-(CREBindingUnit*)sourceUnit{
+    
+    return sourceUnit;
+    
+}
+
 -(NSDictionary*)propertyTargetRelationForProperty:(NSString *)property{
     
     return nil;
@@ -250,7 +258,8 @@
  
     [holderSet removeObject:bindingUnit];
     
-    if ([bindingUnit isEqual:sourceUnit]) {
+    if ([bindingUnit isEqual:sourceUnit])
+    {
         
         sourceUnit = nil;
         
@@ -309,10 +318,100 @@
         
     }
     
+    NSLog(@"value set %@", value);
     
-    NSAssert(value, @"__FIX Value in %s not set", __PRETTY_FUNCTION__);
+   // NSAssert(value, @"__FIX Value in %s not set", __PRETTY_FUNCTION__);
 
     [target.boundObject setValue:value forKeyPath:target.boundObjectProperty];
+    
+    //[self setValue:value forObject:target.boundObject withKeypath:target.boundObjectProperty];
+    
+    
+}
+
+-(void)setValue:(id)value forObject:(id)object withKeypath:(NSString*)keyPath{
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [object setValue:value forKeyPath:keyPath];
+        
+    });
+    
+}
+
+#pragma mark - Bind protocol
+
+-(void)bind{
+    
+    if (_isBound)
+        return;
+        
+    
+    
+    if (self.directionType == CREBindingTransactionDirectionOneWay)
+    {
+        
+        [self bindWithSource:self.sourceUnit];
+        return;
+    }
+    
+    NSArray *transactionUnitSet = self.bindingUnits;
+    
+    for (CREBindingUnit *aUnit in transactionUnitSet)
+    {
+        
+        [self bindWithSource:aUnit];
+        
+    }
+    
+    _isBound = YES;
+
+    
+}
+
+-(void)unbind{
+    
+    if (!_isBound)
+        return;
+    
+    
+    
+    if (self.directionType == CREBindingTransactionDirectionOneWay)
+    {
+        
+        [self unbindWithSource:self.sourceUnit];
+        return;
+        
+    }
+    
+    for ( CREBindingUnit *unit in self.bindingUnits )
+    {
+        
+        [unit.boundObject removeObserver:self forKeyPath:unit.boundObjectProperty];
+        
+    }
+    
+    _isBound = NO;
+
+}
+
+-(void)bindWithSource:(CREBindingUnit*)unit{
+    
+    NSString *sourceKeyPath = unit.boundObjectProperty;
+    
+    id sourceObject = unit.boundObject;
+    id sourceValue = [sourceObject valueForKeyPath:sourceKeyPath];
+    
+    
+    [self handleInitialValue:sourceValue unit:unit];
+    
+    [sourceObject addObserver:self forKeyPath:sourceKeyPath options:NSKeyValueObservingOptionNew context:(__bridge void *)unit];
+    
+}
+
+-(void)unbindWithSource:(CREBindingUnit*)unit{
+    
+    [unit.boundObject removeObserver:self forKeyPath:unit.boundObjectProperty];
     
     
 }

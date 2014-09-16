@@ -122,12 +122,12 @@
 
 }
 
--(void)testBindingUnitInitializationNegative{
-    
-    UILabel *aLabel = [UILabel new];
-    XCTAssertThrows( [[CREBindingUnit alloc]initWithDictionary:@{aProperty:aLabel}], @"BindingUnit initializaiton negative test failed");
-    
-}
+//-(void)testBindingUnitInitializationNegative{
+//    
+//    UILabel *aLabel = [UILabel new];
+//    XCTAssertThrows( [[CREBindingUnit alloc]initWithDictionary:@{aProperty:aLabel}], @"BindingUnit initializaiton negative test failed");
+//    
+//}
 
 
 #pragma mark - CREBindintTransaction

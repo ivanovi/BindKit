@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "CREBindingTransaction.h"
 #import "NSError+BinderKit.h"
+#import "CREBindProtocol.h"
 
 /**
  === General Information ===
@@ -21,8 +22,7 @@
 #pragma mark - Binder delegate
 
 
-
-@interface CREBinder : NSObject
+@interface CREBinder : NSObject <CREBindProtocol>
 
 //@property (nonatomic, weak) id <CREBinderDelegate> delegate;
 @property (nonatomic, weak, readonly) CREBinder * superBinder;
@@ -30,6 +30,7 @@
 @property (nonatomic, readonly) NSArray * transactions; 
 @property (nonatomic, readonly) BOOL isLocked;
 @property (nonatomic, readonly) BOOL isBound;
+
 
 //@property (nonatomic, readonly, strong) NSDictionary *mappingDictonary; //the dictionary that sets the mapping structure. Set the property name
 
@@ -75,15 +76,7 @@
 -(void)removeFromSuperBinder;
 
 #pragma mark - Binding
-/**
- Binds all pairs. Sets self as observer for value changes of the source's keyPath.
- */
--(void)bind;
 
-/**
- Removes previously added pair. Adds the pair argument and binds it.
- */
--(void)unbind;
 
 /**
  The method within which the actual value merge/setting is taking place. Override this method to supply custom behavior. This method is called only if the delegate returns TRUE (if set) to the call binder:shouldSetValue:forKeyPath:.

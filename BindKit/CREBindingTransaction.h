@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CREBindingUnit.h"
-
+#import "CREBindProtocol.h"
 
 @class CREBindingTransaction;
 
@@ -58,7 +58,7 @@ typedef NS_ENUM(NSUInteger, CREBindingTransactionDirection) {
 };
 
 
-@interface CREBindingTransaction : NSObject{
+@interface CREBindingTransaction : NSObject <CREBindProtocol>{
     
      CREBindingUnit * sourceUnit;
     
@@ -72,7 +72,9 @@ typedef NS_ENUM(NSUInteger, CREBindingTransactionDirection) {
 @property (nonatomic, weak) id <CREValueTransformerProtocol> valueTransformer;
 @property (nonatomic, weak) id <CREPlaceholderProtocol> placeholder;
 @property (nonatomic, weak) id <CREBindTransactionDelegate> delegate;
+@property (nonatomic, readonly) CREBindingUnit *sourceUnit;
 @property (nonatomic, readonly) BOOL isLocked;
+@property (nonatomic, readonly) BOOL isBound;
 
 //- (instancetype)initWithDictionary:(NSDictionary*)bindingDict;
 - (instancetype)initWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
@@ -90,5 +92,8 @@ typedef NS_ENUM(NSUInteger, CREBindingTransactionDirection) {
 -(void)handleInitialValue:(id)value unit:(CREBindingUnit*)unit;
 -(void)mergeValue:(id)value toTarget:(CREBindingUnit*)target;
 -(BOOL)containsUnit:(CREBindingUnit*)unit;
+
+
+-(void)setValue:(id)value forObject:(id)object withKeypath:(NSString*)keyPath;
 
 @end

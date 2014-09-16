@@ -81,13 +81,8 @@
                 NSAssert(newValue, @"__FIX no newValue");
                 
                 NSLog(@"image received %@", sourceUnit.value);
-                dispatch_async(dispatch_get_main_queue(), ^{
-            
-                    [target.boundObject setValue:newValue forKeyPath:target.boundObjectProperty];
-                    
-                });
                 
-                
+                [self setValue:newValue forObject:target.boundObject withKeypath:target.boundObjectProperty];
                 
             }else{
                 //handle error
@@ -153,6 +148,12 @@
 #pragma mark - Assertions
 
 -(void)assertRequest:(id)request{
+    
+    if (!request) {
+        
+        NSLog(@"assertion will fail");
+        
+    }
     
     NSAssert(request, @"__FIX request factory must return a valid request");
     NSAssert( ( [request isKindOfClass:[NSURLRequest class]] ||

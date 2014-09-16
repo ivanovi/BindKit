@@ -13,6 +13,7 @@
     NSMutableArray *transactionsArray;
     NSMutableArray *childBinders;
     
+    
 }
 
 @end
@@ -94,29 +95,16 @@
 
 #pragma mark - Bind/unbind
 
+
+
 -(void)bind{
     
-    for (CREBindingTransaction *aTransaction in transactionsArray) {
+
+    for (CREBindingTransaction *aTransaction in transactionsArray)
+    {
         
-        NSArray *transactionUnitSet = aTransaction.bindingUnits;
+        [aTransaction bind];
         
-        for (CREBindingUnit *aUnit in transactionUnitSet)
-        {
-            
-            NSString *propertyName = aUnit.boundObjectProperty;
-            void *context = (__bridge void *)aUnit;
-            id sourceObject = aUnit.boundObject;
-            id value = [sourceObject valueForKeyPath:propertyName];
-            
-            
-            //TODO: Resolve conflict when both have values and none is source
-            
-            [aTransaction handleInitialValue:value unit:aUnit];
-            
-            [sourceObject addObserver:aTransaction forKeyPath:propertyName
-                              options:NSKeyValueObservingOptionNew context:context];
-            
-        }
     }
     
     
@@ -130,6 +118,9 @@
     _isBound = YES;
 }
 
+
+
+
 -(void)unbind{
     
     if (!_isBound)
@@ -137,14 +128,10 @@
         return;
     }
     
-    for (CREBindingTransaction *transaction in transactionsArray) {
+    for (CREBindingTransaction *transaction in transactionsArray)
+    {
         
-        for ( CREBindingUnit *unit in transaction.bindingUnits ) {
-            
-            [unit.boundObject removeObserver:self forKeyPath:unit.boundObjectProperty];
-            
-        }
-        
+        [transaction unbind];
         
     }
     
@@ -158,6 +145,8 @@
     _isBound = NO;
     
 }
+
+
 
 //-(void)bindPair:(NSArray *)pairArray{
 //    
@@ -197,6 +186,34 @@
 
 
 
+//-(void)handleInitialValue:(id)value unit:(CREBindingUnit*)unit{
+//    
+//    CREBindingTransaction *theTransaction = unit.transaction;
+//    NSString *properyName = unit.boundObjectProperty;
+//    id sourceObject = unit.boundObject;
+//    void *context = (__bridge void *)unit;
+//    
+//    if (value)
+//    {
+//        
+//        [self observeValueForKeyPath:properyName ofObject:sourceObject
+//                              change:nil context:context];
+//        
+//    }else{
+//        
+//        if ([theTransaction.placeholder respondsToSelector:@selector(bindTransaction:requiresPlaceholderValuesForUnit:)]) {
+//            
+//            
+//            value = [theTransaction.placeholder bindTransaction:theTransaction requiresPlaceholderValuesForUnit:unit];
+//            
+//            [self observeValueForKeyPath:properyName ofObject:sourceObject
+//                                  change:nil context:context];
+//        }
+//        
+//    }
+//    
+//    
+//}
 
 //-(BOOL)didAddPair:(NSDictionary*)pair{
 //
@@ -217,81 +234,81 @@
 //
 //}
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-    
-    if (_isLocked) //protect against infinite loop when both ways binding
-    {
-      //  NSLog(@"Binder is locked. Discontinuing loop.");
-        return;
-        
-    }
-   // NSLog(@"value changed object %@", object);
-    
-    
-    
-    CREBindingUnit *bindingUnit = (__bridge CREBindingUnit*)context;
-    NSArray *peerUnitSet = bindingUnit.transaction.bindingUnits;
-    
-    
-    for ( CREBindingUnit *notifyUnit in peerUnitSet) {
-        
-        if ([notifyUnit isEqual:bindingUnit]) {
-            continue;
-        }
-        
-        
-        BOOL mergeBOOL = YES;
-        id newValue = [object valueForKeyPath:keyPath];
-//        id targetObject =  notifyUnit.boundObject; // [self objectInPairWithBoundObject:object mapKeys:NO];
-//        id targetKey =  notifyUnit.boundObjectProperty; //[self objectInPairWithBoundObject:keyPath mapKeys:YES];
-        
-        if (_delegate) //delegation
-        {
-            
-            if ([_delegate respondsToSelector:@selector(binder:shouldSetValue:forKeyPath:)])
-            {
-                mergeBOOL = [_delegate binder:self shouldSetValue:newValue forKeyPath:keyPath];
-            }else
-            {
-                NSLog(@"Warnig %@", [NSError errorDescriptionForDomain:kCREBinderWarningsDomain code:1000]);
-            }
-            if (mergeBOOL)
-            {
-                
-                if([_delegate respondsToSelector:@selector(binder:willSetValue:forKeyPath:inObject:)])
-                {
-                    [_delegate binder:self willSetValue:newValue forKeyPath:keyPath inObject:object];
-                }
-                
-            }
-        } //end delegation
-        
-        
-        if (mergeBOOL)
-        {
-            _isLocked = YES;
-                [self mergeValue:newValue toTarget:notifyUnit];
-            _isLocked = NO;
-            
-        }
+//-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+//    
+//    if (_isLocked) //protect against infinite loop when both ways binding
+//    {
+//        NSLog(@"Binder is locked. Discontinuing loop.");
+//        return;
+//        
+//    }
+//   // NSLog(@"value changed object %@", object);
+//    
+//    
+//    
+//    CREBindingUnit *bindingUnit = (__bridge CREBindingUnit*)context;
+//    NSArray *peerUnitSet = bindingUnit.transaction.bindingUnits;
+//    
+//    
+//    for ( CREBindingUnit *notifyUnit in peerUnitSet) {
+//        
+//        if ([notifyUnit isEqual:bindingUnit]) {
+//            continue;
+//        }
+//        
+//        
+//        BOOL mergeBOOL = YES;
+//        id newValue = [object valueForKeyPath:keyPath];
+////        id targetObject =  notifyUnit.boundObject; // [self objectInPairWithBoundObject:object mapKeys:NO];
+////        id targetKey =  notifyUnit.boundObjectProperty; //[self objectInPairWithBoundObject:keyPath mapKeys:YES];
+//        
+//        if (_delegate) //delegation
+//        {
+//            
+//            if ([_delegate respondsToSelector:@selector(binder:shouldSetValue:forKeyPath:)])
+//            {
+//                mergeBOOL = [_delegate binder:self shouldSetValue:newValue forKeyPath:keyPath];
+//            }else
+//            {
+//                NSLog(@"Warnig %@", [NSError errorDescriptionForDomain:kCREBinderWarningsDomain code:1000]);
+//            }
+//            if (mergeBOOL)
+//            {
+//                
+//                if([_delegate respondsToSelector:@selector(binder:willSetValue:forKeyPath:inObject:)])
+//                {
+//                    [_delegate binder:self willSetValue:newValue forKeyPath:keyPath inObject:object];
+//                }
+//                
+//            }
+//        } //end delegation
+//        
+//        
+//        if (mergeBOOL)
+//        {
+//            _isLocked = YES;
+//                [self mergeValue:newValue toTarget:notifyUnit];
+//            _isLocked = NO;
+//            
+//        }
+//
+//        
+//        
+//    }
+//    
+//    
+//}
 
-        
-        
-    }
-    
-    
-}
-
--(void)mergeValue:(id)value toTarget:(CREBindingUnit*)target{
-    
-    if (value)
-    {
-        
-        [target.transaction mergeValue:value toTarget:target];
-            
-    }
-    
-}
+//-(void)mergeValue:(id)value toTarget:(CREBindingUnit*)target{
+//    
+//    if (value)
+//    {
+//        
+//        [target.transaction mergeValue:value toTarget:target];
+//            
+//    }
+//    
+//}
 
 #pragma mark - Managing composites / child relations
 
