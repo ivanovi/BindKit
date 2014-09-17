@@ -16,55 +16,6 @@
 
 
 
--(void)mergeValue:(id)value toTarget:(CREBindingUnit *)target{
-    
-    [self assertSource];
-    
-    if ([self.valueTransformer respondsToSelector:@selector(bindRelation:willModify:withValue:)]) {
-        
-        value = [self.valueTransformer bindRelation:self willModify:target withValue:value];
-        
-    }
-    
-    if (![target isEqual:sourceUnit])
-    {
-        
-        NSURLRequest *request = [self createRequest:sourceUnit.value];
-        
-        [self executeRequest:request withCallBack:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-            
-            id newValue = nil;
-            
-            if (!connectionError) {
-                
-                newValue = [self handleResponse:data urlResponse:response targetUnit:target];
-                NSAssert(newValue, @"__FIX no newValue");
-                
-                NSLog(@"image received %@", sourceUnit.value);
-                
-                [self setValue:newValue forObject:target.boundObject withKeypath:target.boundObjectProperty];
-                
-            }else{
-                //handle error
-                
-                NSLog(@"received ERROR response with value set %@ url %@", [connectionError localizedDescription], sourceUnit.value);
-                
-            }
-            
-            if (self.callBack) {
-                
-                self.callBack(newValue, target, connectionError);
-                
-            }
-            
-            
-        }];
-        
-        
-        
-    }
-    
-}
 
 -(void)executeRequest:(id)request withCallBack:(void (^)(NSURLResponse *response,
                                                          NSData *data,

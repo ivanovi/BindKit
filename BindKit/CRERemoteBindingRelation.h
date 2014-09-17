@@ -31,9 +31,6 @@
 
 @class CRERemoteBindingRelation;
 
-
-
-
 typedef void (^CRERemoteBinderCallBack)(id newValue, CREBindingUnit *unit, NSError *error);
 
 
@@ -42,14 +39,10 @@ typedef void (^CRERemoteBinderCallBack)(id newValue, CREBindingUnit *unit, NSErr
 //@property (nonatomic, weak) id <CREBinderRequestFactory> requestFactory;
 @property (nonatomic, readwrite, copy) CRERemoteBinderCallBack callBack;
 
-
+-(void)executeRequest:(id)request withCallBack:(void (^)(NSURLResponse *response,
+                                                         NSData *data,
+                                                         NSError *connectionError)) completionHandler;
 -(void)assertSource;
 -(void)assertRequest:(id)request;
-
--(id)requestWithRequest:(id)request;
--(NSURLRequest*)createRequest:(id)requestAddress;
-
--(id)handleResponse:(NSData*)responseData urlResponse:(NSURLResponse*)response targetUnit:(CREBindingUnit*)targetUnit;
-
 
 @end
