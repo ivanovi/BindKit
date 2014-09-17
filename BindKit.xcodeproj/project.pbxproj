@@ -30,30 +30,30 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0C08D9F119B0BCD2008E27F6 /* CREBindingUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CREBindingUnit.h; sourceTree = "<group>"; };
-		0C08D9F219B0BCD2008E27F6 /* CREBindingUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CREBindingUnit.m; sourceTree = "<group>"; };
-		0C25CB0519C04BD200A5DC40 /* CRERemoteBinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRERemoteBinder.h; sourceTree = "<group>"; };
+		0C08D9F119B0BCD2008E27F6 /* CREBindingUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CREBindingUnit.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		0C08D9F219B0BCD2008E27F6 /* CREBindingUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CREBindingUnit.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0C25CB0519C04BD200A5DC40 /* CRERemoteBinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CRERemoteBinder.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0C25CB0619C04BD200A5DC40 /* CRERemoteBinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRERemoteBinder.m; sourceTree = "<group>"; };
-		0C25CB0919C0618700A5DC40 /* BindKitRemoteTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindKitRemoteTests.m; sourceTree = "<group>"; };
+		0C25CB0919C0618700A5DC40 /* BindKitRemoteTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BindKitRemoteTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0C9DB15F19C181A6003548FC /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		0C9DB16219C18D1C003548FC /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		0CB7A31A19ADC31D0020FBD5 /* BindKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BindKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CB7A31E19ADC31D0020FBD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0CB7A31F19ADC31D0020FBD5 /* BindKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BindKit.h; sourceTree = "<group>"; };
+		0CB7A31F19ADC31D0020FBD5 /* BindKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BindKit.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0CB7A32519ADC31D0020FBD5 /* BindKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BindKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CB7A32819ADC31D0020FBD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0CB7A32919ADC31D0020FBD5 /* BindKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BindKitTests.m; sourceTree = "<group>"; };
-		0CB7A35719ADED160020FBD5 /* CREBinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CREBinder.h; sourceTree = "<group>"; };
-		0CB7A35819ADED160020FBD5 /* CREBinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CREBinder.m; sourceTree = "<group>"; };
-		0CB7A35E19AE0BC20020FBD5 /* NSError+BinderKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+BinderKit.h"; sourceTree = "<group>"; };
-		0CB7A35F19AE0BC20020FBD5 /* NSError+BinderKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+BinderKit.m"; sourceTree = "<group>"; };
-		0CBA0A8D19C849CB009C2C09 /* CREBindProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CREBindProtocol.h; sourceTree = "<group>"; };
-		0CBE0E8019AF7644007AE6DD /* CREBindingTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CREBindingTransaction.h; sourceTree = "<group>"; };
-		0CBE0E8119AF7644007AE6DD /* CREBindingTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CREBindingTransaction.m; sourceTree = "<group>"; };
+		0CB7A32919ADC31D0020FBD5 /* BindKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BindKitTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0CB7A35719ADED160020FBD5 /* CREBinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CREBinder.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		0CB7A35819ADED160020FBD5 /* CREBinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CREBinder.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0CB7A35E19AE0BC20020FBD5 /* NSError+BinderKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "NSError+BinderKit.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		0CB7A35F19AE0BC20020FBD5 /* NSError+BinderKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "NSError+BinderKit.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0CBA0A8D19C849CB009C2C09 /* CREBindProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CREBindProtocol.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		0CBE0E8019AF7644007AE6DD /* CREBindingTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CREBindingTransaction.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		0CBE0E8119AF7644007AE6DD /* CREBindingTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CREBindingTransaction.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0CDE521019B639BE00412662 /* CRERemoteBindingTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRERemoteBindingTransaction.h; sourceTree = "<group>"; };
 		0CDE521119B639BE00412662 /* CRERemoteBindingTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRERemoteBindingTransaction.m; sourceTree = "<group>"; };
-		0CF7B40419C0940B001E1678 /* CREBindTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CREBindTestHelper.h; path = BindKitTests/CREBindTestHelper.h; sourceTree = SOURCE_ROOT; };
-		0CF7B40519C0940B001E1678 /* CREBindTestHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CREBindTestHelper.m; path = BindKitTests/CREBindTestHelper.m; sourceTree = SOURCE_ROOT; };
+		0CF7B40419C0940B001E1678 /* CREBindTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CREBindTestHelper.h; path = BindKitTests/CREBindTestHelper.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		0CF7B40519C0940B001E1678 /* CREBindTestHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CREBindTestHelper.m; path = BindKitTests/CREBindTestHelper.m; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
