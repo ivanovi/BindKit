@@ -219,8 +219,6 @@
     [self assertRequest:request];
     
     
-    
-    
     if ([request isKindOfClass:[SLRequest class]]) {
         
         SLRequest *initialRequest = request;

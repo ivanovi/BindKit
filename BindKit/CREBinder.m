@@ -168,6 +168,14 @@
 
 -(void)addTransaction:(CREBindingTransaction *)bindingTransaction{
     
+    
+    if (!transactionsArray)
+    {
+        
+        transactionsArray = [NSMutableArray new];
+        
+    }
+    
     if (![transactionsArray containsObject:bindingTransaction])
     {
         

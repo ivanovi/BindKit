@@ -14,6 +14,7 @@
 
 //TODO: Add more descriptive errors
 
+
 @interface BindKitTests : XCTestCase  {
  
     NSDictionary * aDictionary, *bDictionary, *cDictionary;
@@ -45,7 +46,6 @@
     
     aTestMappingDictionary = helper.aTestMappingDictionary;
 
-    
 }
 
 - (void)tearDown {
@@ -93,6 +93,126 @@
     XCTAssertNotEqualObjects(aTestValue , bDictionary [bProperty], @"Failed test %s", __PRETTY_FUNCTION__);
 
 
+}
+
+-(void)testBaseBinderTransactionCreation{
+    
+    CREBinder *newBinder = [CREBinder new];
+    
+    CREBindingTransaction *aTransaction = [[CREBindingTransaction alloc] initWithProperties:@[aProperty, bProperty]
+                                                                              sourceObjects:@[aDictionary, bDictionary]];
+    [newBinder addTransaction:aTransaction];
+    [newBinder bind];
+    
+    
+    //positive
+    [aDictionary setValue:aTestValue forKey:aProperty];
+    XCTAssertEqualObjects(aDictionary [aProperty], bDictionary [bProperty], @"Failed base test %s", __PRETTY_FUNCTION__);
+    
+    [aDictionary setValue:bTestValue forKey:aProperty];
+    XCTAssertEqualObjects(aDictionary [aProperty], bDictionary [bProperty], @"Failed base test %s", __PRETTY_FUNCTION__);
+    
+    [bDictionary setValue:cTestValue forKey:bProperty];
+    XCTAssertEqualObjects(aDictionary [aProperty], bDictionary [bProperty], @"Failed base test %s", __PRETTY_FUNCTION__);
+
+    
+    //negative
+    [aDictionary setValue:aTestValue forKey:aProperty];
+    XCTAssertNotEqualObjects(aDictionary [aProperty], cTestValue, @"Failed base test %s", __PRETTY_FUNCTION__);
+    
+    [aDictionary setValue:bTestValue forKey:aProperty];
+    XCTAssertNotEqualObjects(aDictionary [aProperty], aTestValue, @"Failed base test %s", __PRETTY_FUNCTION__);
+
+}
+
+#pragma mark - Transaction composition
+
+-(void)testBaseBinderTransactionCompositionAdd{
+    
+    CREBinder *newBinder = [CREBinder new];
+    
+    XCTAssertNil(newBinder.transactions, @"Failed base test %s", __PRETTY_FUNCTION__);
+    
+    CREBindingTransaction *aTransaction = [[CREBindingTransaction alloc] initWithProperties:@[aProperty, bProperty]
+                                                                              sourceObjects:@[aDictionary, bDictionary]];
+    //add positive
+    [newBinder addTransaction:aTransaction];
+    
+    XCTAssertTrue(newBinder.transactions.count == 1, @"Failed base test %s", __PRETTY_FUNCTION__);
+    XCTAssertTrue([newBinder.transactions containsObject:aTransaction], @"Failed base test %s", __PRETTY_FUNCTION__);
+    
+    //remove positive
+    [newBinder removeTransaction:aTransaction];
+    XCTAssertTrue(newBinder.transactions.count == 0 , @"Failed base test %s", __PRETTY_FUNCTION__);
+    XCTAssertTrue(![newBinder.transactions containsObject:aTransaction], @"Failed base test %s", __PRETTY_FUNCTION__);
+    
+    
+    CREBindingTransaction *bTransaction = [[CREBindingTransaction alloc] initWithProperties:@[aProperty, bProperty]
+                                                                              sourceObjects:@[aDictionary, bDictionary]];
+    //add negative
+    [newBinder addTransaction:bTransaction];
+    XCTAssertTrue(newBinder.transactions.count == 1, @"Failed base test %s", __PRETTY_FUNCTION__);
+    XCTAssertTrue(![newBinder.transactions containsObject:aTransaction], @"Failed base test %s", __PRETTY_FUNCTION__);
+    
+    //remove negative
+    [newBinder removeTransaction:aTransaction];
+    XCTAssertTrue(newBinder.transactions.count == 1, @"Failed base test %s", __PRETTY_FUNCTION__);
+    XCTAssertTrue([newBinder.transactions containsObject:bTransaction], @"Failed base test %s", __PRETTY_FUNCTION__);
+    
+    XCTAssertNoThrow([newBinder bind], @"Failed base test %s", __PRETTY_FUNCTION__);
+}
+
+#pragma mark - Binder composition
+
+-(void)testBaseBinderComposition{
+    
+    CREBinder *aBinder = [[CREBinder alloc]  initWithProperties:@[aProperty, bProperty]
+                                                  sourceObjects:@[aDictionary, bDictionary]];
+    
+    
+    XCTAssertNil(aBinder.childBinders, @"Failed base test %s", __PRETTY_FUNCTION__);
+    
+    CREBinder *bBinder = [[CREBinder alloc]  initWithProperties:@[cProperty, bProperty]
+                                                  sourceObjects:@[cDictionary, bDictionary]];
+    
+    CREBinder *cBinder = [[CREBinder alloc] initWithProperties:@[cProperty, aProperty]
+                                                sourceObjects:@[cDictionary, aDictionary]];
+    
+    [aBinder addBinder:bBinder];
+    
+    XCTAssert(aBinder.childBinders, @"Failed base test %s", __PRETTY_FUNCTION__);
+    XCTAssertTrue(aBinder.childBinders.count == 1, @"Failed base test %s", __PRETTY_FUNCTION__);
+    XCTAssertTrue([aBinder.childBinders containsObject:bBinder], @"Failed base test %s", __PRETTY_FUNCTION__);
+    
+    [aBinder addBinder:cBinder];
+    XCTAssert(aBinder.childBinders, @"Failed base test %s", __PRETTY_FUNCTION__);
+    XCTAssertTrue(aBinder.childBinders.count == 2, @"Failed base test %s", __PRETTY_FUNCTION__);
+    XCTAssertTrue([aBinder.childBinders containsObject:cBinder], @"Failed base test %s", __PRETTY_FUNCTION__);
+    
+    [aBinder removeBinder:bBinder];
+    XCTAssert(aBinder.childBinders, @"Failed base test %s", __PRETTY_FUNCTION__);
+    XCTAssertTrue(aBinder.childBinders.count == 1, @"Failed base test %s", __PRETTY_FUNCTION__);
+    XCTAssertTrue(![aBinder.childBinders containsObject:bBinder], @"Failed base test %s", __PRETTY_FUNCTION__);
+    XCTAssertTrue([aBinder.childBinders containsObject:cBinder], @"Failed base test %s", __PRETTY_FUNCTION__);
+    
+    [aBinder addBinder:bBinder];
+
+    XCTAssert(aBinder.childBinders, @"Failed base test %s", __PRETTY_FUNCTION__);
+    XCTAssertTrue(aBinder.childBinders.count == 2, @"Failed base test %s", __PRETTY_FUNCTION__);
+    XCTAssertTrue([aBinder.childBinders containsObject:bBinder], @"Failed base test %s", __PRETTY_FUNCTION__);
+    
+    [aBinder removeBinder:bBinder];
+    [aBinder removeBinder:cBinder];
+    
+    XCTAssert(aBinder.childBinders.count == 0, @"Failed base test %s", __PRETTY_FUNCTION__);
+    
+    [aBinder addBinder:cBinder];
+    [cBinder addBinder:bBinder];
+    
+    XCTAssertTrue([aBinder.childBinders containsObject:cBinder], @"Failed base test %s", __PRETTY_FUNCTION__);
+    XCTAssertTrue([cBinder.childBinders containsObject:bBinder], @"Failed base test %s", __PRETTY_FUNCTION__);
+    
+    XCTAssertNoThrow([aBinder bind],@"Failed base test %s", __PRETTY_FUNCTION__);
 }
 
 #pragma mark - CREBindingUnit
