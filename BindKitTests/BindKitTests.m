@@ -114,13 +114,13 @@
 
 }
 
--(void)testBaseBinderTransactionCreation{
+-(void)testBaseBinderRelationCreation{
     
     CREBinder *newBinder = [CREBinder new];
     
-    CREBindingTransaction *aTransaction = [[CREBindingTransaction alloc] initWithProperties:@[aProperty, bProperty]
+    CREBindRelation *aRelation = [[CREBindRelation alloc] initWithProperties:@[aProperty, bProperty]
                                                                               sourceObjects:@[aDictionary, bDictionary]];
-    [newBinder addTransaction:aTransaction];
+    [newBinder addRelation:aRelation];
     [newBinder bind];
     
     
@@ -144,39 +144,39 @@
 
 }
 
-#pragma mark - Transaction composition
+#pragma mark - Relation composition
 
--(void)testBaseBinderTransactionCompositionAdd{
+-(void)testBaseBinderRelationCompositionAdd{
     
     CREBinder *newBinder = [CREBinder new];
     
-    XCTAssertNil(newBinder.transactions, @"Failed base test %s", __PRETTY_FUNCTION__);
+    XCTAssertNil(newBinder.relations, @"Failed base test %s", __PRETTY_FUNCTION__);
     
-    CREBindingTransaction *aTransaction = [[CREBindingTransaction alloc] initWithProperties:@[aProperty, bProperty]
+    CREBindRelation *aRelation = [[CREBindRelation alloc] initWithProperties:@[aProperty, bProperty]
                                                                               sourceObjects:@[aDictionary, bDictionary]];
     //add positive
-    [newBinder addTransaction:aTransaction];
+    [newBinder addRelation:aRelation];
     
-    XCTAssertTrue(newBinder.transactions.count == 1, @"Failed base test %s", __PRETTY_FUNCTION__);
-    XCTAssertTrue([newBinder.transactions containsObject:aTransaction], @"Failed base test %s", __PRETTY_FUNCTION__);
+    XCTAssertTrue(newBinder.relations.count == 1, @"Failed base test %s", __PRETTY_FUNCTION__);
+    XCTAssertTrue([newBinder.relations containsObject:aRelation], @"Failed base test %s", __PRETTY_FUNCTION__);
     
     //remove positive
-    [newBinder removeTransaction:aTransaction];
-    XCTAssertTrue(newBinder.transactions.count == 0 , @"Failed base test %s", __PRETTY_FUNCTION__);
-    XCTAssertTrue(![newBinder.transactions containsObject:aTransaction], @"Failed base test %s", __PRETTY_FUNCTION__);
+    [newBinder removeRelation:aRelation];
+    XCTAssertTrue(newBinder.relations.count == 0 , @"Failed base test %s", __PRETTY_FUNCTION__);
+    XCTAssertTrue(![newBinder.relations containsObject:aRelation], @"Failed base test %s", __PRETTY_FUNCTION__);
     
     
-    CREBindingTransaction *bTransaction = [[CREBindingTransaction alloc] initWithProperties:@[aProperty, bProperty]
+    CREBindRelation *bRelation = [[CREBindRelation alloc] initWithProperties:@[aProperty, bProperty]
                                                                               sourceObjects:@[aDictionary, bDictionary]];
     //add negative
-    [newBinder addTransaction:bTransaction];
-    XCTAssertTrue(newBinder.transactions.count == 1, @"Failed base test %s", __PRETTY_FUNCTION__);
-    XCTAssertTrue(![newBinder.transactions containsObject:aTransaction], @"Failed base test %s", __PRETTY_FUNCTION__);
+    [newBinder addRelation:bRelation];
+    XCTAssertTrue(newBinder.relations.count == 1, @"Failed base test %s", __PRETTY_FUNCTION__);
+    XCTAssertTrue(![newBinder.relations containsObject:aRelation], @"Failed base test %s", __PRETTY_FUNCTION__);
     
     //remove negative
-    [newBinder removeTransaction:aTransaction];
-    XCTAssertTrue(newBinder.transactions.count == 1, @"Failed base test %s", __PRETTY_FUNCTION__);
-    XCTAssertTrue([newBinder.transactions containsObject:bTransaction], @"Failed base test %s", __PRETTY_FUNCTION__);
+    [newBinder removeRelation:aRelation];
+    XCTAssertTrue(newBinder.relations.count == 1, @"Failed base test %s", __PRETTY_FUNCTION__);
+    XCTAssertTrue([newBinder.relations containsObject:bRelation], @"Failed base test %s", __PRETTY_FUNCTION__);
     
     XCTAssertNoThrow([newBinder bind], @"Failed base test %s", __PRETTY_FUNCTION__);
 }
@@ -269,11 +269,11 @@
 //}
 
 
-#pragma mark - CREBindintTransaction
+#pragma mark - CREBindintRelation
 
 - (void)testBindingDefintionInit{
     
-    CREBindingTransaction *aDefinition = [[CREBindingTransaction alloc] initWithProperties:@[aProperty, bProperty] sourceObjects:@[aDictionary, bDictionary]];
+    CREBindRelation *aDefinition = [[CREBindRelation alloc] initWithProperties:@[aProperty, bProperty] sourceObjects:@[aDictionary, bDictionary]];
     
     for (CREBindingUnit *aBindingUnit in aDefinition.bindingUnits)
     {
@@ -287,7 +287,7 @@
 //TODO: add assertion
 - (void)testBindingDefintionAddBindingUnit{
     
-    CREBindingTransaction *aDefinition = [CREBindingTransaction new];
+    CREBindRelation *aDefinition = [CREBindRelation new];
     CREBindingUnit *bindingUnit = [[CREBindingUnit alloc] initWithDictionary:@{cProperty: cDictionary}];
     
     [aDefinition addBindingUnit:bindingUnit];
@@ -322,7 +322,7 @@
 
 -(void)testBindingDefinitionAddBindingUnitWithDictionary{
     
-    CREBindingTransaction *aDefinition = [CREBindingTransaction new];
+    CREBindRelation *aDefinition = [CREBindRelation new];
     NSDictionary *baseDictionary = @{cProperty: cDictionary};
     
     [aDefinition addBindingUnitWithDictionary: baseDictionary];

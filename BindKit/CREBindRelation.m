@@ -25,10 +25,10 @@
 
 
 
-#import "CREBindingTransaction.h"
+#import "CREBindRelation.h"
 #import "NSError+BinderKit.h"
 
-@interface CREBindingTransaction(){
+@interface CREBindRelation(){
     
     NSMutableArray * holderSet;
     
@@ -36,7 +36,7 @@
 
 @end
 
-@implementation CREBindingTransaction
+@implementation CREBindRelation
 
 -(instancetype)init{
     self = [super init];
@@ -45,7 +45,7 @@
         
         holderSet = [NSMutableArray new];
         
-        _directionType = CREBindingTransactionDirectionBothWays;
+        _directionType = CREBindingRelationDirectionBothWays;
         _isBound = NO;
     }
     
@@ -90,7 +90,7 @@
     }
 
     CREBindingUnit *bindingUnit = (__bridge CREBindingUnit*)context;
-    NSArray *peerUnitSet = bindingUnit.transaction.bindingUnits;
+    NSArray *peerUnitSet = bindingUnit.relation.bindingUnits;
     BOOL mergeBOOL = YES;
     
     for ( CREBindingUnit *notifyUnit in peerUnitSet) {
@@ -108,9 +108,9 @@
         if (_delegate) //delegation
         {
             
-            if ([_delegate respondsToSelector:@selector(bindTransaction:shouldSetValue:forKeyPath:)])
+            if ([_delegate respondsToSelector:@selector(bindRelation:shouldSetValue:forKeyPath:)])
             {
-                mergeBOOL = [_delegate bindTransaction:self shouldSetValue:newValue forKeyPath:keyPath];
+                mergeBOOL = [_delegate bindRelation:self shouldSetValue:newValue forKeyPath:keyPath];
             }else
             {
                 NSLog(@"Warnig %@", [NSError errorDescriptionForDomain:kCREBinderWarningsDomain code:1000]);
@@ -118,9 +118,9 @@
             if (mergeBOOL)
             {
                 
-                if([_delegate respondsToSelector:@selector(bindTransaction:willSetValue:forKeyPath:inObject:)])
+                if([_delegate respondsToSelector:@selector(bindRelation:willSetValue:forKeyPath:inObject:)])
                 {
-                    [_delegate bindTransaction:self willSetValue:newValue forKeyPath:keyPath inObject:object];
+                    [_delegate bindRelation:self willSetValue:newValue forKeyPath:keyPath inObject:object];
                 }
                 
             }
@@ -156,11 +156,11 @@
         
     }else{
         
-        if ([self.placeholder respondsToSelector:@selector(bindTransaction:requiresPlaceholderValuesForUnit:)])
+        if ([self.placeholder respondsToSelector:@selector(bindRelation:requiresPlaceholderValuesForUnit:)])
         {
             
             
-            value = [self.placeholder bindTransaction:self requiresPlaceholderValuesForUnit:unit];
+            value = [self.placeholder bindRelation:self requiresPlaceholderValuesForUnit:unit];
             [self observeValueForKeyPath:properyName ofObject:sourceObject
                                   change:nil context:context];
         }
@@ -208,7 +208,7 @@
         
         newBinderUnit = [[CREBindingUnit alloc] initWithDictionary:propertyTargetDict];
         [holderSet addObject:newBinderUnit];
-        [newBinderUnit setTransaction:self];
+        [newBinderUnit setRelation:self];
 
     
     }
@@ -222,7 +222,7 @@
     {
         
         [holderSet addObject:subBindingUnit];
-        [subBindingUnit setTransaction:self];
+        [subBindingUnit setRelation:self];
         
     }
     
@@ -232,7 +232,7 @@
     
    // [self addSourceBindingUnit:sourceBindingUnit];
     
-    _directionType = CREBindingTransactionDirectionOneWay;
+    _directionType = CREBindingRelationDirectionBothWays;
     sourceUnit = sourceBindingUnit;
     
 }
@@ -306,9 +306,9 @@
 
 -(void)mergeValue:(id)value toTarget:(CREBindingUnit *)target{
     
-    if ([_valueTransformer respondsToSelector:@selector(bindTransaction:willModify:withValue:)]) {
+    if ([_valueTransformer respondsToSelector:@selector(bindRelation:willModify:withValue:)]) {
         
-        value = [_valueTransformer bindTransaction:self willModify:target withValue:value];
+        value = [_valueTransformer bindRelation:self willModify:target withValue:value];
         
     }
     
@@ -345,7 +345,7 @@
     if (_isBound)
         return;
     
-    if (self.directionType == CREBindingTransactionDirectionOneWay)
+    if (self.directionType == CREBindingRelationDirectionOneWay)
     {
         
         [self bindWithSource:self.sourceUnit];
@@ -370,7 +370,7 @@
     if (!_isBound)
         return;
     
-    if (self.directionType == CREBindingTransactionDirectionOneWay)
+    if (self.directionType == CREBindingRelationDirectionOneWay)
     {
         
         [self unbindWithSource:self.sourceUnit];

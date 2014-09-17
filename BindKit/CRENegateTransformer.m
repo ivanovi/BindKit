@@ -28,7 +28,7 @@
 @implementation CRENegateTransformer
 
 
--(id)bindTransaction:(CREBindingTransaction *)transaction willModify:(CREBindingUnit *)unit withValue:(id)value{
+-(id)bindRelation:(CREBindRelation *)Relation willModify:(CREBindingUnit *)unit withValue:(id)value{
     
     NSNumber *transformNumber = nil;
     

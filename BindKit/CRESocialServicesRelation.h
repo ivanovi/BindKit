@@ -1,5 +1,5 @@
 //
-//  CRESocialServicesTransaction.h
+//  CRESocialServicesRelation.h
 //  BindKit
 //
 //  Created by Ivan Ivanov on 9/17/14.
@@ -9,7 +9,8 @@
 #import <BindKit/BindKit.h>
 #import <Social/Social.h>
 #import <Accounts/Accounts.h>
+#import "CRERemoteBindingRelation.h"
 
-@interface CRESocialServicesTransaction : CRERemoteBindingTransaction
+@interface CRESocialServicesRelation : CRERemoteBindingRelation
 
 @end

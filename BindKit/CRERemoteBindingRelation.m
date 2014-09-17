@@ -1,5 +1,5 @@
 //
-//  CRERemoteBindingTransaction.m
+//  CRERemoteBindingRelation.m
 //  BindKit
 //
 //  Created by Ivan Ivanov on 9/2/14.
@@ -25,11 +25,11 @@
 
 
 
-#import "CRERemoteBindingTransaction.h"
+#import "CRERemoteBindingRelation.h"
 #import <Social/Social.h>
 #import <Accounts/Accounts.h>
 
-@interface CRERemoteBindingTransaction(){
+@interface CRERemoteBindingRelation(){
     
     NSURL *urlContainer;
     id remoteRequest;
@@ -38,9 +38,11 @@
 
 @end
 
-@implementation CRERemoteBindingTransaction
 
 
+@implementation CRERemoteBindingRelation
+
+@synthesize requestFactory = _requestFactory;
 
 #pragma mark - Overrides
 
@@ -63,9 +65,9 @@
     
     [self assertSource];
     
-    if ([self.valueTransformer respondsToSelector:@selector(bindTransaction:willModify:withValue:)]) {
+    if ([self.valueTransformer respondsToSelector:@selector(bindRelation:willModify:withValue:)]) {
         
-        value = [self.valueTransformer bindTransaction:self willModify:target withValue:value];
+        value = [self.valueTransformer bindRelation:self willModify:target withValue:value];
         
     }
     
@@ -173,10 +175,10 @@
     [self resolveRequestAdderss:requestAddress];
     
     
-    if ([_requestFactory respondsToSelector:@selector(bindTransaction:forURL:unit:parameters:)])
+    if ([_requestFactory respondsToSelector:@selector(bindRelation:forURL:unit:parameters:)])
     {
         
-      id receivedRequest = [_requestFactory bindTransaction:self forURL:urlContainer unit:sourceUnit parameters:nil];
+      id receivedRequest = [_requestFactory bindRelation:self forURL:urlContainer unit:sourceUnit parameters:nil];
       [self assertRequest:receivedRequest];
        
       return receivedRequest;
@@ -281,9 +283,9 @@
 }
 
 
-//-(CREBindingTransactionDirection)directionType{
+//-(CREBindingRelationDirection)directionType{
 //    
-//    return CREBindingTransactionDirectionOneWay;
+//    return CREBindingRelationDirectionOneWay;
 //    
 //}
 

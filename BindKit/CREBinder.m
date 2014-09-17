@@ -29,7 +29,8 @@
 
 @interface CREBinder(){
     
-    NSMutableArray *transactionsArray;
+    NSMutableArray *relationsArray;
+    
     NSMutableArray *childBinders;
     
 }
@@ -59,10 +60,10 @@
     
     if (self)
     {
-        transactionsArray = [NSMutableArray new];
+        relationsArray = [NSMutableArray new];
         
-        CREBindingTransaction *initialTransaction = [self createTransactionWithProperties:propertiesArray sourceObjects:objectsArray transactionClass:@"CREBindingTransaction"];
-        [transactionsArray addObject:initialTransaction];
+        CREBindRelation *initialRelation = [self createRelationWithProperties:propertiesArray sourceObjects:objectsArray relationClass:@"CREBindRelation"];
+        [relationsArray addObject:initialRelation];
         
         _isBound = NO;
 
@@ -73,19 +74,19 @@
 }
 
 
--(CREBindingTransaction*)createTransactionWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray transactionClass:(NSString *)className{
+-(CREBindRelation*)createRelationWithProperties:(NSArray *)propertiesArray sourceObjects:(NSArray *)objectsArray relationClass:(NSString *)className{
     
     
-    Class transactionClass = NSClassFromString(className);
+    Class relationClass = NSClassFromString(className);
     
     if (!propertiesArray || !objectsArray)
     {
         
-        return [transactionClass new];
+        return [relationClass new];
         
     }
     
-    return [[transactionClass alloc] initWithProperties:propertiesArray sourceObjects:objectsArray];
+    return [[relationClass alloc] initWithProperties:propertiesArray sourceObjects:objectsArray];
     
 }
 
@@ -97,10 +98,10 @@
 -(void)bind{
     
 
-    for (CREBindingTransaction *aTransaction in transactionsArray)
+    for (CREBindRelation *aRelation in relationsArray)
     {
         
-        [aTransaction bind];
+        [aRelation bind];
         
     }
     
@@ -125,10 +126,10 @@
         return;
     }
     
-    for (CREBindingTransaction *transaction in transactionsArray)
+    for (CREBindRelation *relation in relationsArray)
     {
         
-        [transaction unbind];
+        [relation unbind];
         
     }
     
@@ -149,171 +150,48 @@
 //    
 //    
 //}
-#pragma mark - Transactions compositions
+#pragma mark - Relations compositions
 
--(NSArray*)transactions{
+-(NSArray*)relations{
     
-    if (transactionsArray)
+    if (relationsArray)
     {
         
-        return [NSArray arrayWithArray:transactionsArray];
+        return [NSArray arrayWithArray:relationsArray];
         
     }
     return nil;
 }
 
 
--(void)addTransaction:(CREBindingTransaction *)bindingTransaction{
+-(void)addRelation:(CREBindRelation *)bindRelation{
     
     
-    if (!transactionsArray)
+    if (!relationsArray)
     {
         
-        transactionsArray = [NSMutableArray new];
+        relationsArray = [NSMutableArray new];
         
     }
     
-    if (![transactionsArray containsObject:bindingTransaction])
+    if (![relationsArray containsObject:bindRelation])
     {
         
-        [transactionsArray addObject:bindingTransaction];
+        [relationsArray addObject:bindRelation];
         
     }
     
     
 }
 
--(void)removeTransaction:(CREBindingTransaction *)removingTransaction{
+-(void)removeRelation:(CREBindRelation *)removeRelation{
     
-    [transactionsArray removeObject:removingTransaction];
+    [relationsArray removeObject:removeRelation];
     
 }
 
 
 
-//-(void)handleInitialValue:(id)value unit:(CREBindingUnit*)unit{
-//    
-//    CREBindingTransaction *theTransaction = unit.transaction;
-//    NSString *properyName = unit.boundObjectProperty;
-//    id sourceObject = unit.boundObject;
-//    void *context = (__bridge void *)unit;
-//    
-//    if (value)
-//    {
-//        
-//        [self observeValueForKeyPath:properyName ofObject:sourceObject
-//                              change:nil context:context];
-//        
-//    }else{
-//        
-//        if ([theTransaction.placeholder respondsToSelector:@selector(bindTransaction:requiresPlaceholderValuesForUnit:)]) {
-//            
-//            
-//            value = [theTransaction.placeholder bindTransaction:theTransaction requiresPlaceholderValuesForUnit:unit];
-//            
-//            [self observeValueForKeyPath:properyName ofObject:sourceObject
-//                                  change:nil context:context];
-//        }
-//        
-//    }
-//    
-//    
-//}
-
-//-(BOOL)didAddPair:(NSDictionary*)pair{
-//
-////    for (NSDictionary * existindPairDictionary in tempPairsArray)
-////    {
-////
-////        if ([existindPairDictionary isEqualToDictionary:pair])
-////        {
-////            return YES;
-////        }
-////        
-////    }
-////    
-////    return NO;
-//
-//
-//
-//
-//}
-
-//-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-//    
-//    if (_isLocked) //protect against infinite loop when both ways binding
-//    {
-//        NSLog(@"Binder is locked. Discontinuing loop.");
-//        return;
-//        
-//    }
-//   // NSLog(@"value changed object %@", object);
-//    
-//    
-//    
-//    CREBindingUnit *bindingUnit = (__bridge CREBindingUnit*)context;
-//    NSArray *peerUnitSet = bindingUnit.transaction.bindingUnits;
-//    
-//    
-//    for ( CREBindingUnit *notifyUnit in peerUnitSet) {
-//        
-//        if ([notifyUnit isEqual:bindingUnit]) {
-//            continue;
-//        }
-//        
-//        
-//        BOOL mergeBOOL = YES;
-//        id newValue = [object valueForKeyPath:keyPath];
-////        id targetObject =  notifyUnit.boundObject; // [self objectInPairWithBoundObject:object mapKeys:NO];
-////        id targetKey =  notifyUnit.boundObjectProperty; //[self objectInPairWithBoundObject:keyPath mapKeys:YES];
-//        
-//        if (_delegate) //delegation
-//        {
-//            
-//            if ([_delegate respondsToSelector:@selector(binder:shouldSetValue:forKeyPath:)])
-//            {
-//                mergeBOOL = [_delegate binder:self shouldSetValue:newValue forKeyPath:keyPath];
-//            }else
-//            {
-//                NSLog(@"Warnig %@", [NSError errorDescriptionForDomain:kCREBinderWarningsDomain code:1000]);
-//            }
-//            if (mergeBOOL)
-//            {
-//                
-//                if([_delegate respondsToSelector:@selector(binder:willSetValue:forKeyPath:inObject:)])
-//                {
-//                    [_delegate binder:self willSetValue:newValue forKeyPath:keyPath inObject:object];
-//                }
-//                
-//            }
-//        } //end delegation
-//        
-//        
-//        if (mergeBOOL)
-//        {
-//            _isLocked = YES;
-//                [self mergeValue:newValue toTarget:notifyUnit];
-//            _isLocked = NO;
-//            
-//        }
-//
-//        
-//        
-//    }
-//    
-//    
-//}
-
-//-(void)mergeValue:(id)value toTarget:(CREBindingUnit*)target{
-//    
-//    if (value)
-//    {
-//        
-//        [target.transaction mergeValue:value toTarget:target];
-//            
-//    }
-//    
-//}
 
 #pragma mark - Managing composites / child relations
 
@@ -379,7 +257,7 @@
     
     __block id returnValue = nil;
     
-    for (NSDictionary *bindingPairDictionary in transactionsArray)
+    for (NSDictionary *bindingPairDictionary in relationsArray)
     {
 
         [bindingPairDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {

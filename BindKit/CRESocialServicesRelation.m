@@ -1,16 +1,18 @@
 //
-//  CRESocialServicesTransaction.m
+//  CRESocialServicesRelation.m
 //  BindKit
 //
 //  Created by Ivan Ivanov on 9/17/14.
 //  Copyright (c) 2014 Creatub Ltd. All rights reserved.
 //
 
-#import "CRESocialServicesTransaction.h"
+
 #import <Social/Social.h>
 #import <Accounts/Accounts.h>
+#import "CRESocialServicesRelation.h"
 
-@implementation CRESocialServicesTransaction
+
+@implementation CRESocialServicesRelation
 
 
 
@@ -18,9 +20,9 @@
     
     [self assertSource];
     
-    if ([self.valueTransformer respondsToSelector:@selector(bindTransaction:willModify:withValue:)]) {
+    if ([self.valueTransformer respondsToSelector:@selector(bindRelation:willModify:withValue:)]) {
         
-        value = [self.valueTransformer bindTransaction:self willModify:target withValue:value];
+        value = [self.valueTransformer bindRelation:self willModify:target withValue:value];
         
     }
     

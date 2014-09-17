@@ -26,7 +26,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import "CREBindingTransaction.h"
+#import "CREBindRelation.h"
 #import "NSError+BinderKit.h"
 #import "CREBindProtocol.h"
 
@@ -37,19 +37,19 @@
 #pragma mark - Binder delegate
 
 
-@protocol CREBindingTransactionFactory <NSObject>
+@protocol CREBindRelationFactory <NSObject>
 
--(CREBindingTransaction*)createTransactionWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray transactionClass:(NSString*)className;
+-(CREBindRelation*)createRelationWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray relationClass:(NSString*)className;
 
 @end
 
-@interface CREBinder : NSObject <CREBindProtocol, CREBindingTransactionFactory>
+@interface CREBinder : NSObject <CREBindProtocol, CREBindRelationFactory>
 
 //@property (nonatomic, weak) id <CREBinderDelegate> delegate;
-//@property (nonatomic, weak) id <CREBindingTransactionFactory> transactionFactory;
+//@property (nonatomic, weak) id <CREBindRelationFactory> relationFactory;
 @property (nonatomic, readonly) CREBinder * superBinder;
 @property (nonatomic, readonly) NSArray * childBinders;
-@property (nonatomic, readonly) NSArray * transactions; 
+@property (nonatomic, readonly) NSArray * relations;
 @property (nonatomic, readonly) BOOL isLocked;
 @property (nonatomic, readonly) BOOL isBound;
 
@@ -58,15 +58,15 @@
 
 #pragma mark - Initialization
 
-+(instancetype)binderWithFactory:(id <CREBindingTransactionFactory>)factory;
+//+(instancetype)binderWithFactory:(id <CREBindRelationFactory>)factory;
 +(instancetype)binderWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
 -(instancetype)initWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
 
 
 #pragma mark - Setup
 
--(void)addTransaction:(CREBindingTransaction*)bindingTransaction;
--(void)removeTransaction:(CREBindingTransaction*)removingTransaction;
+-(void)addRelation:(CREBindRelation*)bindRelation;
+-(void)removeRelation:(CREBindRelation*)removeRelation;
 
 -(void)addBinder:(CREBinder*)childBinder;
 -(void)removeBinder:(CREBinder*)childBinder;

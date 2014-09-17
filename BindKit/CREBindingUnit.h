@@ -28,7 +28,7 @@
 #import <Foundation/Foundation.h>
 #import "NSError+BinderKit.h"
 
-@class CREBindingTransaction;
+@class CREBindRelation;
 /**
  
  The smallest unit of abstraction, encapsulating a object, its property and context.
@@ -43,7 +43,7 @@
 @property (nonatomic, weak) id boundObjectProperty;
 @property (nonatomic, weak) id remoteProperty;
 @property (nonatomic, weak) id value;
-@property (nonatomic, weak) CREBindingTransaction *transaction;
+@property (nonatomic, weak) CREBindRelation *relation;
 
 //@property (nonatomic, strong) NSDictionary *bindOptionsDictionary; // redo with enumeration
 

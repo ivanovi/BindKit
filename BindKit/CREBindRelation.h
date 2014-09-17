@@ -28,44 +28,57 @@
 #import "CREBindingUnit.h"
 #import "CREBindProtocol.h"
 
-@class CREBindingTransaction;
+@class CREBindRelation;
 
 
 
-@protocol CREBindTransactionDelegate <NSObject>
+@protocol CREBindRelationDelegate <NSObject>
 
 
--(BOOL)bindTransaction:(CREBindingTransaction*)transaction shouldSetValue:(id)value forKeyPath:(NSString*)keyPath;
+-(BOOL)bindRelation:(CREBindRelation*)relation shouldSetValue:(id)value forKeyPath:(NSString*)keyPath;
 
 @optional
 
--(void)bindTransaction:(CREBindingTransaction*)transaction willSetValue:(id)value forKeyPath:(NSString*)keyPath inObject:(id)targetObject;
+-(void)bindRelation:(CREBindRelation*)relation willSetValue:(id)value forKeyPath:(NSString*)keyPath inObject:(id)targetObject;
 
 @end
 
 
 @protocol CREValueTransformerProtocol <NSObject>
 
--(id)bindTransaction:(CREBindingTransaction*)transaction willModify:(CREBindingUnit*)unit withValue:(id)value;
+-(id)bindRelation:(CREBindRelation*)relation willModify:(CREBindingUnit*)unit withValue:(id)value;
 
 @end
 
 @protocol CREPlaceholderProtocol <NSObject>
 
--(id)bindTransaction:(CREBindingTransaction*)transaction requiresPlaceholderValuesForUnit:(CREBindingUnit*)unit;
+-(id)bindRelation:(CREBindRelation*)relation requiresPlaceholderValuesForUnit:(CREBindingUnit*)unit;
 
 @end
 
-typedef NS_ENUM(NSUInteger, CREBindingTransactionDirection) {
+@protocol CREBinderRequestFactory <NSObject>
+
+-(id)bindRelation:(CREBindRelation*)bindingRelation forURL:(NSURL*)url unit:(CREBindingUnit*)unit parameters:(NSDictionary*)params;
+
+@end
+
+@protocol CREBindRelationRequestDelegate <NSObject>
+
+@optional
+@property (nonatomic, weak) id <CREBinderRequestFactory> requestFactory;
+
+@end
+
+typedef NS_ENUM(NSUInteger, CREBindingRelationDirection) {
     
-    CREBindingTransactionDirectionBothWays,
-    CREBindingTransactionDirectionOneWay,
-    CREBindingTransactionDirectionChained,
+    CREBindingRelationDirectionBothWays,
+    CREBindingRelationDirectionOneWay,
+    CREBindingRelationDirectionChained,
     
 };
 
 
-@interface CREBindingTransaction : NSObject <CREBindProtocol>{
+@interface CREBindRelation : NSObject <CREBindProtocol>{
     
      CREBindingUnit * sourceUnit;
     
@@ -75,10 +88,10 @@ typedef NS_ENUM(NSUInteger, CREBindingTransactionDirection) {
 //@property (nonatomic, readonly) NSSet * boundObjects;
 //@property (nonatomic, readonly) NSSet * keys;
 @property (nonatomic, readonly) NSArray * bindingUnits; //immediate/current units
-@property (nonatomic, readonly) CREBindingTransactionDirection directionType;
+@property (nonatomic, readonly) CREBindingRelationDirection directionType;
 @property (nonatomic, weak) id <CREValueTransformerProtocol> valueTransformer;
 @property (nonatomic, weak) id <CREPlaceholderProtocol> placeholder;
-@property (nonatomic, weak) id <CREBindTransactionDelegate> delegate;
+@property (nonatomic, weak) id <CREBindRelationDelegate> delegate;
 @property (nonatomic, readonly) CREBindingUnit *sourceUnit;
 @property (nonatomic, readonly) BOOL isLocked;
 @property (nonatomic, readonly) BOOL isBound;

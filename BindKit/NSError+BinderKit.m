@@ -117,8 +117,8 @@ NSString * const kCREBinderErrorLogic = @"binderErrorLogicDomain";
 +(NSString*)errorDescriptionLogic:(NSInteger)errorCode{
     
     NSArray *errorDescritionsLiteralsArray =
-    @[@"Received request to merge unit that was not added to any transaction",
-      @"A binding unit can be assigned to only one transaction.",
+    @[@"Received request to merge unit that was not added to any Relation",
+      @"A binding unit can be assigned to only one Relation.",
       @"DataToImage transformer received object of incompatible type (expected NSData)."];
     
     return errorDescritionsLiteralsArray [ errorCode ];

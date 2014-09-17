@@ -28,7 +28,7 @@
 @implementation CREDataImageTransformer
 
 
--(id)bindTransaction:(CREBindingTransaction *)transaction willModify:(CREBindingUnit *)unit withValue:(id)value{
+-(id)bindRelation:(CREBindRelation *)Relation willModify:(CREBindingUnit *)unit withValue:(id)value{
     
     
     NSAssert([value isKindOfClass: [NSData class] ], [NSError errorDescriptionForDomain:kCREBinderErrorLogic code:2002] );

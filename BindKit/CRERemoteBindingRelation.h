@@ -1,5 +1,5 @@
 //
-//  CRERemoteBindingTransaction.h
+//  CRERemoteBindingRelation.h
 //  BindKit
 //
 //  Created by Ivan Ivanov on 9/2/14.
@@ -26,24 +26,20 @@
 
 
 
-#import "CREBindingTransaction.h"
+#import "CREBindRelation.h"
+
+
+@class CRERemoteBindingRelation;
 
 
 
-@class CRERemoteBindingTransaction;
-
-@protocol CREBinderRequestFactory <NSObject>
-
--(id)bindTransaction:(CRERemoteBindingTransaction*)bindingTransaction forURL:(NSURL*)url unit:(CREBindingUnit*)unit parameters:(NSDictionary*)params;
-
-@end
 
 typedef void (^CRERemoteBinderCallBack)(id newValue, CREBindingUnit *unit, NSError *error);
 
 
-@interface CRERemoteBindingTransaction : CREBindingTransaction 
+@interface CRERemoteBindingRelation : CREBindRelation <CREBindRelationRequestDelegate>
 
-@property (nonatomic, weak) id <CREBinderRequestFactory> requestFactory;
+//@property (nonatomic, weak) id <CREBinderRequestFactory> requestFactory;
 @property (nonatomic, readwrite, copy) CRERemoteBinderCallBack callBack;
 
 
