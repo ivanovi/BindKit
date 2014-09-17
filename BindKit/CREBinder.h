@@ -37,9 +37,16 @@
 #pragma mark - Binder delegate
 
 
-@interface CREBinder : NSObject <CREBindProtocol>
+@protocol CREBindingTransactionFactory <NSObject>
+
+-(CREBindingTransaction*)createTransactionWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray transactionClass:(NSString*)className;
+
+@end
+
+@interface CREBinder : NSObject <CREBindProtocol, CREBindingTransactionFactory>
 
 //@property (nonatomic, weak) id <CREBinderDelegate> delegate;
+//@property (nonatomic, weak) id <CREBindingTransactionFactory> transactionFactory;
 @property (nonatomic, readonly) CREBinder * superBinder;
 @property (nonatomic, readonly) NSArray * childBinders;
 @property (nonatomic, readonly) NSArray * transactions; 
@@ -51,7 +58,7 @@
 
 #pragma mark - Initialization
 
-
++(instancetype)binderWithFactory:(id <CREBindingTransactionFactory>)factory;
 +(instancetype)binderWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
 -(instancetype)initWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
 
@@ -66,11 +73,6 @@
 -(void)removeFromSuperBinder;
 
 
-/**
- 
- Factory method for the initial CREBindingTransaction instance.
- 
- */
--(CREBindingTransaction*)createTransactionWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
+
 
 @end

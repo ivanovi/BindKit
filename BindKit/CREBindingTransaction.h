@@ -72,8 +72,8 @@ typedef NS_ENUM(NSUInteger, CREBindingTransactionDirection) {
 }
 
 
-@property (nonatomic, readonly) NSSet * boundObjects;
-@property (nonatomic, readonly) NSSet * keys;
+//@property (nonatomic, readonly) NSSet * boundObjects;
+//@property (nonatomic, readonly) NSSet * keys;
 @property (nonatomic, readonly) NSArray * bindingUnits; //immediate/current units
 @property (nonatomic, readonly) CREBindingTransactionDirection directionType;
 @property (nonatomic, weak) id <CREValueTransformerProtocol> valueTransformer;

@@ -27,25 +27,8 @@
 
 
 #import "CREBindingTransaction.h"
-#import <Social/Social.h>
-#import <Accounts/Accounts.h>
-
-/**
- This class binds key-value pairs (CREBindingUnit) to an url. The url is assumed to by in a property and is passed again as a key-value pair (CREBindingUnit).
- The type of the url can be either NSString or NSURL. 
- 
- It supports custom requests of type NSURLRequest and SLRequest. You create and setup this request and set the property request before calling the "bind" method.
- 
- */
 
 
-typedef NS_ENUM(NSUInteger, CREBinderRequestType) {
-    CREBinderRequestTypeURL,
-    CREBinderRequestTypeFacebook,
-    CREBinderRequestTypeTwitter,
-    CREBinderRequestTypeWeibo,
-    CREBinderRequestTypeTencentWeibo,
-};
 
 @class CRERemoteBindingTransaction;
 
@@ -60,14 +43,17 @@ typedef void (^CRERemoteBinderCallBack)(id newValue, CREBindingUnit *unit, NSErr
 
 @interface CRERemoteBindingTransaction : CREBindingTransaction 
 
-/**
- Pass pre-configured SLRequest => a request to Facebook / Twitter / Waebo
- or standard NSURLRequest. If the request property is not set, 
- */
 @property (nonatomic, weak) id <CREBinderRequestFactory> requestFactory;
-@property (nonatomic, readonly) CREBinderRequestType requestType;
 @property (nonatomic, readwrite, copy) CRERemoteBinderCallBack callBack;
 
+
+-(void)assertSource;
+-(void)assertRequest:(id)request;
+
+-(id)requestWithRequest:(id)request;
+-(NSURLRequest*)createRequest:(id)requestAddress;
+
+-(id)handleResponse:(NSData*)responseData urlResponse:(NSURLResponse*)response targetUnit:(CREBindingUnit*)targetUnit;
 
 
 @end

@@ -27,7 +27,7 @@
 		0CDE521219B639BE00412662 /* CRERemoteBindingTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDE521019B639BE00412662 /* CRERemoteBindingTransaction.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0CDE521319B639BE00412662 /* CRERemoteBindingTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDE521119B639BE00412662 /* CRERemoteBindingTransaction.m */; };
 		0CDED07D19C996CD00F4ADD9 /* CREValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDED07519C996CD00F4ADD9 /* CREValueTransformer.m */; };
-		0CDED07E19C996CD00F4ADD9 /* CREValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDED07619C996CD00F4ADD9 /* CREValueTransformer.h */; };
+		0CDED07E19C996CD00F4ADD9 /* CREValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDED07619C996CD00F4ADD9 /* CREValueTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0CDED08019C996CD00F4ADD9 /* CREDataImageTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDED07819C996CD00F4ADD9 /* CREDataImageTransformer.h */; };
 		0CDED08219C996CD00F4ADD9 /* CRENegateTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDED07A19C996CD00F4ADD9 /* CRENegateTransformer.h */; };
 		0CDED08319C996CD00F4ADD9 /* CRENegateTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDED07B19C996CD00F4ADD9 /* CRENegateTransformer.m */; };
@@ -167,12 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				0CBA0A8D19C849CB009C2C09 /* CREBindProtocol.h */,
-				0CB7A35719ADED160020FBD5 /* CREBinder.h */,
-				0CB7A35819ADED160020FBD5 /* CREBinder.m */,
-				0CBE0E8019AF7644007AE6DD /* CREBindingTransaction.h */,
-				0CBE0E8119AF7644007AE6DD /* CREBindingTransaction.m */,
-				0C08D9F119B0BCD2008E27F6 /* CREBindingUnit.h */,
-				0C08D9F219B0BCD2008E27F6 /* CREBindingUnit.m */,
+				0CDED08A19C9AE6400F4ADD9 /* Base */,
 				0CB7A35E19AE0BC20020FBD5 /* NSError+BinderKit.h */,
 				0CB7A35F19AE0BC20020FBD5 /* NSError+BinderKit.m */,
 				0CDED08519C996E700F4ADD9 /* Value Transformers */,
@@ -194,6 +189,19 @@
 			name = "Value Transformers";
 			sourceTree = "<group>";
 		};
+		0CDED08A19C9AE6400F4ADD9 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				0CB7A35719ADED160020FBD5 /* CREBinder.h */,
+				0CB7A35819ADED160020FBD5 /* CREBinder.m */,
+				0CBE0E8019AF7644007AE6DD /* CREBindingTransaction.h */,
+				0CBE0E8119AF7644007AE6DD /* CREBindingTransaction.m */,
+				0C08D9F119B0BCD2008E27F6 /* CREBindingUnit.h */,
+				0C08D9F219B0BCD2008E27F6 /* CREBindingUnit.m */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
 		0CF7B40719C09414001E1678 /* Help */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,13 +219,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				0CB7A35919ADED160020FBD5 /* CREBinder.h in Headers */,
-				0CDED07E19C996CD00F4ADD9 /* CREValueTransformer.h in Headers */,
 				0CBE0E8219AF7644007AE6DD /* CREBindingTransaction.h in Headers */,
 				0CB7A36019AE0BC20020FBD5 /* NSError+BinderKit.h in Headers */,
 				0C25CB0719C04BD300A5DC40 /* CRERemoteBinder.h in Headers */,
 				0CDED08019C996CD00F4ADD9 /* CREDataImageTransformer.h in Headers */,
 				0C08D9F319B0BCD2008E27F6 /* CREBindingUnit.h in Headers */,
 				0CDED08819C9AA3000F4ADD9 /* CRESocialServicesTransaction.h in Headers */,
+				0CDED07E19C996CD00F4ADD9 /* CREValueTransformer.h in Headers */,
 				0CDE521219B639BE00412662 /* CRERemoteBindingTransaction.h in Headers */,
 				0CBA0A8E19C849CB009C2C09 /* CREBindProtocol.h in Headers */,
 				0CDED08219C996CD00F4ADD9 /* CRENegateTransformer.h in Headers */,

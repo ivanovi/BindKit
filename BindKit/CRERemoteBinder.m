@@ -31,7 +31,7 @@
 @implementation CRERemoteBinder
 
 
--(CREBindingTransaction*)createTransactionWithProperties:(NSArray *)propertiesArray sourceObjects:(NSArray *)objectsArray{
+-(CREBindingTransaction*)createTransactionWithProperties:(NSArray *)propertiesArray sourceObjects:(NSArray *)objectsArray transactionClass:(NSString *)className{
     
     return [[CRERemoteBindingTransaction alloc]initWithProperties:propertiesArray sourceObjects:objectsArray];
         

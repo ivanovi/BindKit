@@ -44,8 +44,9 @@
 
 +(instancetype)binderWithProperties:(NSArray *)propertiesArray sourceObjects:(NSArray *)objectsArray{
     
-    return [ [  [self class]  alloc] initWithProperties:propertiesArray sourceObjects:objectsArray];
+    return [ [CREBinder  alloc] initWithProperties:propertiesArray sourceObjects:objectsArray];
 }
+
 
 
 -(instancetype)initWithProperties:(NSArray *)propertiesArray sourceObjects:(NSArray *)objectsArray{
@@ -60,7 +61,7 @@
     {
         transactionsArray = [NSMutableArray new];
         
-        CREBindingTransaction *initialTransaction = [self createTransactionWithProperties:propertiesArray sourceObjects:objectsArray];
+        CREBindingTransaction *initialTransaction = [self createTransactionWithProperties:propertiesArray sourceObjects:objectsArray transactionClass:@"CREBindingTransaction"];
         [transactionsArray addObject:initialTransaction];
         
         _isBound = NO;
@@ -72,15 +73,19 @@
 }
 
 
--(CREBindingTransaction*)createTransactionWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray{
+-(CREBindingTransaction*)createTransactionWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray transactionClass:(NSString *)className{
     
-    if (!propertiesArray || !objectsArray) {
+    
+    Class transactionClass = NSClassFromString(className);
+    
+    if (!propertiesArray || !objectsArray)
+    {
         
-        return [CREBindingTransaction new];
+        return [transactionClass new];
         
     }
     
-    return [[CREBindingTransaction alloc] initWithProperties:propertiesArray sourceObjects:objectsArray];
+    return [[transactionClass alloc] initWithProperties:propertiesArray sourceObjects:objectsArray];
     
 }
 

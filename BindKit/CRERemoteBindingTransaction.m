@@ -114,21 +114,8 @@
                                                          NSError *connectionError)) completionHandler{
     [self assertRequest:request];
     
-    if ([request isKindOfClass:[NSURLRequest class]] ) {
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler: completionHandler];
         
-        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler: completionHandler];
-        
-    }else if ( [request isKindOfClass:[SLRequest class]] ){
-        
-        [(SLRequest*)request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
-            
-            completionHandler (urlResponse,responseData,error);
-            
-        }];
-        
-    }
-    
-    
     
 }
 
