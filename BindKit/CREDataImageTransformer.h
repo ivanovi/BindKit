@@ -1,8 +1,8 @@
 //
-//  NSError+BinderKit.h
+//  CREDataImageTransformer.h
 //  BindKit
 //
-//  Created by Ivan Ivanov on 8/27/14.
+//  Created by Ivan Ivanov on 9/17/14.
 //  Copyright (c) 2014 Ivan Ivanov, Creatub Ltd.
 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,22 +22,10 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
+#import "CREValueTransformer.h"
+
+@interface CREDataImageTransformer : CREValueTransformer
 
 
-#import <Foundation/Foundation.h>
-
-/**
- Provides only BinderKit specific error descriptions based on domain and errorCode
- */
-
-extern NSString * const kCREBinderErrorSetupDomain;
-extern NSString * const kCREBinderWarningsDomain;
-extern NSString * const kCREBinderErrorInternalDomain;
-extern NSString * const kCREBinderErrorLogic;
-
-@interface NSError (BinderKit)
-
-+(NSError*)errorWithBinderDomain:(NSString*)domainString code:(NSInteger)errorCode;
-+(NSString*)errorDescriptionForDomain:(NSString*)domainString code:(NSInteger)errorCode;
 
 @end

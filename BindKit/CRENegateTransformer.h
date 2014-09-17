@@ -1,8 +1,8 @@
 //
-//  NSError+BinderKit.h
+//  CRENegateTransformer.h
 //  BindKit
 //
-//  Created by Ivan Ivanov on 8/27/14.
+//  Created by Ivan Ivanov on 9/17/14.
 //  Copyright (c) 2014 Ivan Ivanov, Creatub Ltd.
 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,21 +23,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+#import "CREValueTransformer.h"
 
-#import <Foundation/Foundation.h>
+//Returns an NSNumber with the opposite / negative value
+//Expects NSInteger, int or BOOL
 
-/**
- Provides only BinderKit specific error descriptions based on domain and errorCode
- */
+@interface CRENegateTransformer : CREValueTransformer
 
-extern NSString * const kCREBinderErrorSetupDomain;
-extern NSString * const kCREBinderWarningsDomain;
-extern NSString * const kCREBinderErrorInternalDomain;
-extern NSString * const kCREBinderErrorLogic;
 
-@interface NSError (BinderKit)
-
-+(NSError*)errorWithBinderDomain:(NSString*)domainString code:(NSInteger)errorCode;
-+(NSString*)errorDescriptionForDomain:(NSString*)domainString code:(NSInteger)errorCode;
 
 @end

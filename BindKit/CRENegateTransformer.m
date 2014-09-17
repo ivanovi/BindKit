@@ -1,8 +1,8 @@
 //
-//  NSError+BinderKit.h
+//  CRENegateTransformer.m
 //  BindKit
 //
-//  Created by Ivan Ivanov on 8/27/14.
+//  Created by Ivan Ivanov on 9/17/14.
 //  Copyright (c) 2014 Ivan Ivanov, Creatub Ltd.
 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,21 +23,30 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+#import "CRENegateTransformer.h"
 
-#import <Foundation/Foundation.h>
+@implementation CRENegateTransformer
 
-/**
- Provides only BinderKit specific error descriptions based on domain and errorCode
- */
 
-extern NSString * const kCREBinderErrorSetupDomain;
-extern NSString * const kCREBinderWarningsDomain;
-extern NSString * const kCREBinderErrorInternalDomain;
-extern NSString * const kCREBinderErrorLogic;
+-(id)bindTransaction:(CREBindingTransaction *)transaction willModify:(CREBindingUnit *)unit withValue:(id)value{
+    
+    NSNumber *transformNumber = nil;
+    
+    @try {
+        
+        transformNumber = [NSNumber numberWithInt: ( (int)value * -1 )];
+        
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Failed to negate number %@", value);
+        
+        [exception raise];
+    }
+    
+    
+    return transformNumber;
+    
+}
 
-@interface NSError (BinderKit)
-
-+(NSError*)errorWithBinderDomain:(NSString*)domainString code:(NSInteger)errorCode;
-+(NSString*)errorDescriptionForDomain:(NSString*)domainString code:(NSInteger)errorCode;
 
 @end

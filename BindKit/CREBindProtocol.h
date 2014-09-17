@@ -27,16 +27,7 @@
 
 @protocol CREBindProtocol <NSObject>
 
-
-
-/**
- Binds composite binders and transactions. Sets self as observer for value changes of the source's keyPath.
- */
 -(void)bind;
-
-/**
- Unbinds all observers. 
- */
 -(void)unbind;
 
 

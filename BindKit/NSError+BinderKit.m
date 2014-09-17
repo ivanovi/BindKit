@@ -29,7 +29,8 @@
 
 NSString * const kCREBinderErrorSetupDomain = @"binderErrorSetupErrorDomain";
 NSString * const kCREBinderWarningsDomain = @"binderErrorWarnigsDomain";
-NSString * const kCREBinderErrorInternalDomain = @"binderErrorLogicDomain";
+NSString * const kCREBinderErrorInternalDomain = @"binderErrorInternal";
+NSString * const kCREBinderErrorLogic = @"binderErrorLogicDomain";
 
 @implementation NSError (BinderKit)
 
@@ -61,11 +62,10 @@ NSString * const kCREBinderErrorInternalDomain = @"binderErrorLogicDomain";
         
         return [NSError errorDescriptionWarnings:errorCode - 1000];
 
-    } else if ([errorDomain isEqualToString:kCREBinderWarningsDomain]){
+    } else if ([errorDomain isEqualToString:kCREBinderErrorLogic]){
         
         return [NSError errorDescriptionLogic:errorCode - 2000];
 
-        
     }
     
     return [NSError errorDescriptionForDefaultDomain:errorCode];
@@ -84,7 +84,9 @@ NSString * const kCREBinderErrorInternalDomain = @"binderErrorLogicDomain";
       @"INTERNAL - BindingUnit: Instance can be initialized with only one property : instance pair.",
       @"INTERNAL - BindingUnit: Bounding Object does contain added property.",
       @"Each property-name in the 'property' array must correspond to a matching sourceObject.",
-      @"RemoteBinder's source property can be either NSString or NSUrl instance."];
+      @"RemoteBinder's source property can be either NSString or NSUrl instance.",
+      @"ValueTransformer did not implement mandatory method.",
+      @"ValueTransformer class not found."];
     
     
     return errorDescritionsLiteralsArray [ errorCode ];
@@ -116,7 +118,8 @@ NSString * const kCREBinderErrorInternalDomain = @"binderErrorLogicDomain";
     
     NSArray *errorDescritionsLiteralsArray =
     @[@"Received request to merge unit that was not added to any transaction",
-      @"A binding unit can be assigned to only one transaction."];
+      @"A binding unit can be assigned to only one transaction.",
+      @"DataToImage transformer received object of incompatible type (expected NSData)."];
     
     return errorDescritionsLiteralsArray [ errorCode ];
 }

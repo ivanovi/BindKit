@@ -31,23 +31,14 @@
 @class CREBindingTransaction;
 
 
-/**
- === Delegation ===
- We provide delegation to serve as an entry point for the viewControllers' modification of binding behavior at run-time. The controllers normally hold most of the context information.
- */
+
 @protocol CREBindTransactionDelegate <NSObject>
 
-/**
- The below method is called after a value has been changed in one of the objects in a pair. If TRUE is returned the mergeValue:toTarget:withKeyPath: is called (which you can override to provide custom merge behavior, e.g. animation, transitions etc. ).
- */
+
 -(BOOL)bindTransaction:(CREBindingTransaction*)transaction shouldSetValue:(id)value forKeyPath:(NSString*)keyPath;
 
 @optional
 
-/**
- The below method is called after binder:shouldSetValue:forKeyPath: has returned TRUE and before mergeValue:toTarget:withKeyPath:
- Here you can do value transformations to map types, proper formatting etc., if needed.
- */
 -(void)bindTransaction:(CREBindingTransaction*)transaction willSetValue:(id)value forKeyPath:(NSString*)keyPath inObject:(id)targetObject;
 
 @end
@@ -55,14 +46,12 @@
 
 @protocol CREValueTransformerProtocol <NSObject>
 
-//Value transformer object must resturn transformed value //not nil
 -(id)bindTransaction:(CREBindingTransaction*)transaction willModify:(CREBindingUnit*)unit withValue:(id)value;
 
 @end
 
 @protocol CREPlaceholderProtocol <NSObject>
 
-//Placeholder object must return placeholder value //not nil
 -(id)bindTransaction:(CREBindingTransaction*)transaction requiresPlaceholderValuesForUnit:(CREBindingUnit*)unit;
 
 @end

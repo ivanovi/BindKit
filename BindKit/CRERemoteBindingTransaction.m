@@ -41,22 +41,6 @@
 @implementation CRERemoteBindingTransaction
 
 
-//-(instancetype)initWithDictionary:(NSDictionary *)bindingDict{
-//    self = [super initWithDictionary:bindingDict];
-//    
-//    if (self) {
-//      
-//     
-//        if (bindingDict) {
-//            
-//        }
-//      
-//        
-//    }
-//    
-//    return self;
-//    
-//}
 
 #pragma mark - Overrides
 

@@ -32,7 +32,6 @@
     NSMutableArray *transactionsArray;
     NSMutableArray *childBinders;
     
-    
 }
 
 @end
@@ -41,37 +40,11 @@
 
 
 #pragma mark - Public Methods
-//
-//-(instancetype)initWithMapping:(NSDictionary *)mapDictionary{
-//    self = [super init];
-//    
-//    if (self)
-//    {
-//        
-//        transactionsArray = [NSMutableArray new];
-//        
-//        CREBindingTransaction *aTransaction = [self createTransactionWithMapping:mapDictionary];
-//        [transactionsArray addObject:aTransaction];
-//        
-//        _isLocked = NO;
-//        
-//    }
-//    
-//    return self;
-//    
-//}
-//
-//
-//+(instancetype)binderWithMapping:(NSDictionary *)mapDictionary{
-//    
-//    return [[self alloc] initWithMapping:mapDictionary];
-//    
-//}
 
 
 +(instancetype)binderWithProperties:(NSArray *)propertiesArray sourceObjects:(NSArray *)objectsArray{
     
-    return [[self alloc]initWithProperties:propertiesArray sourceObjects:objectsArray];
+    return [ [  [self class]  alloc] initWithProperties:propertiesArray sourceObjects:objectsArray];
 }
 
 
