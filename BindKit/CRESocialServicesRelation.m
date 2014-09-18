@@ -32,7 +32,57 @@
     
 }
 
+-(id)requestWithRequest:(id)request{
+    
+    if (self.requestFactory) {
+        
+        return remoteRequest;
+        
+    }
+    
+    [self assertRequest:request];
+    
+    
+    SLRequest *initialRequest = request;
+    
+    return [SLRequest requestForServiceType:[self resolveAcountServiceToSLserviceWithAccount:initialRequest.account.accountType.identifier]
+                              requestMethod:initialRequest.requestMethod
+                                        URL:urlContainer
+                                 parameters:initialRequest.parameters];
+}
 
+-(NSString*)resolveAcountServiceToSLserviceWithAccount:(NSString*)accountIdentifier{
+    
+    if ([accountIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
+        
+        return SLServiceTypeFacebook;
+        
+    }else if ([accountIdentifier isEqualToString:ACAccountTypeIdentifierSinaWeibo]){
+        
+        return SLServiceTypeSinaWeibo;
+        
+    }else if ([accountIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]){
+        
+        return SLServiceTypeTwitter;
+        
+    }else if ([accountIdentifier isEqualToString:ACAccountTypeIdentifierTencentWeibo]){
+        
+        return SLServiceTypeTencentWeibo;
+        
+    }
+    
+    return nil;
+    
+}
+
+#pragma mark - Assertions
+
+-(void)assertRequest:(id)request{
+    
+    NSAssert(request, @"__FIX request factory must return a valid request");
+    NSAssert( [request isKindOfClass:[SLRequest class]], @"__FIX Supporting only SLRequest and NSURLRequest");
+    
+}
 
 
 @end

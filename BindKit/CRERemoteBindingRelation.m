@@ -26,15 +26,9 @@
 
 
 #import "CRERemoteBindingRelation.h"
-#import <Social/Social.h>
-#import <Accounts/Accounts.h>
 
-@interface CRERemoteBindingRelation(){
-    
-    NSURL *urlContainer;
-    id remoteRequest;
-    
-}
+
+@interface CRERemoteBindingRelation()
 
 @end
 
@@ -140,16 +134,9 @@
 #pragma mark - Assertions
 
 -(void)assertRequest:(id)request{
-    
-    if (!request) {
-        
-        NSLog(@"assertion will fail");
-        
-    }
-    
+
     NSAssert(request, @"__FIX request factory must return a valid request");
-    NSAssert( ( [request isKindOfClass:[NSURLRequest class]] ||
-               [request isKindOfClass:[SLRequest class]] ), @"__FIX Supporting only SLRequest and NSURLRequest");
+    NSAssert( [request isKindOfClass:[NSURLRequest class]], @"__FIX Supporting only SLRequest and NSURLRequest");
     
 }
 
@@ -175,12 +162,13 @@
     [self resolveRequestAdderss:requestAddress];
     
     
-    if ([_requestFactory respondsToSelector:@selector(bindRelation:forURL:unit:parameters:)])
+    if ([_requestFactory conformsToProtocol:@protocol(CREBinderRequestFactory)])
     {
         
       id receivedRequest = [_requestFactory bindRelation:self forURL:urlContainer unit:sourceUnit parameters:nil];
       [self assertRequest:receivedRequest];
        
+        
       return receivedRequest;
         
     }
@@ -200,7 +188,6 @@
 
 
 -(id)requestWithRequest:(id)request{
-    //
     
     if (_requestFactory) {
         
@@ -210,50 +197,15 @@
     
     [self assertRequest:request];
     
+
+    NSURLRequest *initialRequest = request;
     
-    if ([request isKindOfClass:[SLRequest class]]) {
-        
-        SLRequest *initialRequest = request;
-        
-        return [SLRequest requestForServiceType:[self resolveAcountServiceToSLserviceWithAccount:initialRequest.account.accountType.identifier]
-                                  requestMethod:initialRequest.requestMethod
-                                            URL:urlContainer
-                                     parameters:initialRequest.parameters];
-        
-    }else if ([request isKindOfClass:[NSURLRequest class]]){
-        
-        NSURLRequest *initialRequest = request;
-        
-        return [NSURLRequest requestWithURL:urlContainer cachePolicy:initialRequest.cachePolicy timeoutInterval:initialRequest.timeoutInterval];
-    }
+    return [NSURLRequest requestWithURL:urlContainer cachePolicy:initialRequest.cachePolicy timeoutInterval:initialRequest.timeoutInterval];
     
-    return nil;
 }
 
 
--(NSString*)resolveAcountServiceToSLserviceWithAccount:(NSString*)accountIdentifier{
-    
-    if ([accountIdentifier isEqualToString:ACAccountTypeIdentifierFacebook]) {
-        
-        return SLServiceTypeFacebook;
-        
-    }else if ([accountIdentifier isEqualToString:ACAccountTypeIdentifierSinaWeibo]){
-        
-        return SLServiceTypeSinaWeibo;
-        
-    }else if ([accountIdentifier isEqualToString:ACAccountTypeIdentifierTwitter]){
-        
-        return SLServiceTypeTwitter;
-        
-    }else if ([accountIdentifier isEqualToString:ACAccountTypeIdentifierTencentWeibo]){
-        
-        return SLServiceTypeTencentWeibo;
-        
-    }
-    
-    return nil;
-    
-}
+
 
 -(id)handleResponse:(NSData*)responseData urlResponse:(NSURLResponse*)response targetUnit:(CREBindingUnit*)targetUnit{
     
