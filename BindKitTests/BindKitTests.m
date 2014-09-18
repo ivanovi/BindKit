@@ -42,18 +42,6 @@
 - (void)setUp {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
-    
-    helper = [CREBindTestHelper new];
-    
-    aDictionary = helper.aDictionary;
-    bDictionary = helper.bDictionary;
-    cDictionary = helper.cDictionary;
-    
-    [self baseTestValues];
-    [self baseProperties];
-    
-    aTestMappingDictionary = helper.aTestMappingDictionary;
-    
   
 
 }
