@@ -25,7 +25,7 @@
 
 
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "CREBindRelation.h"
 #import "NSError+BinderKit.h"
 #import "CREBindProtocol.h"

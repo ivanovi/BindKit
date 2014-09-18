@@ -36,6 +36,10 @@
 		0CDED09319CAADFB00F4ADD9 /* CREImagePNGDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDED09119CAADFB00F4ADD9 /* CREImagePNGDataTransformer.m */; };
 		0CDED09619CAAF7000F4ADD9 /* CREIsNilTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDED09419CAAF7000F4ADD9 /* CREIsNilTransformer.h */; };
 		0CDED09719CAAF7000F4ADD9 /* CREIsNilTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDED09519CAAF7000F4ADD9 /* CREIsNilTransformer.m */; };
+		0CDED14019CAF46F00F4ADD9 /* cc-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0CDED13F19CAF46F00F4ADD9 /* cc-logo.png */; };
+		0CDED14219CB01AA00F4ADD9 /* BindKitValueTransformerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDED14119CB01AA00F4ADD9 /* BindKitValueTransformerTests.m */; };
+		0CDED14419CB02AC00F4ADD9 /* BindKitBaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDED14319CB02AC00F4ADD9 /* BindKitBaseTests.m */; };
+		0CDED14719CB063400F4ADD9 /* BindKitTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDED14619CB063400F4ADD9 /* BindKitTestCase.m */; };
 		0CF7B40919C09AAF001E1678 /* CREBindTestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7B40519C0940B001E1678 /* CREBindTestHelper.m */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +76,11 @@
 		0CDED09119CAADFB00F4ADD9 /* CREImagePNGDataTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CREImagePNGDataTransformer.m; sourceTree = "<group>"; };
 		0CDED09419CAAF7000F4ADD9 /* CREIsNilTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CREIsNilTransformer.h; sourceTree = "<group>"; };
 		0CDED09519CAAF7000F4ADD9 /* CREIsNilTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CREIsNilTransformer.m; sourceTree = "<group>"; };
+		0CDED13F19CAF46F00F4ADD9 /* cc-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cc-logo.png"; sourceTree = "<group>"; };
+		0CDED14119CB01AA00F4ADD9 /* BindKitValueTransformerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindKitValueTransformerTests.m; sourceTree = "<group>"; };
+		0CDED14319CB02AC00F4ADD9 /* BindKitBaseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindKitBaseTests.m; sourceTree = "<group>"; };
+		0CDED14519CB063400F4ADD9 /* BindKitTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindKitTestCase.h; sourceTree = "<group>"; };
+		0CDED14619CB063400F4ADD9 /* BindKitTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindKitTestCase.m; sourceTree = "<group>"; };
 		0CF7B40419C0940B001E1678 /* CREBindTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CREBindTestHelper.h; path = BindKitTests/CREBindTestHelper.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0CF7B40519C0940B001E1678 /* CREBindTestHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CREBindTestHelper.m; path = BindKitTests/CREBindTestHelper.m; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 /* End PBXFileReference section */
@@ -97,7 +106,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0C25CB0419C04B7A00A5DC40 /* Remote Resource Binding */ = {
+		0C25CB0419C04B7A00A5DC40 /* RemoteResourceBinding */ = {
 			isa = PBXGroup;
 			children = (
 				0CDE521019B639BE00412662 /* CRERemoteBindingRelation.h */,
@@ -105,7 +114,7 @@
 				0CDED08619C9AA3000F4ADD9 /* CRESocialServicesRelation.h */,
 				0CDED08719C9AA3000F4ADD9 /* CRESocialServicesRelation.m */,
 			);
-			name = "Remote Resource Binding";
+			name = RemoteResourceBinding;
 			sourceTree = "<group>";
 		};
 		0CB7A31019ADC31D0020FBD5 = {
@@ -147,9 +156,13 @@
 		0CB7A32619ADC31D0020FBD5 /* BindKitTests */ = {
 			isa = PBXGroup;
 			children = (
+				0CDED14519CB063400F4ADD9 /* BindKitTestCase.h */,
+				0CDED14619CB063400F4ADD9 /* BindKitTestCase.m */,
 				0CB7A32919ADC31D0020FBD5 /* BindKitTests.m */,
+				0CDED14319CB02AC00F4ADD9 /* BindKitBaseTests.m */,
 				0C25CB0919C0618700A5DC40 /* BindKitRemoteTests.m */,
-				0CF7B40719C09414001E1678 /* Help */,
+				0CDED14119CB01AA00F4ADD9 /* BindKitValueTransformerTests.m */,
+				0CF7B40719C09414001E1678 /* HelpClasses */,
 				0CB7A32719ADC31D0020FBD5 /* Supporting Files */,
 			);
 			path = BindKitTests;
@@ -158,6 +171,7 @@
 		0CB7A32719ADC31D0020FBD5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0CDED13F19CAF46F00F4ADD9 /* cc-logo.png */,
 				0C9DB15F19C181A6003548FC /* Social.framework */,
 				0CB7A32819ADC31D0020FBD5 /* Info.plist */,
 				0C9DB16219C18D1C003548FC /* Accounts.framework */,
@@ -172,13 +186,13 @@
 				0CDED08A19C9AE6400F4ADD9 /* Base */,
 				0CB7A35E19AE0BC20020FBD5 /* NSError+BinderKit.h */,
 				0CB7A35F19AE0BC20020FBD5 /* NSError+BinderKit.m */,
-				0CDED08519C996E700F4ADD9 /* Value Transformers */,
-				0C25CB0419C04B7A00A5DC40 /* Remote Resource Binding */,
+				0CDED08519C996E700F4ADD9 /* ValueTransformers */,
+				0C25CB0419C04B7A00A5DC40 /* RemoteResourceBinding */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
 		};
-		0CDED08519C996E700F4ADD9 /* Value Transformers */ = {
+		0CDED08519C996E700F4ADD9 /* ValueTransformers */ = {
 			isa = PBXGroup;
 			children = (
 				0CDED07619C996CD00F4ADD9 /* CREValueTransformer.h */,
@@ -192,7 +206,7 @@
 				0CDED09419CAAF7000F4ADD9 /* CREIsNilTransformer.h */,
 				0CDED09519CAAF7000F4ADD9 /* CREIsNilTransformer.m */,
 			);
-			name = "Value Transformers";
+			name = ValueTransformers;
 			sourceTree = "<group>";
 		};
 		0CDED08A19C9AE6400F4ADD9 /* Base */ = {
@@ -208,13 +222,13 @@
 			name = Base;
 			sourceTree = "<group>";
 		};
-		0CF7B40719C09414001E1678 /* Help */ = {
+		0CF7B40719C09414001E1678 /* HelpClasses */ = {
 			isa = PBXGroup;
 			children = (
 				0CF7B40419C0940B001E1678 /* CREBindTestHelper.h */,
 				0CF7B40519C0940B001E1678 /* CREBindTestHelper.m */,
 			);
-			name = Help;
+			name = HelpClasses;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -325,6 +339,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CDED14019CAF46F00F4ADD9 /* cc-logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,8 +369,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				0CF7B40919C09AAF001E1678 /* CREBindTestHelper.m in Sources */,
+				0CDED14219CB01AA00F4ADD9 /* BindKitValueTransformerTests.m in Sources */,
 				0CB7A32A19ADC31D0020FBD5 /* BindKitTests.m in Sources */,
+				0CDED14419CB02AC00F4ADD9 /* BindKitBaseTests.m in Sources */,
 				0C25CB0A19C0618700A5DC40 /* BindKitRemoteTests.m in Sources */,
+				0CDED14719CB063400F4ADD9 /* BindKitTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

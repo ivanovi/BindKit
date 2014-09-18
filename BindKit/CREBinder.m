@@ -66,8 +66,7 @@
         [relationsArray addObject:initialRelation];
         
         _isBound = NO;
-
-        
+     
     }
     
     return self;
@@ -289,5 +288,23 @@
     [self unbind];
     
 }
+
+
+#define MYBUNDLE_NAME       @"testResources.bundle"
+#define MYBUNDLE_IDENTIFIER @"com.creatub.testResources"
+#define MYBUNDLE_PATH       [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent: MYBUNDLE_NAME]
+#define MYBUNDLE            [NSBundle bundleWithPath: MYBUNDLE_PATH]
+
+// Get an image file from your "static library" bundle:
+
+- (NSString *) getMyBundlePathFor: (NSString *) filename
+{
+    NSBundle *libBundle = MYBUNDLE;
+    if( libBundle && filename ){
+        return [[libBundle resourcePath] stringByAppendingPathComponent: filename];
+    }
+    return nil;
+}
+
 
 @end

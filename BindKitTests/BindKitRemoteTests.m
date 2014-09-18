@@ -59,8 +59,8 @@
     bDictionary = helper.bDictionary;
     cDictionary = helper.cDictionary;
     
-    [self baseTestValues];
-    [self baseProperties];
+    //[self baseTestValues];
+    //[self baseProperties];
     
     aTestMappingDictionary = helper.aTestMappingDictionary;
 
@@ -105,22 +105,6 @@
 
 
 
-
--(void)baseTestValues{
-    
-    aTestValue = helper.aTestValue;
-    bTestValue = helper.bTestValue;
-    cTestValue = helper.cTestValue;
-    
-}
-
--(void)baseProperties{
-    
-    aProperty = helper.aProperty;
-    bProperty = helper.bProperty;
-    cProperty = helper.cProperty;
-    
-}
 
 -(void)assertBindingUnit:(CREBindingUnit*)oneUnit withBindingUnit:(CREBindingUnit*)secondUnit{
     

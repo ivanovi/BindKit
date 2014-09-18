@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BindKitTests/BindKitTests.m"
-            timestampString = "432658388.22657"
+            filePath = "BindKitTests/CREBindTestHelper.m"
+            timestampString = "432736331.280631"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
-            landmarkName = "-testBaseBinderComposition"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
+            landmarkName = "-createTestImage"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

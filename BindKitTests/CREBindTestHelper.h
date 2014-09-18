@@ -25,18 +25,8 @@
 
 
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-
-//@interface BindKitTests : XCTestCase  {
-//    
-//    NSDictionary * aDictionary, *bDictionary, *cDictionary;
-//    NSDictionary * aTestMappingDictionary;
-//    
-//    NSString *aTestValue, *bTestValue, *cTestValue;
-//    NSString *aProperty, *bProperty, *cProperty;;
-//    
-//}
 
 @interface CREBindTestHelper : NSObject
 
@@ -45,5 +35,7 @@
 @property (nonatomic, strong) NSDictionary * aDictionary, *bDictionary, *cDictionary, *aTestMappingDictionary;
 @property (nonatomic, strong) NSString *aTestValue, *bTestValue, *cTestValue;
 @property (nonatomic, strong) NSString *aProperty, *bProperty, *cProperty;
+@property (nonatomic, strong) UIImage * testImage;
+@property (nonatomic, strong) NSData *testPNGImageData;
 
 @end

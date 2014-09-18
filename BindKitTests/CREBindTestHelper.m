@@ -56,6 +56,8 @@
         
         isRemote = YES;
         [self initializeValues];
+       
+        
         
     }
     
@@ -75,6 +77,9 @@
     
     _aTestMappingDictionary = @{_aProperty:_aDictionary,
                                _bProperty:_bDictionary};
+    
+     _testImage = [self createTestImage];
+     _testPNGImageData = UIImagePNGRepresentation(_testImage);
     
     
 }
@@ -101,7 +106,13 @@
     
 }
 
-
+-(UIImage*)createTestImage{
+    
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSString *path = [bundle pathForResource:@"cc-logo" ofType:@"png"];
+    
+    return [UIImage imageWithContentsOfFile:path];
+}
 
 
 @end
