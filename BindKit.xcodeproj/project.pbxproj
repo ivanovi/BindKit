@@ -32,6 +32,10 @@
 		0CDED08419C996CD00F4ADD9 /* CREDataImageTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDED07C19C996CD00F4ADD9 /* CREDataImageTransformer.m */; };
 		0CDED08819C9AA3000F4ADD9 /* CRESocialServicesRelation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDED08619C9AA3000F4ADD9 /* CRESocialServicesRelation.h */; };
 		0CDED08919C9AA3000F4ADD9 /* CRESocialServicesRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDED08719C9AA3000F4ADD9 /* CRESocialServicesRelation.m */; };
+		0CDED09219CAADFB00F4ADD9 /* CREImagePNGDataTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDED09019CAADFB00F4ADD9 /* CREImagePNGDataTransformer.h */; };
+		0CDED09319CAADFB00F4ADD9 /* CREImagePNGDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDED09119CAADFB00F4ADD9 /* CREImagePNGDataTransformer.m */; };
+		0CDED09619CAAF7000F4ADD9 /* CREIsNilTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDED09419CAAF7000F4ADD9 /* CREIsNilTransformer.h */; };
+		0CDED09719CAAF7000F4ADD9 /* CREIsNilTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDED09519CAAF7000F4ADD9 /* CREIsNilTransformer.m */; };
 		0CF7B40919C09AAF001E1678 /* CREBindTestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7B40519C0940B001E1678 /* CREBindTestHelper.m */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +68,10 @@
 		0CDED07C19C996CD00F4ADD9 /* CREDataImageTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CREDataImageTransformer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0CDED08619C9AA3000F4ADD9 /* CRESocialServicesRelation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRESocialServicesRelation.h; sourceTree = "<group>"; };
 		0CDED08719C9AA3000F4ADD9 /* CRESocialServicesRelation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRESocialServicesRelation.m; sourceTree = "<group>"; };
+		0CDED09019CAADFB00F4ADD9 /* CREImagePNGDataTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CREImagePNGDataTransformer.h; sourceTree = "<group>"; };
+		0CDED09119CAADFB00F4ADD9 /* CREImagePNGDataTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CREImagePNGDataTransformer.m; sourceTree = "<group>"; };
+		0CDED09419CAAF7000F4ADD9 /* CREIsNilTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CREIsNilTransformer.h; sourceTree = "<group>"; };
+		0CDED09519CAAF7000F4ADD9 /* CREIsNilTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CREIsNilTransformer.m; sourceTree = "<group>"; };
 		0CF7B40419C0940B001E1678 /* CREBindTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CREBindTestHelper.h; path = BindKitTests/CREBindTestHelper.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0CF7B40519C0940B001E1678 /* CREBindTestHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CREBindTestHelper.m; path = BindKitTests/CREBindTestHelper.m; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 /* End PBXFileReference section */
@@ -177,8 +185,12 @@
 				0CDED07519C996CD00F4ADD9 /* CREValueTransformer.m */,
 				0CDED07819C996CD00F4ADD9 /* CREDataImageTransformer.h */,
 				0CDED07C19C996CD00F4ADD9 /* CREDataImageTransformer.m */,
+				0CDED09019CAADFB00F4ADD9 /* CREImagePNGDataTransformer.h */,
+				0CDED09119CAADFB00F4ADD9 /* CREImagePNGDataTransformer.m */,
 				0CDED07A19C996CD00F4ADD9 /* CRENegateTransformer.h */,
 				0CDED07B19C996CD00F4ADD9 /* CRENegateTransformer.m */,
+				0CDED09419CAAF7000F4ADD9 /* CREIsNilTransformer.h */,
+				0CDED09519CAAF7000F4ADD9 /* CREIsNilTransformer.m */,
 			);
 			name = "Value Transformers";
 			sourceTree = "<group>";
@@ -216,11 +228,13 @@
 				0CBE0E8219AF7644007AE6DD /* CREBindRelation.h in Headers */,
 				0CB7A36019AE0BC20020FBD5 /* NSError+BinderKit.h in Headers */,
 				0CDED08019C996CD00F4ADD9 /* CREDataImageTransformer.h in Headers */,
+				0CDED09619CAAF7000F4ADD9 /* CREIsNilTransformer.h in Headers */,
 				0C08D9F319B0BCD2008E27F6 /* CREBindingUnit.h in Headers */,
 				0CDED08819C9AA3000F4ADD9 /* CRESocialServicesRelation.h in Headers */,
 				0CDED07E19C996CD00F4ADD9 /* CREValueTransformer.h in Headers */,
 				0CDE521219B639BE00412662 /* CRERemoteBindingRelation.h in Headers */,
 				0CBA0A8E19C849CB009C2C09 /* CREBindProtocol.h in Headers */,
+				0CDED09219CAADFB00F4ADD9 /* CREImagePNGDataTransformer.h in Headers */,
 				0CDED08219C996CD00F4ADD9 /* CRENegateTransformer.h in Headers */,
 				0CB7A32019ADC31D0020FBD5 /* BindKit.h in Headers */,
 			);
@@ -329,6 +343,8 @@
 				0CDED07D19C996CD00F4ADD9 /* CREValueTransformer.m in Sources */,
 				0CDED08319C996CD00F4ADD9 /* CRENegateTransformer.m in Sources */,
 				0CBE0E8319AF7644007AE6DD /* CREBindRelation.m in Sources */,
+				0CDED09719CAAF7000F4ADD9 /* CREIsNilTransformer.m in Sources */,
+				0CDED09319CAADFB00F4ADD9 /* CREImagePNGDataTransformer.m in Sources */,
 				0CDE521319B639BE00412662 /* CRERemoteBindingRelation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

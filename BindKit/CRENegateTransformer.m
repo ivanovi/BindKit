@@ -38,7 +38,7 @@
         
     }
     @catch (NSException *exception) {
-        NSLog(@"Failed to negate number %@", value);
+        NSLog(@"Failed to negate number %@. The value must be of type NSInteger, Int, Bool", value);
         
         [exception raise];
     }
