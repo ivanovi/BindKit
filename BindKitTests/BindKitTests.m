@@ -68,7 +68,6 @@
               
 -(void)testBindingUnitInitialization{
     
-    UILabel *aLabel = [UILabel new];
     
     CREBindingUnit *testUnit = [[CREBindingUnit alloc]initWithDictionary:@{aProperty:aDictionary}];
     
@@ -101,7 +100,8 @@
     }
     
 }
-//TODO: add assertion
+//TODO: add assertion + add unit duplication check in class
+
 - (void)testBindingDefintionAddBindingUnit{
     
     CREBindRelation *aDefinition = [CREBindRelation new];

@@ -14,12 +14,15 @@
     
     if (value) {
         
-        return [NSNumber numberWithBool:YES];
+        return [NSNumber numberWithBool:NO];
         
+    }else{
+   
+        return [NSNumber numberWithBool:YES];
+    
     }
     
-    return [NSNumber numberWithBool:NO];
-    
+   
 }
 
 @end
