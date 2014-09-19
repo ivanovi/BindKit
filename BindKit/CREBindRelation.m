@@ -30,7 +30,7 @@
 
 @interface CREBindRelation(){
     
-    NSMutableArray * holderSet;
+    NSMutableArray * holderArray;
     
 }
 
@@ -43,7 +43,7 @@
     
     if (self) {
         
-        holderSet = [NSMutableArray new];
+        holderArray = [NSMutableArray new];
         
         _directionType = CREBindingRelationDirectionBothWays;
         _isBound = NO;
@@ -53,6 +53,9 @@
 }
 
 -(instancetype)initWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray{
+    
+    
+    
     self = [self init];
     
     if (self) {
@@ -72,6 +75,8 @@
         
         
     }
+    
+    NSAssert(holderArray.count > 0, @"%s %@", __PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:101]);
     
     return self;
     
@@ -113,7 +118,8 @@
                 mergeBOOL = [_delegate bindRelation:self shouldSetValue:newValue forKeyPath:keyPath];
             }else
             {
-                NSLog(@"Warnig %@", [NSError errorDescriptionForDomain:kCREBinderWarningsDomain code:1000]);
+                NSLog(@"Warnig %@ for %@", [NSError errorDescriptionForDomain:kCREBinderWarningsDomain code:1000],
+                      NSStringFromSelector( @selector(bindRelation:shouldSetValue:forKeyPath:)));
             }
             if (mergeBOOL)
             {
@@ -175,15 +181,13 @@
 
 -(NSSet*)boundObjects{
 
-    NSAssert(holderSet, @"%s %@", __PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:101]);
     
     return [self allBinderUnitValuesWithKey:@"boundObject"];
 
 }
 
 -(NSSet*)keys{
-    
-    NSAssert(holderSet, @"%s %@", __PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:101]);
+
     
     return [self allBinderUnitValuesWithKey:@"boundObjectProperty"];
     
@@ -191,9 +195,8 @@
 
 -(NSArray*)bindingUnits{
     
-    NSAssert(holderSet, @"%s %@", __PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:101]);
     
-    return [NSArray arrayWithArray:holderSet];
+    return [NSArray arrayWithArray:holderArray];
     
 }
 
@@ -207,7 +210,7 @@
     {
         
         newBinderUnit = [[CREBindingUnit alloc] initWithDictionary:propertyTargetDict];
-        [holderSet addObject:newBinderUnit];
+        [holderArray addObject:newBinderUnit];
         [newBinderUnit setRelation:self];
 
     
@@ -218,10 +221,10 @@
 
 - (void)addBindingUnit:(CREBindingUnit*)subBindingUnit{
     
-    if (![holderSet containsObject:subBindingUnit])
+    if (![holderArray containsObject:subBindingUnit])
     {
         
-        [holderSet addObject:subBindingUnit];
+        [holderArray addObject:subBindingUnit];
         [subBindingUnit setRelation:self];
         
     }
@@ -250,7 +253,7 @@
 
 - (void)removeBindingUnit:(CREBindingUnit*)bindingUnit{
  
-    [holderSet removeObject:bindingUnit];
+    [holderArray removeObject:bindingUnit];
     
     if ([bindingUnit isEqual:sourceUnit])
     {
@@ -265,7 +268,7 @@
     
     CREBindingUnit *aUnit = nil;
     
-    for (CREBindingUnit *aBinderUnit in holderSet)
+    for (CREBindingUnit *aBinderUnit in holderArray)
     {
         
         if ([aBinderUnit compareWithDict:prospectDictionary])
@@ -285,7 +288,7 @@
     
     NSMutableSet *objectsSet = nil;
     
-    for (CREBindingUnit *aBinderUnit in holderSet) {
+    for (CREBindingUnit *aBinderUnit in holderArray) {
         
         [objectsSet addObject:[aBinderUnit valueForKey:binderUnitKey] ];
         
@@ -297,7 +300,7 @@
 
 -(BOOL)containsUnit:(CREBindingUnit *)unit{
     
-    return [holderSet containsObject:unit];
+    return [holderArray containsObject:unit];
     
     
 }
@@ -322,7 +325,7 @@
     }else
     {
         
-        NSLog(@"Warnining in %s. %@", __PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderWarningsDomain code:1000]);
+        NSLog(@"Warnining in %s. %@", __PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderWarningsDomain code:1001]);
         
     }
     

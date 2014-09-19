@@ -62,6 +62,8 @@
     {
         relationsArray = [NSMutableArray new];
         
+        
+
         CREBindRelation *initialRelation = [self createRelationWithProperties:propertiesArray sourceObjects:objectsArray relationClass:@"CREBindRelation"];
         [relationsArray addObject:initialRelation];
         

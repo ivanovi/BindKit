@@ -13,7 +13,7 @@
 
 -(id)bindRelation:(CREBindRelation *)relation willModify:(CREBindingUnit *)unit withValue:(id)value{
     
-    NSAssert([value isKindOfClass:[NSNumber class]], [NSError errorDescriptionForDomain:kCREBinderErrorLogic code:2004] );
+    NSAssert([value isKindOfClass:[NSNumber class]], [NSError errorDescriptionForDomain:kCREBinderErrorTransformer code:3003] );
         
     return  [NSDate dateWithTimeIntervalSince1970: (NSTimeInterval)[(NSNumber*)value integerValue] ];;
     

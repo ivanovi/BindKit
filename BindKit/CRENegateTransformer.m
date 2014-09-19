@@ -31,7 +31,7 @@
 -(id)bindRelation:(CREBindRelation *)Relation willModify:(CREBindingUnit *)unit withValue:(id)value{
     
    
-    NSAssert([value isKindOfClass:[NSNumber class]], [NSError errorDescriptionForDomain:kCREBinderErrorLogic code:2002] );
+    NSAssert([value isKindOfClass:[NSNumber class]], [NSError errorDescriptionForDomain:kCREBinderErrorTransformer code:3002] );
     
     return [NSNumber numberWithInt: ( [(NSNumber*)value intValue] * -1 )];
     

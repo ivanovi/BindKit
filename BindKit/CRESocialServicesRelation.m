@@ -79,8 +79,8 @@
 
 -(void)assertRequest:(id)request{
     
-    NSAssert(request, @"__FIX request factory must return a valid request");
-    NSAssert( [request isKindOfClass:[SLRequest class]], @"__FIX Supporting only SLRequest and NSURLRequest");
+    NSAssert(request, @"%@", [NSError errorDescriptionForDomain:kCREBinderErrorLogic code:2003]);
+    NSAssert( [request isKindOfClass:[SLRequest class]],@"%@", [NSError errorDescriptionForDomain:kCREBinderErrorLogic code:2004]);
     
 }
 

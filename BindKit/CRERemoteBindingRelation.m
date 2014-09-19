@@ -77,9 +77,9 @@
             if (!connectionError) {
                 
                 newValue = [self handleResponse:data urlResponse:response targetUnit:target];
-                NSAssert(newValue, @"__FIX no newValue");
+                NSAssert(newValue, @"%s %@",__PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorLogic code:2000]);
                 
-                NSLog(@"image received %@", sourceUnit.value);
+                //NSLog(@"image received %@", sourceUnit.value);
                 
                 [self setValue:newValue forObject:target.boundObject withKeypath:target.boundObjectProperty];
                 
@@ -135,8 +135,8 @@
 
 -(void)assertRequest:(id)request{
 
-    NSAssert(request, @"__FIX request factory must return a valid request");
-    NSAssert( [request isKindOfClass:[NSURLRequest class]], @"__FIX Supporting only SLRequest and NSURLRequest");
+    NSAssert(request, @"%@", [NSError errorDescriptionForDomain:kCREBinderErrorLogic code:2001]);
+    NSAssert( [request isKindOfClass:[NSURLRequest class]], @"%@", [NSError errorDescriptionForDomain:kCREBinderErrorLogic code:2002]);
     
 }
 
@@ -146,7 +146,7 @@
     if (sourceUnit.value)
     {
         
-        NSAssert( ([sourceUnit.value isKindOfClass: [NSString class] ] || [sourceUnit.value isKindOfClass: [NSString class] ] ), @"%s Error: %@ Source unit %@", __PRETTY_FUNCTION__ , [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:105], sourceUnit.value );
+        NSAssert( ([sourceUnit.value isKindOfClass: [NSString class] ] || [sourceUnit.value isKindOfClass: [NSURL class] ] ), @"%s Error: %@ Source unit %@", __PRETTY_FUNCTION__ , [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:105], sourceUnit.value );
         
     }
     
@@ -229,7 +229,7 @@
         
     }
     
-    NSAssert(newValue, @"__FIX New value not set receivedDict %@ mimeType %@", receivedDictionary, mimeType);
+    NSAssert(newValue, @"%@. New value not set receivedDict %@ mimeType %@",[NSError errorDescriptionForDomain:kCREBinderErrorLogic code:2000], receivedDictionary, mimeType);
     
     return newValue;
 }

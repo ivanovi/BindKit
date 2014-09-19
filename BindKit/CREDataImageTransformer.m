@@ -31,13 +31,13 @@
 -(id)bindRelation:(CREBindRelation *)Relation willModify:(CREBindingUnit *)unit withValue:(id)value{
     
     
-    NSAssert([value isKindOfClass: [NSData class] ], [NSError errorDescriptionForDomain:kCREBinderErrorLogic code:2002] );
+    NSAssert([value isKindOfClass: [NSData class] ], [NSError errorDescriptionForDomain:kCREBinderErrorTransformer code:3001] );
  
 #ifdef DEBUG //unit is not mandatory
     if (unit)
     {
 
-        NSAssert([unit.value isKindOfClass: [UIImage class] ], [NSError errorDescriptionForDomain:kCREBinderErrorLogic code:2002] );
+        NSAssert([unit.value isKindOfClass: [UIImage class] ], [NSError errorDescriptionForDomain:kCREBinderErrorTransformer code:3000] );
 
     }
 #endif

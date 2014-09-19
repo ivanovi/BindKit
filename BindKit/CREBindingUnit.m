@@ -47,6 +47,7 @@
             }
             @catch (NSException *exception)
             {
+                NSLog(@"%s %@",__PRETTY_FUNCTION__,[NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:102]);
                 
                 [exception raise];
                 

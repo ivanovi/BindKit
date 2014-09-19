@@ -29,116 +29,79 @@
 
 NSString * const kCREBinderErrorSetupDomain = @"binderErrorSetupErrorDomain";
 NSString * const kCREBinderWarningsDomain = @"binderErrorWarnigsDomain";
-NSString * const kCREBinderErrorInternalDomain = @"binderErrorInternal";
 NSString * const kCREBinderErrorLogic = @"binderErrorLogicDomain";
-NSString * const kCREBinderErrorTransformer = @"binderErrorTransformer";
+NSString * const kCREBinderErrorTransformer = @"binderErrorTransformerDomain";
 
+static NSDictionary * errorMessagesDictionary;
 
 @implementation NSError (BinderKit)
 
 
 +(NSError*)errorWithBinderDomain:(NSString *)domainString code:(NSInteger)errorCode{
     
-    NSString * errorDescription = [ NSError errorDescriptionForDomain:domainString code:errorCode ];
-    NSString * scopedDomain = [NSString stringWithFormat:@"%@%@%@",
-                               [[NSBundle mainBundle] bundleIdentifier],
-                               [[NSBundle mainBundle] infoDictionary] [@"CFBundleVersion"] ,
-                               domainString];
     
-    return [NSError errorWithDomain:scopedDomain
+    NSString * errorDescription = [ NSError errorDescriptionForDomain:domainString code:errorCode ];
+    
+    
+    
+    return [NSError errorWithDomain:domainString
                                code:errorCode
                            userInfo:@{@"localizedDescription":errorDescription }];
     
     
 }
 
-
-
-+(NSString*)errorDescriptionForDomain:(NSString*)errorDomain code:(NSInteger)errorCode{
++(void)unarchiveErrorMessages{
     
-    if ([errorDomain isEqualToString:kCREBinderErrorSetupDomain]) {
-        
-        return [NSError errorDescriptionForSetupDomain:errorCode - 100];
     
-    } else if ([errorDomain isEqualToString:kCREBinderWarningsDomain]){
+    if (!errorMessagesDictionary)
+    {
+        NSBundle *bundle = [NSBundle bundleForClass:NSClassFromString(@"CREBinder")];
+        NSString *path = [bundle pathForResource:@"BindKitErrorMessages" ofType:@"plist"];
         
-        return [NSError errorDescriptionWarnings:errorCode - 1000];
-
-    } else if ([errorDomain isEqualToString:kCREBinderErrorLogic]){
-        
-        return [NSError errorDescriptionLogic:errorCode - 2000];
-
-    } else if ([errorDomain isEqualToString:kCREBinderErrorTransformer]){
-        
-        return [NSError errorDescriptionTransformer:errorCode - 3000];
+        errorMessagesDictionary = [NSDictionary dictionaryWithContentsOfFile:path];
         
     }
     
+}
+
++(NSString*)errorDescriptionForDomain:(NSString*)errorDomain code:(NSInteger)errorCode{
     
-    return [NSError errorDescriptionForDefaultDomain:errorCode];
+    [self unarchiveErrorMessages];
+    
+    NSArray *errorMessagesForDomain = errorMessagesDictionary [ errorDomain ];
+    NSInteger normalizedCode = [NSError normalizeCodeForDomain:errorDomain code:errorCode];
+    
+    return errorMessagesForDomain [normalizedCode];
+    
 }
 
 #pragma mark - Private Methods
 
-#pragma mark - | Error Description Literals Mapping
++(NSInteger)normalizeCodeForDomain:(NSString*)errorDomain code:(NSInteger)errorCode{
+    
+        if ([errorDomain isEqualToString:kCREBinderErrorSetupDomain]) {
+    
+            return errorCode - 100;
+    
+        } else if ([errorDomain isEqualToString:kCREBinderWarningsDomain]){
+    
+            return errorCode - 1000;
+    
+        } else if ([errorDomain isEqualToString:kCREBinderErrorTransformer]){
+    
+            return errorCode - 3000;
+    
+        }
+        else if ([errorDomain isEqualToString:kCREBinderErrorLogic]){
+    
+            return errorCode - 2000;
+    
+        }
+    
+        return errorCode;
 
-+(NSString*)errorDescriptionForSetupDomain:(NSInteger)errorCode{
-    
-   
-    NSArray *errorDescritionsLiteralsArray =
-    @[@"Adding pair using dictionaries is allowed only for one-to-one relationships (maximum two objects at a time).",
-      @"CREBinderDefinition must be initialised with mapping dictionary.",
-      @"INTERNAL - BindingUnit: Instance can be initialized with only one property : instance pair.",
-      @"INTERNAL - BindingUnit: Bounding Object does contain added property.",
-      @"Each property-name in the 'property' array must correspond to a matching sourceObject.",
-      @"RemoteBinder's source property can be either NSString or NSUrl instance.",
-      @"ValueTransformer did not implement mandatory method.",
-      @"ValueTransformer class not found."];
-    
-    
-    return errorDescritionsLiteralsArray [ errorCode ];
-
-    
 }
 
 
-+(NSString*)errorDescriptionForDefaultDomain:(NSInteger)errorCode{
-    
-    NSArray *errorDescritionsLiteralsArray =
-    @[@"Mandatory delegate method not implemented."];
-    
-    return errorDescritionsLiteralsArray [ errorCode ];
-    
-}
-
-
-+(NSString*)errorDescriptionWarnings:(NSInteger)errorCode{
-    
-    NSArray *errorDescritionsLiteralsArray =
-    @[@"Called setValue:ForKeyPath: with value of nil."];
-    
-    return errorDescritionsLiteralsArray [ errorCode ];
-    
-}
-
-+(NSString*)errorDescriptionLogic:(NSInteger)errorCode{
-    
-    NSArray *errorDescritionsLiteralsArray =
-    @[@"Received request to merge unit that was not added to any Relation",
-      @"A binding unit can be assigned to only one Relation.",
-      ];
-    
-    return errorDescritionsLiteralsArray [ errorCode ];
-}
-
-
-+(NSString*)errorDescriptionTransformer:(NSInteger)errorCode{
-    
-    NSArray *errorDescritionsLiteralsArray =
-    @[@"DataToImage transformer received object of incompatible type (expected NSData).",
-      @"NegateTransformer expects NSNumber instance passed as the 'value' parameter.",
-      @"NegateTransformer expects NSNumber instance passed as the 'value' parameter."];
-    
-    return errorDescritionsLiteralsArray [ errorCode ];
-}
 @end

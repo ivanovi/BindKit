@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>binderErrorTransformerDomain</key>
+	<array>
+		<string>DataToImage or ImagePNGData transformer target or value property is not type UIImage.</string>
+		<string>DataToImage or ImagePNGData transformer target or value property is not of type NSData.</string>
+		<string>NegateTransformer expects NSNumber instance as &apos;value&apos; parameter.</string>
+		<string>NumberDate transformer expects NSNumber instance passed as &apos;value&apos; parameter.</string>
+	</array>
+	<key>binderErrorWarnigsDomain</key>
+	<array>
+		<string>BindKit WARNING: Mandatory delegate method not implemented.</string>
+		<string>BindKit WARNING: BindRelation was asked to set value with instance equal to &apos;nil&apos;</string>
+	</array>
+	<key>binderErrorSetupErrorDomain</key>
+	<array>
+		<string>Adding property-object pair with dictionaries is allowed only for one-to-one relationships (maximum two objects at a time).</string>
+		<string>CREBindRelation must be initialised with properties and source objects. Current relation does not contain any such property - source pair.</string>
+		<string>BindingUnit: Instance can be initialized with only one property-object pair. In the init method pass a dictionary with only one key-value pair.</string>
+		<string>BindingUnit: Bounding Object does not seem to contain added property. If you are using a  &apos;withProperties:sourceObjects:&apos; method please make sure the properties are ordered in accodance with their source objects. For example: propertiesArray = @[@&apos;text&apos;,@&apos;name&apos;] sourceArray = @[nameLabel,personModelObject]</string>
+		<string>Each property-name in the &apos;property&apos; array must correspond to a matching sourceObject.</string>
+		<string>RemoteBinder&apos;s source property can hold either NSString or NSUrl instance.</string>
+	</array>
+	<key>binderErrorLogicDomain</key>
+	<array>
+		<string>RemoteBindingRelation could not resolve received response.</string>
+		<string>RemoteBindingRelation could not validate passed request =&gt; request missing.</string>
+		<string>RemoteBindingRelation supports request of type NSURLRequest only; the passed request is of different type.</string>
+		<string>SocialServicesRelation could not validate passed request =&gt; request missing.</string>
+		<string>SocialServicesRelation supports request of type SLRequest only; the passed request is of different type.</string>
+	</array>
+</dict>
+</plist>

@@ -26,6 +26,14 @@
 #import "BindKitTestCase.h"
 #import "CREBindTestHelper.h"
 
+@interface BindKitTestCase(){
+    
+    BOOL didRunSetup;
+    
+}
+
+@end
+
 @implementation BindKitTestCase
 
 
@@ -34,16 +42,19 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     
-    helper = [CREBindTestHelper new];
-    
-    aDictionary = helper.aDictionary;
-    bDictionary = helper.bDictionary;
-    cDictionary = helper.cDictionary;
-    
-    [self baseTestValues];
-    [self baseProperties];
-    
-    aTestMappingDictionary = helper.aTestMappingDictionary;
+
+        helper = [CREBindTestHelper new];
+        
+        aDictionary = helper.aDictionary;
+        bDictionary = helper.bDictionary;
+        cDictionary = helper.cDictionary;
+        
+        [self baseTestValues];
+        [self baseProperties];
+        
+        aTestMappingDictionary = helper.aTestMappingDictionary;
+        
+        didRunSetup = YES;
     
 }
 
