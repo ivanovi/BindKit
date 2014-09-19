@@ -137,16 +137,19 @@
     
     NSDate *nowDate = [NSDate date];
     
-    id returnedValue = [valueTransformer bindRelation:nil willModify:nil withValue:@( [nowDate  timeIntervalSince1970] )];
+    NSDate * returnedValue = [valueTransformer bindRelation:nil willModify:nil withValue:@( [nowDate  timeIntervalSince1970] )];
+    
+    NSTimeInterval a = [nowDate timeIntervalSinceDate:returnedValue];
     
     XCTAssert(returnedValue, @"ValueTransformer returned nil. In %s", __PRETTY_FUNCTION__);
-    XCTAssertTrue([nowDate isEqualToDate:returnedValue], @"NumberToDate transformer returned wrong value" );
+    XCTAssertTrue(a < 1, @"NumberToDate transformer returned wrong value" );
     
     NSDate *diffrentDate = [NSDate date];
     
     id returnedSecondValue = [valueTransformer bindRelation:nil willModify:nil withValue:@( [diffrentDate  timeIntervalSince1970] )];
+    NSTimeInterval b = [nowDate timeIntervalSinceDate:returnedSecondValue];
     
-    XCTAssertTrue(![nowDate isEqualToDate:returnedSecondValue],  @"NumberToDate transformer returned wrong value on negative test");
+    XCTAssertTrue( b < a,  @"NumberToDate transformer returned wrong value on negative test");
     XCTAssertThrows([valueTransformer bindRelation:nil willModify:nil withValue:@"i'm not an NSDate"], @"NegateTransformer accepted a non-NSnumber value");
 
 }
