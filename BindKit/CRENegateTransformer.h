@@ -25,8 +25,8 @@
 
 #import "CREValueTransformer.h"
 
-//Returns an NSNumber with the opposite / negative value
-//Expects NSInteger, int or BOOL
+
+//Expects NSNumber
 
 @interface CRENegateTransformer : CREValueTransformer
 

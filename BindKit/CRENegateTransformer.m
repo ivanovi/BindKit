@@ -30,21 +30,10 @@
 
 -(id)bindRelation:(CREBindRelation *)Relation willModify:(CREBindingUnit *)unit withValue:(id)value{
     
-    NSNumber *transformNumber = nil;
+   
+    NSAssert([value isKindOfClass:[NSNumber class]], [NSError errorDescriptionForDomain:kCREBinderErrorLogic code:2002] );
     
-    @try {
-        
-        transformNumber = [NSNumber numberWithInt: ( (int)value * -1 )];
-        
-    }
-    @catch (NSException *exception) {
-        NSLog(@"Failed to negate number %@. The value must be of type NSInteger, Int, Bool", value);
-        
-        [exception raise];
-    }
-    
-    
-    return transformNumber;
+    return [NSNumber numberWithInt: ( [(NSNumber*)value intValue] * -1 )];
     
 }
 

@@ -31,6 +31,8 @@ NSString * const kCREBinderErrorSetupDomain = @"binderErrorSetupErrorDomain";
 NSString * const kCREBinderWarningsDomain = @"binderErrorWarnigsDomain";
 NSString * const kCREBinderErrorInternalDomain = @"binderErrorInternal";
 NSString * const kCREBinderErrorLogic = @"binderErrorLogicDomain";
+NSString * const kCREBinderErrorTransformer = @"binderErrorTransformer";
+
 
 @implementation NSError (BinderKit)
 
@@ -66,7 +68,12 @@ NSString * const kCREBinderErrorLogic = @"binderErrorLogicDomain";
         
         return [NSError errorDescriptionLogic:errorCode - 2000];
 
+    } else if ([errorDomain isEqualToString:kCREBinderErrorTransformer]){
+        
+        return [NSError errorDescriptionTransformer:errorCode - 3000];
+        
     }
+    
     
     return [NSError errorDescriptionForDefaultDomain:errorCode];
 }
@@ -119,7 +126,18 @@ NSString * const kCREBinderErrorLogic = @"binderErrorLogicDomain";
     NSArray *errorDescritionsLiteralsArray =
     @[@"Received request to merge unit that was not added to any Relation",
       @"A binding unit can be assigned to only one Relation.",
-      @"DataToImage transformer received object of incompatible type (expected NSData)."];
+      ];
+    
+    return errorDescritionsLiteralsArray [ errorCode ];
+}
+
+
++(NSString*)errorDescriptionTransformer:(NSInteger)errorCode{
+    
+    NSArray *errorDescritionsLiteralsArray =
+    @[@"DataToImage transformer received object of incompatible type (expected NSData).",
+      @"NegateTransformer expects NSNumber instance passed as the 'value' parameter.",
+      @"NegateTransformer expects NSNumber instance passed as the 'value' parameter."];
     
     return errorDescritionsLiteralsArray [ errorCode ];
 }

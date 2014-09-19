@@ -33,7 +33,7 @@
     Class transformerClass = NSClassFromString(transformerClassName);
    
     NSAssert(transformerClass, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:1007]);
-    NSAssert([transformerClass resolveClassMethod:@selector(bindRelation:willModify:withValue:)],
+    NSAssert([transformerClass instancesRespondToSelector:@selector(bindRelation:willModify:withValue:)],
              @"%@. In class: %@", [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:1006], transformerClass);
     
     return [NSClassFromString(transformerClassName)  new];
