@@ -135,11 +135,7 @@
         if (mergeBOOL)
         {
             
-            _isLocked = YES;
-
-                [self mergeValue:newValue toTarget:notifyUnit];
-            
-            _isLocked = NO;
+            [self mergeValue:newValue toTarget:notifyUnit];
             
         }
         
@@ -231,12 +227,14 @@
     
 }
 
+#pragma mark - Source Unit accessors
+
 -(void)setSourceBindingUnit:(CREBindingUnit *)sourceBindingUnit{
     
-   // [self addSourceBindingUnit:sourceBindingUnit];
-    
-    _directionType = CREBindingRelationDirectionBothWays;
-    sourceUnit = sourceBindingUnit;
+    [self unbind];
+        _directionType = CREBindingRelationDirectionOneWay;
+        sourceUnit = sourceBindingUnit;
+    [self bind];
     
 }
 
@@ -245,6 +243,16 @@
     return sourceUnit;
     
 }
+
+-(void)removeSourceUnit{
+    
+    [self unbind];
+        _directionType = CREBindingRelationDirectionBothWays;
+        sourceUnit = nil;
+    [self bind];
+    
+}
+
 
 -(NSDictionary*)propertyTargetRelationForProperty:(NSString *)property{
     
@@ -319,9 +327,9 @@
     
     if (value)
     {
-        
-        [target.boundObject setValue:value forKeyPath:target.boundObjectProperty];
-        
+        _isLocked = YES;
+            [target.boundObject setValue:value forKeyPath:target.boundObjectProperty];
+        _isLocked = NO;
     }else
     {
         

@@ -84,8 +84,9 @@
 
 -(void)assertBindingUnit:(CREBindingUnit*)oneUnit withBindingUnit:(CREBindingUnit*)secondUnit{
     
-    XCTAssertTrue( [oneUnit.boundObject isEqual:secondUnit.boundObject], @"Failed addinig bindingUnit" );
-    XCTAssertTrue( [oneUnit.boundObjectProperty isEqual:secondUnit.boundObjectProperty], @"Failed addinig bindingUnit" );
+    XCTAssertEqualObjects(oneUnit.boundObject, secondUnit.boundObject,  @"Failed addinig bindingUnit; boundObjects are not equal." );
+    XCTAssertEqualObjects(oneUnit.boundObjectProperty, secondUnit.boundObjectProperty,  @"Failed addinig bindingUnit ; boundObjectProperty are not equal." );
+
     
 }
 
