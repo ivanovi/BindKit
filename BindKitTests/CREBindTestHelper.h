@@ -26,6 +26,7 @@
 
 
 #import <UIKit/UIKit.h>
+#import "CRETestModel.h"
 
 
 @interface CREBindTestHelper : NSObject
@@ -37,5 +38,7 @@
 @property (nonatomic, strong) NSString *aProperty, *bProperty, *cProperty;
 @property (nonatomic, strong) UIImage * testImage;
 @property (nonatomic, strong) NSData *testPNGImageData;
+@property (nonatomic, strong) NSArray *testModelArray;
+@property (nonatomic, strong) NSArray *testModelPropertiesArray;
 
 @end

@@ -233,6 +233,7 @@
     
 }
 
+#pragma mark - Merge Value Interface
 
 -(void)testMergeValue{
     
@@ -253,10 +254,110 @@
     [bRelation bind];
     
     [bRelation mergeValue:aTestValue toTarget:bRelation.bindingUnits [0]];
-//    XCTAssertEqualObjects(aDictionary[aProperty], bDictionary[bProperty], @"MergeValue interface call failed.");
+    XCTAssertEqualObjects(aDictionary[aProperty], bDictionary[bProperty], @"MergeValue interface call failed.");
     XCTAssertEqualObjects(aDictionary[aProperty], aTestValue, @"MergeValue failed to assign value.");
 
     
+    
+}
+
+#pragma mark - Bind operation
+
+-(void)testBindRelation{
+    
+    CREBindRelation *aRelation = [[CREBindRelation alloc] initWithProperties:@[aProperty, bProperty]
+                                                               sourceObjects:@[aDictionary, bDictionary]];
+    
+    [aDictionary setValue:aTestValue forKey:aProperty];
+    XCTAssertNotEqualObjects(aDictionary[aProperty], bDictionary[bProperty], @"Initial bind state must be unbound (isBound = NO).");
+    
+    [aRelation bind];
+    XCTAssertEqualObjects(aDictionary[aProperty], bDictionary[bProperty], @"MergeValue interface call failed.");
+
+    [bDictionary setValue:bTestValue forKey:bProperty];
+    XCTAssertEqualObjects(aDictionary[aProperty], bDictionary[bProperty], @"MergeValue interface call failed.");
+    
+    NSArray *testModels = helper.testModelArray;
+    NSArray *testModelProperties = helper.testModelPropertiesArray;
+    
+    CREBindRelation *bRealation = [[CREBindRelation alloc] initWithProperties:testModelProperties sourceObjects:testModels];
+    
+    [bRealation bind];
+    
+    XCTAssertEqualObjects([testModels[0] valueForKey:testModelProperties[0]], [testModels[testModels.count-1] valueForKey:testModelProperties[testModels.count -1]], @"Multiple objects binding failed.");
+    
+    for (int i = 0; i < 5 ; i++)
+    {
+        
+        NSInteger randomIndex = arc4random_uniform(24);
+        NSInteger randomIndexCompare = randomIndex + 5;
+        
+        id setObject = testModels [randomIndex];
+        id secondObject = testModels [randomIndexCompare];
+        
+        NSString *property = testModelProperties [randomIndex];
+        NSString *propertySecond = testModelProperties [randomIndexCompare];
+        
+        [setObject setValue:@( arc4random_uniform(1000) )forKey: property];
+        
+        XCTAssertEqualObjects([setObject valueForKey:property], [secondObject valueForKey:propertySecond], @"Multiple objects binding failed" );
+        
+        
+    }
+    
+    
+}
+
+
+#pragma mark - Unbind operation
+
+
+-(void)testUnbindRelation{
+    
+    
+    CREBindRelation *aRelation = [[CREBindRelation alloc] initWithProperties:@[aProperty, bProperty]
+                                                               sourceObjects:@[aDictionary, bDictionary]];
+    
+    [aDictionary setValue:aTestValue forKey:aProperty];
+    [aRelation bind];
+    XCTAssertEqualObjects(aDictionary[aProperty], bDictionary[bProperty], @"Initial binding failed.");
+
+    [aRelation unbind];
+    
+    [aDictionary setValue:bTestValue forKey:aProperty];
+    
+    XCTAssertNotEqualObjects(aDictionary[aProperty], bDictionary[bProperty], @"Unbind must lead removal of key-value subscription.");
+    
+    
+}
+
+
+#pragma mark - Bind performance
+
+-(void)testBindPerformance{
+    
+    
+    __block NSArray *testModels = helper.testModelArray;
+    __block NSArray *testModelProperties = helper.testModelPropertiesArray;
+    
+    CREBindRelation *bRealation = [[CREBindRelation alloc] initWithProperties:testModelProperties sourceObjects:testModels];
+    
+    [bRealation bind];
+    
+    [self measureBlock:^{
+       
+        for (int i = 0; i < 100 ; i++)
+        {
+            
+            NSInteger randomIndex = arc4random_uniform((int)testModels.count);
+            id setObject = testModels [randomIndex];
+            NSString *property = testModelProperties [randomIndex];
+            
+            [setObject setValue:@( arc4random_uniform(1000) )forKey: property];
+            
+        }
+
+    }];
     
     
 }

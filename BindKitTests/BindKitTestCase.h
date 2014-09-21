@@ -25,6 +25,7 @@
 
 #import <XCTest/XCTest.h>
 #import "CREBinder.h"
+#import "CREBindTestHelper.h"
 
 
 @class CREBindTestHelper;

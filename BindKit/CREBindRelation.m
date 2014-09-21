@@ -323,7 +323,7 @@
         
     }
     
-    NSLog(@"setting value %@ in target %@", value, target);
+   // NSLog(@"setting value %@ in target %@", value, target);
     
     if (value)
     {

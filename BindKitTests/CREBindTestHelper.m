@@ -23,7 +23,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-
+#define testModelsCount 30
 
 #import "CREBindTestHelper.h"
 
@@ -81,6 +81,8 @@
      _testImage = [self createTestImage];
      _testPNGImageData = UIImagePNGRepresentation(_testImage);
     
+    [self createTestModels];
+    [self createTestModelProperties];
     
 }
 
@@ -114,5 +116,48 @@
     return [UIImage imageWithContentsOfFile:path];
 }
 
+
+-(void)createTestModels{
+    
+    if(!_testModelArray)
+    {
+        
+        NSMutableArray *array = [NSMutableArray new];
+        
+        for (int i = 0; i < testModelsCount ; i++)
+        {
+            
+            CRETestModel *aTestModel = [CRETestModel new];
+            [aTestModel setPropertyString:  [NSString stringWithFormat:@"%d", i ] ];
+
+            [array addObject:aTestModel];
+        }
+        
+        _testModelArray = [NSArray arrayWithArray:array];
+        
+    }
+    
+}
+
+-(void)createTestModelProperties{
+    
+    if(!_testModelPropertiesArray)
+    {
+        
+        NSMutableArray *array = [NSMutableArray new];
+        
+        for (int i = 0; i < testModelsCount ; i++)
+        {
+            
+            [array addObject:@"propertyString"];
+            
+        }
+
+        _testModelPropertiesArray = [NSArray arrayWithArray:array];
+        
+    }
+
+    
+}
 
 @end

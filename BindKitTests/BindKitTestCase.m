@@ -24,7 +24,6 @@
 //  SOFTWARE.
 
 #import "BindKitTestCase.h"
-#import "CREBindTestHelper.h"
 
 @interface BindKitTestCase(){
     
