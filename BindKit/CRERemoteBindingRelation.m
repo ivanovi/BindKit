@@ -81,7 +81,7 @@
                 
                 //NSLog(@"image received %@", sourceUnit.value);
                 
-                [self setValue:newValue forObject:target.boundObject withKeypath:target.boundObjectProperty];
+                [self setValue:newValue forUnit:target];
                 
             }else{
                 //handle error
@@ -233,6 +233,18 @@
     
     return newValue;
 }
+
+-(void)setValue:(id)value forUnit:(CREBindingUnit *)bindingUnit{
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [bindingUnit setValue:value];
+        
+    });
+    
+}
+
+
 
 
 //-(CREBindingRelationDirection)directionType{

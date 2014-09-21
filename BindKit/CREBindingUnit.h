@@ -44,9 +44,12 @@
 @property (nonatomic, weak) id remoteProperty;
 @property (nonatomic, weak) id value;
 @property (nonatomic, weak) CREBindRelation *relation;
+@property (nonatomic, readonly) BOOL isLocked;
 
 //@property (nonatomic, strong) NSDictionary *bindOptionsDictionary; // redo with enumeration
 
 -(BOOL)compareWithDict:(NSDictionary*)dictionary;
+
+-(void)unlock;
 
 @end

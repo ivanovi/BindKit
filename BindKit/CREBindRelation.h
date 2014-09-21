@@ -84,9 +84,6 @@ typedef NS_ENUM(NSUInteger, CREBindingRelationDirection) {
     
 }
 
-
-//@property (nonatomic, readonly) NSSet * boundObjects;
-//@property (nonatomic, readonly) NSSet * keys;
 @property (nonatomic, readonly) NSArray * bindingUnits; //immediate/current units
 @property (nonatomic, readonly) CREBindingRelationDirection directionType;
 @property (nonatomic, weak) id <CREValueTransformerProtocol> valueTransformer;
@@ -96,26 +93,16 @@ typedef NS_ENUM(NSUInteger, CREBindingRelationDirection) {
 @property (nonatomic, readonly) BOOL isLocked;
 @property (nonatomic, readonly) BOOL isBound;
 
-//- (instancetype)initWithDictionary:(NSDictionary*)bindingDict;
-- (instancetype)initWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
 
+- (instancetype)initWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
 
 - (CREBindingUnit*)addBindingUnitWithDictionary:(NSDictionary*)propertyTargetDict; //key => represents the property ; value => the instance
 - (void)addBindingUnit:(CREBindingUnit*)subBindingUnit;
 - (void)removeBindingUnit:(CREBindingUnit*)bindingUnit;
 
-//source unit ; changes also the direction of the relation
 - (void)setSourceBindingUnit:(CREBindingUnit*)sourceUnit;
 - (void)removeSourceUnit;
 
-//- (NSSet*)bindingUnitsForProperties:(NSString*)property;
-//- (NSSet*)bindingUnitsForObject:(id)boundObject;
-
-//- (void)handleInitialValue:(id)value unit:(CREBindingUnit*)unit;
 - (void)mergeValue:(id)value toTarget:(CREBindingUnit*)target;
-//- (BOOL)containsUnit:(CREBindingUnit*)unit;
-
-
-- (void)setValue:(id)value forObject:(id)object withKeypath:(NSString*)keyPath;
 
 @end

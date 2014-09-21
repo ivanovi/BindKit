@@ -88,7 +88,7 @@
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
     
-   if (_isLocked) //protect against infinite loop when both ways binding
+   if (self.isLocked) //protect against infinite loop when both ways binding
     {
 
         return;
@@ -327,25 +327,18 @@
     
     if (value)
     {
-        _isLocked = YES;
-            [target.boundObject setValue:value forKeyPath:target.boundObjectProperty];
-        _isLocked = NO;
+        
+        
+        [target setValue:value];
+        
+         //   [target.boundObject setValue:value forKeyPath:target.boundObjectProperty];
+        
     }else
     {
         
         NSLog(@"Warnining in %s. %@", __PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderWarningsDomain code:1001]);
         
     }
-    
-}
-
--(void)setValue:(id)value forObject:(id)object withKeypath:(NSString*)keyPath{
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        [object setValue:value forKeyPath:keyPath];
-        
-    });
     
 }
 
@@ -419,5 +412,35 @@
     
 }
 
+-(void)unlock{
+    
+    for(CREBindingUnit *aUnit in holderArray)
+    {
+        
+        [aUnit unlock];
+        
+    }
+    
+    
+}
+
+
+-(BOOL)isLocked{
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.isLocked == YES"];
+    NSArray *lockedUnits = [holderArray filteredArrayUsingPredicate:predicate];
+    
+    if ( (lockedUnits.count - 1) == holderArray.count)
+    {
+        
+        return YES;
+        
+    }else{
+        
+        return NO;
+        
+    }
+    
+}
 
 @end

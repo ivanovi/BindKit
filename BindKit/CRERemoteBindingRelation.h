@@ -50,4 +50,6 @@ typedef void (^CRERemoteBinderCallBack)(id newValue, CREBindingUnit *unit, NSErr
 -(void)assertSource;
 -(void)assertRequest:(id)request;
 
+-(void)setValue:(id)value forUnit:(CREBindingUnit*)bindingUnit;
+
 @end

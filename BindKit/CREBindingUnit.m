@@ -29,6 +29,8 @@
 
 @implementation CREBindingUnit
 
+//@synthesize value = _value;
+
 
 -(instancetype)initWithDictionary:(NSDictionary *)bindingMappingDictionary{
     NSAssert(bindingMappingDictionary.count == 1, @"%s %@",__PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:102]);
@@ -76,9 +78,36 @@
     
 }
 
+#pragma mark - Value accessors
+
 -(id)value{
     
     return [_boundObject valueForKeyPath:(NSString*)_boundObjectProperty];
+    
+}
+
+-(void)setValue:(id)value{
+    
+    if (![self.value isEqual:value])
+    {
+        
+        _isLocked = YES;
+        [_boundObject setValue:value forKeyPath:_boundObjectProperty];
+        
+    }
+    
+    
+}
+
+
+-(void)unlock{
+    
+    if (_isLocked)
+    {
+        
+        _isLocked = NO;
+        
+    }
     
 }
 @end

@@ -62,7 +62,19 @@
     [bDictionary setValue:cTestValue forKey:bProperty];
     XCTAssertEqualObjects(aDictionary [aProperty], bDictionary [bProperty], @"Failed base test %s", __PRETTY_FUNCTION__);
     
-    NSLog(@"dictionary A %@ dictionary B %@", aDictionary, bDictionary);
+    [newBinder unbind];
+    
+    CREBinder *secondBinder = [CREBinder binderWithProperties:@[aProperty, bProperty, cProperty]
+                                                sourceObjects:@[aDictionary, bDictionary, cDictionary]];
+    
+    [secondBinder bind];
+    [aDictionary setValue:aTestValue forKey:aProperty];
+    
+    XCTAssertEqualObjects(aDictionary [aProperty], bDictionary [bProperty], @"Failed base test %s", __PRETTY_FUNCTION__);
+    XCTAssertEqualObjects(aDictionary [aProperty], cDictionary [cProperty], @"Failed base bidning with more than 2 object.");
+
+    
+    
     
 }
 
