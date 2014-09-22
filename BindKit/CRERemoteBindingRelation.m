@@ -209,7 +209,7 @@
     
     NSString *mimeType = response.MIMEType;
     id newValue = nil;
-    NSDictionary *receivedDictionary = nil;
+    NSDictionary *receivedObject = nil;
     
     if ([mimeType rangeOfString:@"image"].location != NSNotFound)
     {
@@ -218,16 +218,25 @@
         
     }else{
     
-        
-        receivedDictionary = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:nil];
-        NSString *remoteKey = targetUnit.remoteProperty ? targetUnit.remoteProperty : targetUnit.boundObjectProperty;
-        
-        newValue = [receivedDictionary valueForKey:remoteKey];
+        @try
+        {
+            
+            receivedObject = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:nil];
+
+        }
+        @catch (NSException *exception)
+        {
+            
+            NSLog(@"Possibly unsupported API. %@", [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:106]);
+            
+        }
+        //this will extract only one key-value pair matching and the whole JSON object
+        newValue = [self parseReceivedObject:receivedObject target:targetUnit];
         
         
     }
     
-    NSAssert(newValue, @"%@. New value not set receivedDict %@ mimeType %@",[NSError errorDescriptionForDomain:kCREBinderErrorLogic code:2000], receivedDictionary, mimeType);
+    NSAssert(newValue, @"%@. New value not set receivedDict %@ mimeType %@",[NSError errorDescriptionForDomain:kCREBinderErrorLogic code:2000], receivedObject, mimeType);
     
     return newValue;
 }
@@ -239,6 +248,48 @@
         [bindingUnit setValue:value];
         
     });
+    
+}
+
+-(id)parseReceivedObject:(id)object target:(CREBindingUnit*)unit{
+    
+    //making sure we've got a dictionary, the only supported resoponse for now
+    //
+#ifndef DEBUG
+    NSAssert(![object isKindOfClass: [NSArray class] ], [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:107]);
+#else
+    //the placeholder JSON Api provides only lists
+    if ([object isKindOfClass:[NSArray class]])
+    {
+        
+        object = object [0];
+        
+    }
+    
+#endif
+    
+    SEL remoteMappingSelector = @selector(remoteKeyForLocalKey:inLocalClass:);
+    id targetObject = unit.boundObject;
+    id targetProperty = unit.boundObjectProperty;
+    NSString * targetClassName = NSStringFromClass([targetObject class]);
+    
+    NSString *remoteKey = nil;
+
+    if ([_remoteKeyMapper respondsToSelector:remoteMappingSelector]) {
+        
+        remoteKey = [_remoteKeyMapper remoteKeyForLocalKey:targetProperty inLocalClass: targetClassName ];
+        
+    }else if ([targetObject respondsToSelector:remoteMappingSelector]){
+        
+        remoteKey = [targetObject remoteKeyForLocalKey:targetProperty inLocalClass:targetClassName];
+        
+    }
+    
+    NSAssert(remoteKey,
+             @"Could not resolve remote key for object %@. %@", unit, [NSError errorDescriptionForDomain:kCREBinderErrorLogic code:2005]);
+
+    
+    return [object valueForKey:remoteKey];
     
 }
 

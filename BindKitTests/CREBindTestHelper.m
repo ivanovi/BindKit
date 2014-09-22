@@ -23,13 +23,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#define testModelsCount 30
+
 
 #import "CREBindTestHelper.h"
 
 @interface CREBindTestHelper(){
     
     BOOL isRemote;
+    
+    NSInteger testModelsCount;
 }
 
 @end
@@ -83,6 +85,8 @@
     
     [self createTestModels];
     [self createTestModelProperties];
+    
+    testModelsCount = 30;
     
 }
 

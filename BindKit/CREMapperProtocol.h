@@ -27,6 +27,6 @@
 
 @protocol CREMapperProtocol <NSObject>
 
--(NSString*)localKeyForRemoteKey:(NSString*)remoteKey inLocalClass:(NSString*)localClass;
+-(NSString*)remoteKeyForLocalKey:(NSString*)localKey inLocalClass:(NSString*)localClass;
 
 @end
