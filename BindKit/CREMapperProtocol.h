@@ -1,8 +1,8 @@
 //
-//  CRETestModel.h
+//  CREMapperProtocol.h
 //  BindKit
 //
-//  Created by Ivan Ivanov on 9/2/14.
+///  Created by Ivan Ivanov on 9/16/14.
 //  Copyright (c) 2014 Ivan Ivanov, Creatub Ltd.
 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,9 +25,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CRETestModel : NSObject
+@protocol CREMapperProtocol <NSObject>
 
-@property (nonatomic, strong) NSString *propertyString;
-@property (nonatomic, strong) id propertyId;
+-(NSString*)localKeyForRemoteKey:(NSString*)remoteKey inLocalClass:(NSString*)localClass;
 
 @end

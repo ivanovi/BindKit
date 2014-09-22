@@ -24,10 +24,8 @@
 //  SOFTWARE.
 
 
-
-
 #import "CREBindRelation.h"
-
+#import "CREMapperProtocol.h"
 
 @class CRERemoteBindingRelation;
 
@@ -39,8 +37,8 @@ typedef void (^CRERemoteBinderCallBack)(id newValue, CREBindingUnit *unit, NSErr
      NSURL *urlContainer;
 }
 
-//@property (nonatomic, weak) id <CREBinderRequestFactory> requestFactory;
 @property (nonatomic, readwrite, copy) CRERemoteBinderCallBack callBack;
+@property (nonatomic, weak) id <CREMapperProtocol> remoteKeyMapper;
 
 -(id)requestWithRequest:(id)request;
 -(void)executeRequest:(id)request withCallBack:(void (^)(NSURLResponse *response,

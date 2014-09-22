@@ -79,8 +79,6 @@
                 newValue = [self handleResponse:data urlResponse:response targetUnit:target];
                 NSAssert(newValue, @"%s %@",__PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorLogic code:2000]);
                 
-                //NSLog(@"image received %@", sourceUnit.value);
-                
                 [self setValue:newValue forUnit:target];
                 
             }else{
@@ -219,7 +217,7 @@
         newValue = responseData;
         
     }else{
-        
+    
         
         receivedDictionary = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:nil];
         NSString *remoteKey = targetUnit.remoteProperty ? targetUnit.remoteProperty : targetUnit.boundObjectProperty;

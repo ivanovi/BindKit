@@ -30,8 +30,6 @@
 
 @class CREBindRelation;
 
-
-
 @protocol CREBindRelationDelegate <NSObject>
 
 

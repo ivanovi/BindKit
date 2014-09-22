@@ -30,6 +30,8 @@
 #import <BindKit/BindKit.h>
 #import "CREBindTestHelper.h"
 
+
+
 @interface BindKitRemoteTests : XCTestCase{
     
     
@@ -59,8 +61,13 @@
     bDictionary = helper.bDictionary;
     cDictionary = helper.cDictionary;
     
-    //[self baseTestValues];
-    //[self baseProperties];
+    aTestValue = helper.aTestValue;
+    bTestValue = helper.bTestValue;
+    cTestValue = helper.cTestValue;
+    
+    aProperty = helper.aProperty;
+    bProperty = helper.bProperty;
+    cProperty = helper.cProperty;
     
     aTestMappingDictionary = helper.aTestMappingDictionary;
 
@@ -71,37 +78,38 @@
     [super tearDown];
 }
 
-//- (void)testBaseRemoteBinding{
-//    // This is an example of a functional test case.
-//    
-//   XCTestExpectation *connectionExpectation = [self expectationWithDescription:@"fetchData"];
-//    
-//    
-//    CRERemoteBinder *newBinder =[CRERemoteBinder binderWithProperties:@[aProperty, bProperty] sourceObjects:@[aDictionary, bDictionary] ];
-//    
-//    
-//    
-//    [(CRERemoteBindingRelation*)newBinder.relations.lastObject setCallBack:^(id newValue, CREBindingUnit *unit, NSError *error){
-//        
-//        
-//        [connectionExpectation fulfill];
-//        
-//    }];
-//    
-//
-//    [newBinder bind];
-//    
-//    [aDictionary setValue:aTestValue forKey:aProperty];
-//    
-//    [self waitForExpectationsWithTimeout:5 handler:^(NSError *error) {
-//        
-//        NSLog(@"waiting finished");
-//        
-//    }];
-//    
-//    
-//    //XCTAssert(YES, @"Pass");
-//}
+- (void)testBaseRemoteBinding{
+    // This is an example of a functional test case.
+    
+   XCTestExpectation *connectionExpectation = [self expectationWithDescription:@"fetchData"];
+    
+    CREBinder *newBinder = [CREBinder new];
+    CREBindRelation * remoteRelation = [newBinder createRelationWithProperties:@[aProperty, bProperty]
+                                                                 sourceObjects:@[aDictionary, bDictionary]
+                                                                 relationClass:@"CRERemoteBindingRelation"];
+    
+    [newBinder addRelation:remoteRelation];
+    
+    void (^callBack)(id newValue, CREBindingUnit *unit, NSError *error) = ^(id newValue, CREBindingUnit *unit, NSError *error){
+        
+        [connectionExpectation fulfill];
+        
+    };
+    
+    [remoteRelation setValue:callBack forKey:@"callBack"];
+    
+    
+    
+    
+    [aDictionary setValue:aTestValue forKey:aProperty];
+    
+    [self waitForExpectationsWithTimeout:5 handler:^(NSError *error) {
+        
+        NSLog(@"waiting finished");
+        
+    }];
+
+}
 
 
 
