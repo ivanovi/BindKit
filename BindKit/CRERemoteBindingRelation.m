@@ -59,7 +59,8 @@
     
     [self assertSource];
     
-    if ([self.valueTransformer respondsToSelector:@selector(bindRelation:willModify:withValue:)]) {
+    if ([self.valueTransformer respondsToSelector:@selector(bindRelation:willModify:withValue:)])
+    {
         
         value = [self.valueTransformer bindRelation:self willModify:target withValue:value];
         
@@ -88,7 +89,8 @@
                 
             }
             
-            if (_callBack) {
+            if (_callBack)
+            {
                 
                 _callBack(newValue, target, connectionError);
                 
@@ -171,9 +173,9 @@
         
     }
     
-    if (remoteRequest) {
+    if (remoteRequest)
+    {
         
-        //copying the request with the new request address
         return [self requestWithRequest:remoteRequest];
         
     }else{
@@ -187,14 +189,14 @@
 
 -(id)requestWithRequest:(id)request{
     
-    if (_requestFactory) {
+    if (_requestFactory)
+    {
         
         return remoteRequest;
         
     }
     
     [self assertRequest:request];
-    
 
     NSURLRequest *initialRequest = request;
     
@@ -243,11 +245,11 @@
 
 -(void)setValue:(id)value forUnit:(CREBindingUnit *)bindingUnit{
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+   // dispatch_async(dispatch_get_main_queue(), ^{
         
         [bindingUnit setValue:value];
         
-    });
+   // });
     
 }
 

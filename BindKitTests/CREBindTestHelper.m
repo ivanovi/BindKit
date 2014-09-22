@@ -164,4 +164,37 @@
     
 }
 
+-(void)fetchRemoteTestData:(void (^)(NSURLResponse *response,
+                                     NSData *data,
+                                     NSError *connectionError))callBack{
+    
+    NSURL *testUrl = [NSURL URLWithString:self.aTestValue];
+    NSURLRequest *request = [NSURLRequest requestWithURL:testUrl];
+    
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+     
+        NSAssert(!connectionError, @"Connection to placeholder JSON Api failed. Error %@", [connectionError localizedDescription]);
+        
+        _remoteTestDictionary =   [(NSArray*)[NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil] objectAtIndex:0];
+        
+        if (callBack)
+            callBack (response, data, connectionError);
+        
+    }];
+    
+    
+    
+    
+}
+
+#pragma mark - Mapper Protocol
+
+-(NSString*)remoteKeyForLocalKey:(NSString *)localKey inLocalClass:(NSString *)localClass{
+    
+    return @"userId";
+    
+}
+
+
 @end

@@ -38,5 +38,6 @@ FOUNDATION_EXPORT const unsigned char BindKitVersionString[];
 #import <BindKit/CREBinder.h>
 #import <BindKit/CREValueTransformer.h>
 #import <BindKit/CREMapperProtocol.h>
+#import <BindKit/CRERemoteBindingRelation.h>
 
 

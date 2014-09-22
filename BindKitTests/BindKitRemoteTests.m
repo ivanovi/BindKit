@@ -81,34 +81,46 @@
 - (void)testBaseRemoteBinding{
     // This is an example of a functional test case.
     
-   XCTestExpectation *connectionExpectation = [self expectationWithDescription:@"fetchData"];
+    XCTestExpectation *connectionExpectation = [self expectationWithDescription:@"fetchData"];
     
     CREBinder *newBinder = [CREBinder new];
     CREBindRelation * remoteRelation = [newBinder createRelationWithProperties:@[aProperty, bProperty]
                                                                  sourceObjects:@[aDictionary, bDictionary]
                                                                  relationClass:@"CRERemoteBindingRelation"];
-    
     [newBinder addRelation:remoteRelation];
     
-    void (^callBack)(id newValue, CREBindingUnit *unit, NSError *error) = ^(id newValue, CREBindingUnit *unit, NSError *error){
+    void (^callBack)(id newValue, CREBindingUnit *unit, NSError *error) = ^(id newValue, CREBindingUnit *unit, NSError *error)
+    {
+        
+        NSString *remoteKey = [helper remoteKeyForLocalKey:unit.boundObjectProperty inLocalClass:nil];
+        
+        XCTAssertEqualObjects(helper.remoteTestDictionary [remoteKey],
+                              bDictionary [bProperty], @"RemoteBindRelation failed comprehensive test. Check the passed by the placeholder API values." );
         
         [connectionExpectation fulfill];
         
     };
     
-    [remoteRelation setValue:callBack forKey:@"callBack"];
-    
-    
-    
-    
+    [(CRERemoteBindingRelation*)remoteRelation setCallBack:callBack];
+    [(CRERemoteBindingRelation*)remoteRelation setRemoteKeyMapper:helper];
     [aDictionary setValue:aTestValue forKey:aProperty];
     
-    [self waitForExpectationsWithTimeout:5 handler:^(NSError *error) {
-        
-        NSLog(@"waiting finished");
+    
+    [helper fetchRemoteTestData:^(NSURLResponse *response, NSData *data, NSError *connectionError)
+    {
+       
+        [newBinder bind];
         
     }];
+    
+    
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error)
+    {
+        NSLog(@"waiting finished");
+    }];
 
+    
+    
 }
 
 

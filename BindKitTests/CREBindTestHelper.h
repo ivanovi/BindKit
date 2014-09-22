@@ -26,15 +26,21 @@
 
 
 #import <UIKit/UIKit.h>
+#import <BindKit/BindKit.h>
 #import "CRETestModel.h"
 
 
-@interface CREBindTestHelper : NSObject
+
+@interface CREBindTestHelper : NSObject <CREMapperProtocol>
 
 -(instancetype)initForRemoteTests;
+-(void)fetchRemoteTestData:(void (^)(NSURLResponse *response,
+                                     NSData *data,
+                                     NSError *connectionError))callBack;
 
 @property (nonatomic, strong) NSDictionary * aDictionary, *bDictionary, *cDictionary, *aTestMappingDictionary;
 @property (nonatomic, strong) NSString *aTestValue, *bTestValue, *cTestValue;
+@property (nonatomic, strong) NSDictionary *remoteTestDictionary;
 @property (nonatomic, strong) NSString *aProperty, *bProperty, *cProperty;
 @property (nonatomic, strong) UIImage * testImage;
 @property (nonatomic, strong) NSData *testPNGImageData;
