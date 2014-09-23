@@ -246,7 +246,8 @@
 -(void)setValue:(id)value forUnit:(CREBindingUnit *)bindingUnit{
     
    // dispatch_async(dispatch_get_main_queue(), ^{
-        
+
+    
         [bindingUnit setValue:value];
         
    // });

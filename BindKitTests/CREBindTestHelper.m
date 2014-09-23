@@ -83,11 +83,11 @@
      _testImage = [self createTestImage];
      _testPNGImageData = UIImagePNGRepresentation(_testImage);
     
-    [self createTestModels];
-    [self createTestModelProperties];
-    
     testModelsCount = 30;
     
+    [self createTestModels];
+    [self createTestModelProperties];
+  
 }
 
 -(NSDictionary*)baseDictionaryWithName:(NSString*)name{

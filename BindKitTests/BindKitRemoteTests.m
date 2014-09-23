@@ -23,14 +23,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-
-
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 #import <BindKit/BindKit.h>
 #import "CREBindTestHelper.h"
-
-
 
 @interface BindKitRemoteTests : XCTestCase{
     
@@ -88,7 +84,6 @@
                                                                  sourceObjects:@[aDictionary, bDictionary]
                                                                  relationClass:@"CRERemoteBindingRelation"];
     [newBinder addRelation:remoteRelation];
-    
     void (^callBack)(id newValue, CREBindingUnit *unit, NSError *error) = ^(id newValue, CREBindingUnit *unit, NSError *error)
     {
         
@@ -101,11 +96,17 @@
         
     };
     
+    //setting the callBack is needed for the assertion operation
     [(CRERemoteBindingRelation*)remoteRelation setCallBack:callBack];
+    
+    //remoteKeyMapper
     [(CRERemoteBindingRelation*)remoteRelation setRemoteKeyMapper:helper];
+    
+    //Setting the url in the source unit => the first pair in the initialization
     [aDictionary setValue:aTestValue forKey:aProperty];
     
     
+    //calling bind after the remote test value has been fetched independently from the bindRelation
     [helper fetchRemoteTestData:^(NSURLResponse *response, NSData *data, NSError *connectionError)
     {
        

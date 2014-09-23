@@ -45,8 +45,6 @@
 
 @interface CREBinder : NSObject <CREBindProtocol, CREBindRelationFactory>
 
-//@property (nonatomic, weak) id <CREBinderDelegate> delegate;
-//@property (nonatomic, weak) id <CREBindRelationFactory> relationFactory;
 @property (nonatomic, readonly) CREBinder * superBinder;
 @property (nonatomic, readonly) NSArray * childBinders;
 @property (nonatomic, readonly) NSArray * relations;
@@ -54,11 +52,8 @@
 @property (nonatomic, readonly) BOOL isBound;
 
 
-//@property (nonatomic, readonly, strong) NSDictionary *mappingDictonary; //the dictionary that sets the mapping structure. Set the property name
-
 #pragma mark - Initialization
 
-//+(instancetype)binderWithFactory:(id <CREBindRelationFactory>)factory;
 +(instancetype)binderWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
 -(instancetype)initWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
 
