@@ -8,6 +8,9 @@
 		<string>DataToImage or ImagePNGData transformer target or value property is not of type NSData.</string>
 		<string>NegateTransformer expects NSNumber instance as &apos;value&apos; parameter.</string>
 		<string>NumberDate transformer expects NSNumber instance passed as &apos;value&apos; parameter.</string>
+		<string>Call to base class of ValueTransformer is not allowed. Subclass the base class and/or implement the CREValueTransformerProtocol.</string>
+		<string>Tried to create a non implemented concrete class of CREValueTransformer. Please check the string variable passed as class name in the convinience method.</string>
+		<string>Passed concrete valueTransformer class does not implement the mandatory selector : bindRelation:willModify:withValue: </string>
 	</array>
 	<key>binderErrorWarnigsDomain</key>
 	<array>

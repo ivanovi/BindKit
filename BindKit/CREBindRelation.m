@@ -253,11 +253,11 @@
     
 }
 
-
--(NSDictionary*)propertyTargetRelationForProperty:(NSString *)property{
-    
-    return nil;
-}
+//
+//-(NSDictionary*)propertyTargetRelationForProperty:(NSString *)property{
+//    
+//    return nil;
+//}
 
 - (void)removeBindingUnit:(CREBindingUnit*)bindingUnit{
  
@@ -296,7 +296,8 @@
     
     NSMutableSet *objectsSet = nil;
     
-    for (CREBindingUnit *aBinderUnit in holderArray) {
+    for (CREBindingUnit *aBinderUnit in holderArray)
+    {
         
         [objectsSet addObject:[aBinderUnit valueForKey:binderUnitKey] ];
         
