@@ -31,7 +31,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "111"
             endingLineNumber = "111"
-            landmarkName = "-createTestImage"
+            landmarkName = "-baseProperties"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

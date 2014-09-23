@@ -32,9 +32,9 @@
     
     Class transformerClass = NSClassFromString(transformerClassName);
    
-    NSAssert(transformerClass, [NSError errorDescriptionForDomain:kCREBinderErrorTransformer code:1005]);
+    NSAssert(transformerClass, [NSError errorDescriptionForDomain:kCREBinderErrorTransformer code:3005]);
     NSAssert([transformerClass instancesRespondToSelector:@selector(bindRelation:willModify:withValue:)],
-             @"%@. In class: %@", [NSError errorDescriptionForDomain:kCREBinderErrorTransformer code:1006], transformerClass);
+             @"%@. In class: %@", [NSError errorDescriptionForDomain:kCREBinderErrorTransformer code:3006], transformerClass);
     
     return [NSClassFromString(transformerClassName)  new];
     
@@ -44,7 +44,7 @@
 
 -(id)bindRelation:(CREBindRelation *)Relation willModify:(CREBindingUnit *)unit withValue:(id)value{
     // subclasses must override
-    NSString *errorString = [NSString stringWithFormat:@"%@. In class: %@", [NSError errorDescriptionForDomain:kCREBinderErrorTransformer code:1004], [self class]];
+    NSString *errorString = [NSString stringWithFormat:@"%@. In class: %@", [NSError errorDescriptionForDomain:kCREBinderErrorTransformer code:3004], [self class]];
     
     @throw [NSException exceptionWithName:kCREBinderErrorSetupDomain reason: errorString userInfo:nil];
     
