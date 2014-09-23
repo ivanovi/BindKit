@@ -48,9 +48,11 @@
 @property (nonatomic, readonly) CREBinder * superBinder;
 @property (nonatomic, readonly) NSArray * childBinders;
 @property (nonatomic, readonly) NSArray * relations;
-@property (nonatomic, readonly) BOOL isLocked;
-@property (nonatomic, readonly) BOOL isBound;
 
+//TODO: unit test isLocked race condition
+@property (nonatomic, readonly) BOOL isLocked;
+//TODO: unit test
+@property (nonatomic, readonly) BOOL isBound;
 
 #pragma mark - Initialization
 
@@ -59,7 +61,6 @@
 
 
 #pragma mark - Setup
-
 -(void)addRelation:(CREBindRelation*)bindRelation;
 -(void)removeRelation:(CREBindRelation*)removeRelation;
 

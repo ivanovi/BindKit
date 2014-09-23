@@ -33,7 +33,6 @@
 @end
 
 
-
 @implementation CRERemoteBindingRelation
 
 @synthesize requestFactory = _requestFactory;
@@ -47,7 +46,6 @@
     {
         
         [self setSourceBindingUnit:self.bindingUnits[0] ];
-        
         [self assertSource];
         
     }
@@ -257,7 +255,7 @@
 -(id)parseReceivedObject:(id)object target:(CREBindingUnit*)unit{
     
     //making sure we've got a dictionary, the only supported resoponse for now
-    //
+    
 #ifndef DEBUG
     NSAssert(![object isKindOfClass: [NSArray class] ], [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:107]);
 #else

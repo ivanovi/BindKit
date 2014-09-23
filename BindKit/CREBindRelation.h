@@ -32,7 +32,6 @@
 
 @protocol CREBindRelationDelegate <NSObject>
 
-
 -(BOOL)bindRelation:(CREBindRelation*)relation shouldSetValue:(id)value forKeyPath:(NSString*)keyPath;
 
 @optional
@@ -85,9 +84,11 @@ typedef NS_ENUM(NSUInteger, CREBindingRelationDirection) {
 @property (nonatomic, readonly) NSArray * bindingUnits; //immediate/current units
 @property (nonatomic, readonly) CREBindingRelationDirection directionType;
 @property (nonatomic, weak) id <CREValueTransformerProtocol> valueTransformer;
-@property (nonatomic, weak) id <CREPlaceholderProtocol> placeholder;
+@property (nonatomic, weak) id <CREPlaceholderProtocol> placeholder; 
 @property (nonatomic, weak) id <CREBindRelationDelegate> delegate;
 @property (nonatomic, readonly) CREBindingUnit *sourceUnit;
+
+//TODO: unit test isLocked - race condition
 @property (nonatomic, readonly) BOOL isLocked;
 @property (nonatomic, readonly) BOOL isBound;
 
