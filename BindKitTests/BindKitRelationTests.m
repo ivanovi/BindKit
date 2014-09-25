@@ -232,6 +232,8 @@
     
     [aDictionary setValue:bTestValue forKey:aProperty];
     
+    [aBinder bind];
+    
     XCTAssertEqualObjects(aDictionary[aProperty], bDictionary [bProperty], @"Failed binding in one-way relation type.");
 
     
@@ -245,7 +247,8 @@
     [aRelation setSourceBindingUnit:bSourceUnit];
     
     [aDictionary setValue:bTestValue forKey:aProperty];
-    XCTAssertEqualObjects(aDictionary[aProperty], bDictionary [bProperty], @"Failed binding in one-way relation type. The read-only source object was modified.");
+    
+    XCTAssertNotEqualObjects(aDictionary[aProperty], bDictionary [bProperty], @"Failed binding in one-way relation type. The read-only source object was modified.");
     
     
 }

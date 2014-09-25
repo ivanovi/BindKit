@@ -137,7 +137,7 @@
                   symbolName = "-[CRERemoteBindingRelation mergeValue:toTarget:]"
                   moduleName = "BindKit"
                   urlString = "file:///Volumes/data/mainXcode/BindKit/BindKit/CRERemoteBindingRelation.m"
-                  timestampString = "433365143.845579"
+                  timestampString = "433366389.474538"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "73"
@@ -151,7 +151,7 @@
                   symbolName = "__48-[CRERemoteBindingRelation mergeValue:toTarget:]_block_invoke"
                   moduleName = "BindKit"
                   urlString = "file:///Volumes/data/mainXcode/BindKit/BindKit/CRERemoteBindingRelation.m"
-                  timestampString = "433365143.845816"
+                  timestampString = "433366389.474783"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "73"
@@ -174,6 +174,54 @@
             startingLineNumber = "364"
             endingLineNumber = "364"
             landmarkName = "-bind"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BindKit/CREBindRelation.m"
+            timestampString = "433365400.345646"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "237"
+            endingLineNumber = "237"
+            landmarkName = "-setSourceBindingUnit:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BindKit/CREBindRelation.m"
+            timestampString = "433365800.763011"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "256"
+            endingLineNumber = "256"
+            landmarkName = "-removeSourceUnit"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BindKitTests/BindKitRelationTests.m"
+            timestampString = "433366084.470115"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "247"
+            endingLineNumber = "247"
+            landmarkName = "-testSetSourceBindingBehavior"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

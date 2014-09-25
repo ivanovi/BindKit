@@ -234,7 +234,7 @@
 
 -(void)setSourceBindingUnit:(CREBindingUnit *)sourceBindingUnit{
     
-    BOOL wasBound = self.isBound;
+    BOOL wasBound = _isBound;
 
     [self unbind];
 
@@ -253,7 +253,7 @@
 }
 
 -(void)removeSourceUnit{
-    BOOL wasBound = self.isBound;
+    BOOL wasBound = _isBound;
 
 
     [self unbind];
@@ -418,12 +418,14 @@
     
     [sourceObject addObserver:self forKeyPath:sourceKeyPath options:NSKeyValueObservingOptionNew context:(__bridge void *)unit];
     
+    _isBound = YES;
+    
 }
 
 -(void)unbindWithSource:(CREBindingUnit*)unit{
     
     [unit.boundObject removeObserver:self forKeyPath:unit.boundObjectProperty];
-    
+    _isBound = NO;
 }
 
 -(void)unlock{
