@@ -27,7 +27,9 @@
 #import <Foundation/Foundation.h>
 
 /**
- Provides only BinderKit specific error descriptions based on domain and errorCode
+ 
+ Provides only framework specific error descriptions based on domain and errorCode. If you'd like to extend to domains / errorMessage, you could do it in the file BindKitErrorMessage.plist and/or here or provide your implementation of this functionality.
+ 
  */
 
 extern NSString * const kCREBinderErrorSetupDomain;

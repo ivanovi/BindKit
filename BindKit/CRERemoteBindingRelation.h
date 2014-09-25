@@ -33,12 +33,14 @@ typedef void (^CRERemoteBinderCallBack)(id newValue, CREBindingUnit *unit, NSErr
 
 
 @interface CRERemoteBindingRelation : CREBindRelation <CREBindRelationRequestDelegate>{
-     id remoteRequest;
+    // id remoteRequest;
      NSURL *urlContainer;
 }
 
 @property (nonatomic, readwrite, copy) CRERemoteBinderCallBack callBack;
 @property (nonatomic, weak) id <CREMapperProtocol> remoteKeyMapper;
+@property (nonatomic, strong) id remoteRequest;
+
 
 -(id)requestWithRequest:(id)request;
 -(void)executeRequest:(id)request withCallBack:(void (^)(NSURLResponse *response,

@@ -25,6 +25,12 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ 
+ 'CREMapperProtocol' serves to delegate mapping behavior from classes that require properties mapping. As of version 0.1 the CREMapperProtocol is used in CRERemoteBindingRelation with function to resolve properties from an API response against local properties.
+ 
+ */
+
 @protocol CREMapperProtocol <NSObject>
 
 -(NSString*)remoteKeyForLocalKey:(NSString*)localKey inLocalClass:(NSString*)localClass;

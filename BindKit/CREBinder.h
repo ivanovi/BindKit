@@ -24,6 +24,12 @@
 //  SOFTWARE.
 
 
+/**
+ 
+ 'CREBinder' is the class used to establish one or more bindings. It implements a composite-like pattern and may hold other 'CREBinder' instances or instances of type 'CREBindRelation'. In addition to providing an universal access to a set of binder/bindRelation instances,
+ 
+ */
+
 
 #import <UIKit/UIKit.h>
 #import "CREBindRelation.h"
@@ -58,7 +64,6 @@
 
 +(instancetype)binderWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
 -(instancetype)initWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
-
 
 #pragma mark - Setup
 -(void)addRelation:(CREBindRelation*)bindRelation;

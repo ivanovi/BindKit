@@ -9,6 +9,16 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>BindKitStatic.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>BindKitStaticTests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 		<key>BindKitTests.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -22,12 +32,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>0C1DEECD19D2C0C600DFC386</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0C1DEED719D2C0C700DFC386</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>0CB7A31919ADC31D0020FBD5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>0CB7A32419ADC31D0020FBD5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0CD65FD519D3129000FDA9D5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0CD65FDF19D3129100FDA9D5</key>
 		<dict>
 			<key>primary</key>
 			<true/>

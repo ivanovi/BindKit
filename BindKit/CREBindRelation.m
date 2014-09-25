@@ -27,6 +27,8 @@
 
 #import "CREBindRelation.h"
 #import "NSError+BinderKit.h"
+#import "CREBindingUnit.h"
+
 
 @interface CREBindRelation(){
     
@@ -90,7 +92,6 @@
     
    if (self.isLocked) //protect against infinite loop when both ways binding
     {
-
         return;
     }
 
@@ -229,12 +230,19 @@
 
 #pragma mark - Source Unit accessors
 
+
+
 -(void)setSourceBindingUnit:(CREBindingUnit *)sourceBindingUnit{
     
+    BOOL wasBound = self.isBound;
+
     [self unbind];
+
         _directionType = CREBindingRelationDirectionOneWay;
         sourceUnit = sourceBindingUnit;
-    [self bind];
+    
+    if (wasBound)
+        [self bind];
     
 }
 
@@ -245,11 +253,16 @@
 }
 
 -(void)removeSourceUnit{
-    
+    BOOL wasBound = self.isBound;
+
+
     [self unbind];
+    
         _directionType = CREBindingRelationDirectionBothWays;
         sourceUnit = nil;
-    [self bind];
+    
+    if (wasBound)
+        [self bind];
     
 }
 

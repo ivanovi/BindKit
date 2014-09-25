@@ -103,9 +103,9 @@
     [(CRERemoteBindingRelation*)remoteRelation setRemoteKeyMapper:helper];
     
     //Setting the url in the source unit => the first pair in the initialization
+    
     [aDictionary setValue:aTestValue forKey:aProperty];
-    
-    
+
     //calling bind after the remote test value has been fetched independently from the bindRelation
     [helper fetchRemoteTestData:^(NSURLResponse *response, NSData *data, NSError *connectionError)
     {
@@ -115,7 +115,7 @@
     }];
     
     
-    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error)
+    [self waitForExpectationsWithTimeout:15 handler:^(NSError *error)
     {
         NSLog(@"waiting finished");
     }];

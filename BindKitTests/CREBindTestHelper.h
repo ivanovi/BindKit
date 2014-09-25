@@ -1,4 +1,3 @@
-//
 //  CREBindTestHelper.h
 //  BindKit
 //
@@ -23,20 +22,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-
-
 #import <UIKit/UIKit.h>
 #import <BindKit/BindKit.h>
 #import "CRETestModel.h"
 
-
-
 @interface CREBindTestHelper : NSObject <CREMapperProtocol>
 
--(instancetype)initForRemoteTests;
--(void)fetchRemoteTestData:(void (^)(NSURLResponse *response,
-                                     NSData *data,
-                                     NSError *connectionError))callBack;
 
 @property (nonatomic, strong) NSDictionary * aDictionary, *bDictionary, *cDictionary, *aTestMappingDictionary;
 @property (nonatomic, strong) NSString *aTestValue, *bTestValue, *cTestValue;
@@ -46,5 +37,11 @@
 @property (nonatomic, strong) NSData *testPNGImageData;
 @property (nonatomic, strong) NSArray *testModelArray;
 @property (nonatomic, strong) NSArray *testModelPropertiesArray;
+
+
+-(instancetype)initForRemoteTests;
+-(void)fetchRemoteTestData:(void (^)(NSURLResponse *response,
+                                     NSData *data,
+                                     NSError *connectionError))callBack;
 
 @end

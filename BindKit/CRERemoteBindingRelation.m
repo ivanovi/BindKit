@@ -26,6 +26,7 @@
 
 
 #import "CRERemoteBindingRelation.h"
+#import "CREBindingUnit.h"
 
 
 @interface CRERemoteBindingRelation()
@@ -171,10 +172,10 @@
         
     }
     
-    if (remoteRequest)
+    if (_remoteRequest)
     {
         
-        return [self requestWithRequest:remoteRequest];
+        return [self requestWithRequest:_remoteRequest];
         
     }else{
         
@@ -190,7 +191,7 @@
     if (_requestFactory)
     {
         
-        return remoteRequest;
+        return _remoteRequest;
         
     }
     
@@ -243,12 +244,11 @@
 
 -(void)setValue:(id)value forUnit:(CREBindingUnit *)bindingUnit{
     
-   // dispatch_async(dispatch_get_main_queue(), ^{
+  //  dispatch_async(dispatch_get_main_queue(), ^{
 
-    
         [bindingUnit setValue:value];
         
-   // });
+  //  });
     
 }
 

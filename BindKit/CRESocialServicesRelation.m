@@ -36,7 +36,7 @@
     
     if (self.requestFactory) {
         
-        return remoteRequest;
+        return self.remoteRequest;
         
     }
     

@@ -27,6 +27,33 @@
 		0CBB594219AE2FB900CED34E /* BindKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB7A31A19ADC31D0020FBD5 /* BindKit.framework */; };
 		0CBE0E8219AF7644007AE6DD /* CREBindRelation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CBE0E8019AF7644007AE6DD /* CREBindRelation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0CBE0E8319AF7644007AE6DD /* CREBindRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBE0E8119AF7644007AE6DD /* CREBindRelation.m */; };
+		0CD65FEA19D3139200FDA9D5 /* NSError+BinderKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB7A35F19AE0BC20020FBD5 /* NSError+BinderKit.m */; };
+		0CD65FEB19D3139200FDA9D5 /* CREBinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB7A35819ADED160020FBD5 /* CREBinder.m */; };
+		0CD65FEC19D3139200FDA9D5 /* CREBindRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBE0E8119AF7644007AE6DD /* CREBindRelation.m */; };
+		0CD65FED19D3139200FDA9D5 /* CREBindingUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C08D9F219B0BCD2008E27F6 /* CREBindingUnit.m */; };
+		0CD65FEE19D3139200FDA9D5 /* CREValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDED07519C996CD00F4ADD9 /* CREValueTransformer.m */; };
+		0CD65FEF19D3139200FDA9D5 /* CREDataImageTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDED07C19C996CD00F4ADD9 /* CREDataImageTransformer.m */; };
+		0CD65FF019D3139200FDA9D5 /* CREImagePNGDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDED09119CAADFB00F4ADD9 /* CREImagePNGDataTransformer.m */; };
+		0CD65FF119D3139200FDA9D5 /* CRENegateTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDED07B19C996CD00F4ADD9 /* CRENegateTransformer.m */; };
+		0CD65FF219D3139200FDA9D5 /* CREIsNilTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDED09519CAAF7000F4ADD9 /* CREIsNilTransformer.m */; };
+		0CD65FF319D3139200FDA9D5 /* CRENumberDateTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6A435A19D1D3730069AA60 /* CRENumberDateTransformer.m */; };
+		0CD65FF419D3139200FDA9D5 /* CRERemoteBindingRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDE521119B639BE00412662 /* CRERemoteBindingRelation.m */; };
+		0CD65FF519D3139200FDA9D5 /* CRESocialServicesRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDED08719C9AA3000F4ADD9 /* CRESocialServicesRelation.m */; };
+		0CD65FF719D313B000FDA9D5 /* BindKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CB7A31F19ADC31D0020FBD5 /* BindKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0CD65FF819D313B000FDA9D5 /* CREBindProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CBA0A8D19C849CB009C2C09 /* CREBindProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0CD65FFA19D313B000FDA9D5 /* CREBinder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CB7A35719ADED160020FBD5 /* CREBinder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0CD65FFB19D313B000FDA9D5 /* CREBindRelation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CBE0E8019AF7644007AE6DD /* CREBindRelation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0CD65FFC19D313D300FDA9D5 /* CREBindingUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = 0C08D9F119B0BCD2008E27F6 /* CREBindingUnit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0CD65FFE19D313D300FDA9D5 /* CREDataImageTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDED07819C996CD00F4ADD9 /* CREDataImageTransformer.h */; };
+		0CD65FFF19D313D300FDA9D5 /* CREImagePNGDataTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDED09019CAADFB00F4ADD9 /* CREImagePNGDataTransformer.h */; };
+		0CD6600019D313D300FDA9D5 /* CRENegateTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDED07A19C996CD00F4ADD9 /* CRENegateTransformer.h */; };
+		0CD6600119D313D300FDA9D5 /* CREIsNilTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDED09419CAAF7000F4ADD9 /* CREIsNilTransformer.h */; };
+		0CD6600219D313D300FDA9D5 /* CRENumberDateTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0C6A435919D1D3730069AA60 /* CRENumberDateTransformer.h */; };
+		0CD6600319D313D300FDA9D5 /* CRERemoteBindingRelation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDE521019B639BE00412662 /* CRERemoteBindingRelation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0CD6600419D313D300FDA9D5 /* CRESocialServicesRelation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDED08619C9AA3000F4ADD9 /* CRESocialServicesRelation.h */; };
+		0CD6600919D32D5200FDA9D5 /* NSError+BinderKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CB7A35E19AE0BC20020FBD5 /* NSError+BinderKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0CD6601419D3314F00FDA9D5 /* CREMapperProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 0C6A434F19D1D2380069AA60 /* CREMapperProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0CD6601519D3315800FDA9D5 /* CREValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDED07619C996CD00F4ADD9 /* CREValueTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0CDE521219B639BE00412662 /* CRERemoteBindingRelation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDE521019B639BE00412662 /* CRERemoteBindingRelation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0CDE521319B639BE00412662 /* CRERemoteBindingRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDE521119B639BE00412662 /* CRERemoteBindingRelation.m */; };
 		0CDED07D19C996CD00F4ADD9 /* CREValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDED07519C996CD00F4ADD9 /* CREValueTransformer.m */; };
@@ -47,6 +74,18 @@
 		0CDED14719CB063400F4ADD9 /* BindKitTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CDED14619CB063400F4ADD9 /* BindKitTestCase.m */; };
 		0CF7B40919C09AAF001E1678 /* CREBindTestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7B40519C0940B001E1678 /* CREBindTestHelper.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0CD65FD419D3129000FDA9D5 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0C08D9F119B0BCD2008E27F6 /* CREBindingUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CREBindingUnit.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -73,6 +112,7 @@
 		0CBA0A8D19C849CB009C2C09 /* CREBindProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CREBindProtocol.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0CBE0E8019AF7644007AE6DD /* CREBindRelation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CREBindRelation.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0CBE0E8119AF7644007AE6DD /* CREBindRelation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CREBindRelation.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0CD65FD619D3129000FDA9D5 /* libBindKitStatic.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBindKitStatic.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CDE521019B639BE00412662 /* CRERemoteBindingRelation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRERemoteBindingRelation.h; sourceTree = "<group>"; };
 		0CDE521119B639BE00412662 /* CRERemoteBindingRelation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRERemoteBindingRelation.m; sourceTree = "<group>"; };
 		0CDED07519C996CD00F4ADD9 /* CREValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CREValueTransformer.m; sourceTree = "<group>"; };
@@ -111,6 +151,13 @@
 				0C9DB16319C18D1C003548FC /* Accounts.framework in Frameworks */,
 				0C9DB16019C181A6003548FC /* Social.framework in Frameworks */,
 				0CBB594219AE2FB900CED34E /* BindKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0CD65FD319D3129000FDA9D5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,6 +206,7 @@
 			children = (
 				0CB7A31A19ADC31D0020FBD5 /* BindKit.framework */,
 				0CB7A32519ADC31D0020FBD5 /* BindKitTests.xctest */,
+				0CD65FD619D3129000FDA9D5 /* libBindKitStatic.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -281,6 +329,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0CD65FF619D313A000FDA9D5 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0CD65FF719D313B000FDA9D5 /* BindKit.h in Headers */,
+				0CD65FFA19D313B000FDA9D5 /* CREBinder.h in Headers */,
+				0CD65FFC19D313D300FDA9D5 /* CREBindingUnit.h in Headers */,
+				0CD65FF819D313B000FDA9D5 /* CREBindProtocol.h in Headers */,
+				0CD6600919D32D5200FDA9D5 /* NSError+BinderKit.h in Headers */,
+				0CD65FFB19D313B000FDA9D5 /* CREBindRelation.h in Headers */,
+				0CD6600319D313D300FDA9D5 /* CRERemoteBindingRelation.h in Headers */,
+				0CD6601519D3315800FDA9D5 /* CREValueTransformer.h in Headers */,
+				0CD6601419D3314F00FDA9D5 /* CREMapperProtocol.h in Headers */,
+				0CD65FFE19D313D300FDA9D5 /* CREDataImageTransformer.h in Headers */,
+				0CD65FFF19D313D300FDA9D5 /* CREImagePNGDataTransformer.h in Headers */,
+				0CD6600019D313D300FDA9D5 /* CRENegateTransformer.h in Headers */,
+				0CD6600119D313D300FDA9D5 /* CREIsNilTransformer.h in Headers */,
+				0CD6600219D313D300FDA9D5 /* CRENumberDateTransformer.h in Headers */,
+				0CD6600419D313D300FDA9D5 /* CRESocialServicesRelation.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -319,6 +389,24 @@
 			productReference = 0CB7A32519ADC31D0020FBD5 /* BindKitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		0CD65FD519D3129000FDA9D5 /* BindKitStatic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0CD65FE419D3129100FDA9D5 /* Build configuration list for PBXNativeTarget "BindKitStatic" */;
+			buildPhases = (
+				0CD65FD219D3129000FDA9D5 /* Sources */,
+				0CD65FD319D3129000FDA9D5 /* Frameworks */,
+				0CD65FD419D3129000FDA9D5 /* CopyFiles */,
+				0CD65FF619D313A000FDA9D5 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BindKitStatic;
+			productName = BindKitStatic;
+			productReference = 0CD65FD619D3129000FDA9D5 /* libBindKitStatic.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -333,6 +421,9 @@
 					};
 					0CB7A32419ADC31D0020FBD5 = {
 						CreatedOnToolsVersion = 6.0;
+					};
+					0CD65FD519D3129000FDA9D5 = {
+						CreatedOnToolsVersion = 6.0.1;
 					};
 				};
 			};
@@ -350,6 +441,7 @@
 			targets = (
 				0CB7A31919ADC31D0020FBD5 /* BindKit */,
 				0CB7A32419ADC31D0020FBD5 /* BindKitTests */,
+				0CD65FD519D3129000FDA9D5 /* BindKitStatic */,
 			);
 		};
 /* End PBXProject section */
@@ -404,6 +496,25 @@
 				0C25CB0A19C0618700A5DC40 /* BindKitRemoteTests.m in Sources */,
 				0CDED14719CB063400F4ADD9 /* BindKitTestCase.m in Sources */,
 				0C6A435419D1D2B20069AA60 /* BindKitRelationTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0CD65FD219D3129000FDA9D5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0CD65FEA19D3139200FDA9D5 /* NSError+BinderKit.m in Sources */,
+				0CD65FEB19D3139200FDA9D5 /* CREBinder.m in Sources */,
+				0CD65FEC19D3139200FDA9D5 /* CREBindRelation.m in Sources */,
+				0CD65FED19D3139200FDA9D5 /* CREBindingUnit.m in Sources */,
+				0CD65FEE19D3139200FDA9D5 /* CREValueTransformer.m in Sources */,
+				0CD65FEF19D3139200FDA9D5 /* CREDataImageTransformer.m in Sources */,
+				0CD65FF019D3139200FDA9D5 /* CREImagePNGDataTransformer.m in Sources */,
+				0CD65FF119D3139200FDA9D5 /* CRENegateTransformer.m in Sources */,
+				0CD65FF219D3139200FDA9D5 /* CREIsNilTransformer.m in Sources */,
+				0CD65FF319D3139200FDA9D5 /* CRENumberDateTransformer.m in Sources */,
+				0CD65FF419D3139200FDA9D5 /* CRERemoteBindingRelation.m in Sources */,
+				0CD65FF519D3139200FDA9D5 /* CRESocialServicesRelation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -563,6 +674,28 @@
 			};
 			name = Release;
 		};
+		0CD65FE519D3129100FDA9D5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		0CD65FE619D3129100FDA9D5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -589,6 +722,15 @@
 			buildConfigurations = (
 				0CB7A33119ADC31D0020FBD5 /* Debug */,
 				0CB7A33219ADC31D0020FBD5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0CD65FE419D3129100FDA9D5 /* Build configuration list for PBXNativeTarget "BindKitStatic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0CD65FE519D3129100FDA9D5 /* Debug */,
+				0CD65FE619D3129100FDA9D5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

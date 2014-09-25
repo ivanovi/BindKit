@@ -25,6 +25,8 @@
 
 #import <UIKit/UIKit.h>
 #import "CREBindRelation.h"
+#import "CREBindingUnit.h"
+
 
 @interface CREValueTransformer : NSObject <CREValueTransformerProtocol>
 

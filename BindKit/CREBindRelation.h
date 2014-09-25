@@ -25,10 +25,10 @@
 
 
 #import <Foundation/Foundation.h>
-#import "CREBindingUnit.h"
+#import "NSError+BinderKit.h"
 #import "CREBindProtocol.h"
 
-@class CREBindRelation;
+@class CREBindRelation, CREBindingUnit;
 
 @protocol CREBindRelationDelegate <NSObject>
 

@@ -175,8 +175,10 @@
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
      
         NSAssert(!connectionError, @"Connection to placeholder JSON Api failed. Error %@", [connectionError localizedDescription]);
+        NSError *error;
+        _remoteTestDictionary =   [(NSArray*)[NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] objectAtIndex:0];
         
-        _remoteTestDictionary =   [(NSArray*)[NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil] objectAtIndex:0];
+        NSAssert(_remoteTestDictionary, @"remote test dictionary issue %@", data);
         
         if (callBack)
             callBack (response, data, connectionError);
