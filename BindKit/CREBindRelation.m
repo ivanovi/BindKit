@@ -1,5 +1,5 @@
 //
-//  CREBindingDefinition.m
+//  CREBindRelation.m
 //  BindKit
 //
 //  Created by Ivan Ivanov on 8/28/14.

@@ -80,6 +80,12 @@
     
     Class relationClass = NSClassFromString(className);
     
+    NSAssert(relationClass, @"Received non existent name of class %@. %@",
+             className,
+             [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:108] );
+    
+    
+    
     if (!propertiesArray || !objectsArray)
     {
         
