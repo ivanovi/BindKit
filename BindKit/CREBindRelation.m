@@ -234,6 +234,8 @@
 
 -(void)setSourceBindingUnit:(CREBindingUnit *)sourceBindingUnit{
     
+    NSAssert([holderArray containsObject:sourceBindingUnit], @"The sourceUnit %@ failed to be set as a source in bindRelation because it is not part of the relation. %@", sourceUnit, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:109]);
+    
     BOOL wasBound = _isBound;
 
     [self unbind];
@@ -254,7 +256,6 @@
 
 -(void)removeSourceUnit{
     BOOL wasBound = _isBound;
-
 
     [self unbind];
     

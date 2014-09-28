@@ -28,7 +28,7 @@
  
  ## CREBinder Overview
  
- 'CREBinder' is the class used to establish one or more bindings. It may hold other 'CREBinder' instances or instances of type 'CREBindRelation' (N.B.: actual bindings are encapsulated in CREBindRelation). Its main role is to provide an universal access to a set of binder/bindRelation instances relevant to a speicic context (e.g. viewController, flow, object etc.). The bind/unbind methods are thought to get called only on a CREBinder instance as this instance should provide the necessary context.
+ 'CREBinder' is the class used to establish one or more bindings/links. It may hold other 'CREBinder' instances or instances of type 'CREBindRelation' (N.B.: the actual bindings are encapsulated in the CREBindRelation classes). Its main role is to provide a universal access to a set of binder/bindRelation instances relevant to a speicic context (e.g. viewController, flow, object etc.). The bind/unbind methods are to get called only on a CREBinder instance as this instance should provide the necessary context.
  
  ## Extension
  
@@ -36,22 +36,22 @@
  
   As of 0.1, BindKit provides 3 layers that encapsulate different aspects of the data binding structure and execution flow:
     
-    - CREBinder is holder / collection of binding related objects such as CREBindRelation and other sub-binder objects. Subclasses are expected to hold some contextual information/assumptions relevant to the structure of its bindings. The class on which the clients bind/unbind.
+    - CREBinder is holder / collection of binding related objects, such as CREBindRelation (and other binder objects). Subclasses are expected to hold some contextual information relevant to the structure of its bindings. This class is used by the clients to bind or unbind the (owned) object's properties.
  
-    - CREBindRelation represents an actual binding and is the class resposible for linking the objects and changing the values. If you'd want to modify that behavior, that is the place to do it.
+    - CREBindRelation represents the actual binding. It is the class resposible for the actual linking of the objects and for the value manipulation.
  
-    - CREBindingUnit is wrapper for an object and its property. CREBindRelation holds such objects.
+    - CREBindingUnit is a wrapper for an object and its property. CREBindRelation holds such objects to store the object's property and other relevant information for the binding states (i.e. isLocked).
  
  ## Use
  
-  See below an example usage. You can use CREBinder to bind any kind of objects and not only views and models, as longs as they are KVO and KVC compliant.
+  See below an example usage. You can use CREBinder to bind any kind of objects and not only views and models. Yet, they must be KVO and KVC compliant.
  
-     UITextField *aLabel = [[UITextField alloc] initWithFrame:aFrame]; //some frame
+     UITextField *aTextField = [[UITextField alloc] initWithFrame:aFrame]; //some frame
      Person *aPerson = [Person new]; //your model object
      CREBinder *aBinder = [CREBinder binderWithProperties:@[@“text”, @"name”]
-                                            sourceObjects:@[aLabel, aPerson]]; // the order of the items in the arrays is very important and must match the property to object. Any suggestion on more understandable API would very be appriciated.
+                                            sourceObjects:@[aTextField, aPerson]]; // the order of the items in the arrays is very important and must match the property to object. Any suggestion on more understandable API would very be appriciated.
      
-     [aBinder bind]; // now any changes to aPerson.name will be propagated to aLabel.text
+     [aBinder bind]; // now any changes to aPerson.name will be propagated to aTextField.text
  
     The default binding direction is bothways. That is, a change in one object's property will lead to change to all objects in the binding (i.e. the CREBindRelation instance).
  
@@ -73,14 +73,12 @@
 
 /**
  
- The 'CREBindRelationFactory' is an interface used to create instances of CREBindRelation. The CREBinder has a default implementation, but you also have the freedom to implement it as per your needs. If you'd like to implement your CREBindRelation classes you may also use the CREBinder implemenation for their creation to reduce your code's (concrete) dependencies (i.e. like factory method design pattern). Due to Apple's KVC, CREBinder does not need to know about your sub-classes of CREBindRelation, just create it by passing a string holding the name of your class.
-    
-    A possible usage:
+ The 'CREBindRelationFactory' is an interface used to create instances of CREBindRelation. The CREBinder class has a default implementation, but you also have the freedom to implement it as per your needs. If you declare your CREBindRelation classes you may also use the CREBinder for their creation in order to reduce your code's (concrete) dependencies (i.e. like factory method design pattern). Due to Apple's KVC, CREBinder does not need to know about your sub-classes of CREBindRelation, just create the bindRelation by passing a string holding the name of your class, like this:
  
     CREBinder *aBinder = [CREBinder new];
     CREBindRelation *myConcreteRelation = [aBinder createRelationWithProperties:propertiesArray 
                                                                   sourceObjects:objectsArray 
-                                                                  relationClass:myClassName];
+                                                                  relationClass:@"myRelationClassName"];
     [aBinder addRelation: myConcreteRelation];
     [aBinder bind];
  
@@ -88,6 +86,10 @@
 
  @param className The className is the name of the class that needs creation. It must match exactly.
  
+ @param propertiesArray Holds the names of the properties of objects as listed in the parameter 'objectsArray.' The order of the properties' names must match the order of the objects listed in 'objectsArray' so that each property is part of the object in the same index. For example, a property at index 0 in 'propertiesArray' is part of the interface of the object at index 0 of 'objectsArray'.
+ 
+ @param objectsArray Holds a listing of the objects mapped against their properties in 'propertiesArray'.
+
  @see CREBinder
  
  */
@@ -111,9 +113,6 @@
 @property (nonatomic, readonly) BOOL isBound;
 
 #pragma mark - Initialization
-
-
-
 +(instancetype)binderWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
 -(instancetype)initWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
 

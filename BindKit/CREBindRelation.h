@@ -81,7 +81,7 @@ The main entry point for extension is the 'mergeValue:toTarget:' method. It is c
 
 /**
  
- This method is called only if the mandatory method returns YES or no delegate has been set. It does not interfer the remaining execution. If the value object is mutable it may be changed.
+ This method is called only if the mandatory method returns 'bindRelation:shouldSetValue:forKeyPath:' YES or no delegate has been set. It does not interfere with the remaining execution. If the 'value' object is mutable you use this call to change it.
  
  */
 
@@ -115,13 +115,13 @@ The main entry point for extension is the 'mergeValue:toTarget:' method. It is c
  
  Example - Your Value Transformers:
 
- --- assuming you have declared and implemented MyValueTransformer
+ //assuming you have declared some new class called MyValueTransformer
  
  CREBinder *aBinder = [CREBinder binderWithProperties:@[@“text”, @"name”]
                                         sourceObjects:@[aLabel, aPerson]];
  
  CREValueTransformer *numberDate = [CREValueTransformer transformerWithName:@"MyValueTransformer" ];
- [(CREBindRelation*)aBinder.relations.lastObject setValueTransformer: numberDate]
+ [(CREBindRelation*)aBinder.relations.lastObject setValueTransformer: numberDate]; // after initialization
  [aBinder bind];
  
  */
@@ -130,35 +130,50 @@ The main entry point for extension is the 'mergeValue:toTarget:' method. It is c
 
 @end
 
-@protocol CREPlaceholderProtocol <NSObject>
-
 
 /**
- 'CREPlaceholderProtocol' provides capability for providing a placeholder value if at initial bind operation no value has been available. This method is called only at the 'bind' call and before adding the CREBindRelation as observer of notifications.
+ 'CREPlaceholderProtocol' provides placeholder value at the initial bind operation if no value has been available to any bindingUnit in a CREBindRelatiom. This method is called only once (at the 'bind' call) before adding the CREBindRelation as observer of notifications.
  
  */
+
+@protocol CREPlaceholderProtocol <NSObject>
 
 -(id)bindRelation:(CREBindRelation*)relation requiresPlaceholderValuesForUnit:(CREBindingUnit*)unit;
 
 @end
 
-@protocol CREBinderRequestFactory <NSObject>
-
 /**
- 'CREPlaceholderProtocol' provides capability for providing a placeholder value if at initial bind operation no value has been available. This method is called only at the 'bind' call and before adding the CREBindRelation as observer of notifications.
+ 
+ 'CREBinderRequestFactory' can be used for asynchronous data loading/reading. It is currently only called only in Remote Resource binding context.  A possible pattern is to set your server / networking operation classes to be a requestFactory; this can be done in a the factory method 'createRelationWithProperties:sourceObjects:relationClass:'.
+ 
+ @see CRERemoteBindingRelation
  
  */
+
+@protocol CREBinderRequestFactory <NSObject>
 
 -(id)bindRelation:(CREBindRelation*)bindingRelation forURL:(NSURL*)url unit:(CREBindingUnit*)unit parameters:(NSDictionary*)params;
 
 @end
 
+
 @protocol CREBindRelationRequestDelegate <NSObject>
 
-@optional
 @property (nonatomic, weak) id <CREBinderRequestFactory> requestFactory;
 
 @end
+
+
+/**
+ 
+Two binding directions are supported (in 0.1 version):
+  
+    - CREBindingRelationDirectionBothWays: Any object can have impact on the remaining object's properties in a bindRelation. That is, when an object's property is changed all remaining object's properties are changed accordingly. This is the default binding direction.
+ 
+    - CREBindingRelationDirectionOneWay: One object's property is the source for the remaining objects. The transition to such configuration is done implicitly by seting one of the bindingUnits as source (@see setSourceBindingUnit:), this leads automatically to modifying the bindRelation's type to 'CREBindingRelationDirectionOneWay'. The
+
+ 
+ */
 
 typedef NS_ENUM(NSUInteger, CREBindingRelationDirection) {
     
@@ -183,14 +198,77 @@ typedef NS_ENUM(NSUInteger, CREBindingRelationDirection) {
 @property (nonatomic, readonly) BOOL isLocked;
 @property (nonatomic, readonly) BOOL isBound;
 
+/**
+ 
+ 'CREBindRelation' initialization follows the same logic as CREBinder with respect to the order of the objects and properties.
+ 
+ @param propertiesArray Holds the names of the properties of objects as listed in the parameter 'objectsArray.' The order of the properties' names must match the order of the objects listed in 'objectsArray'. For example, a property at index 0 in 'propertiesArray' is declared in the object at index 0 of 'objectsArray'.
+ 
+ @param objectsArray Holds a listing of the objects mapped against their properties in 'propertiesArray'.
+ 
+ 
+ Example:
+ 
+ //create a aBinder somewhere
+ UILabel *aLabel = [[UILabel alloc] initWithFrame:aFrame];
+ Person *aPerson = [Person new]; //an example model object
+ 
+ CREBindRelation *aRelation = [[CREBindRelation alloc] initWithProperties:@[@“text”, @"name”] //name is a property of the class Person
+                                                            sourceObjects:@[aLabel, aPerson]];
+ [aBinder addRelation:aRelation];
+ [aBinder bind];
+ 
+ */
+
 - (instancetype)initWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
 
-- (CREBindingUnit*)addBindingUnitWithDictionary:(NSDictionary*)propertyTargetDict; //key => represents the property ; value => the instance
+/**
+ 
+ Adding an object's property to a CREBindiRelation is possible also as Dictionary, where the key represents the property name and the value the object.
+ 
+ */
+
+- (CREBindingUnit*)addBindingUnitWithDictionary:(NSDictionary*)propertyTargetDict;
+
+/**
+ 
+ You can add or remove more objects' properties via a bindingUnit instance.
+ 
+ */
+
 - (void)addBindingUnit:(CREBindingUnit*)subBindingUnit;
 - (void)removeBindingUnit:(CREBindingUnit*)bindingUnit;
 
+
+/**
+ 
+ 'setSourceBindingUnit:' sets the passed sourceUnit as a source and changes the direction type to one-way.
+ 
+ @param sourceUnit This is the unit (an object's property wrapped in CREBindingUnit) that will modify the remaining bindingUnits in the bindRelation. It must have already been added to relation (@see addBindingUnit:).
+ 
+ */
+
 - (void)setSourceBindingUnit:(CREBindingUnit*)sourceUnit;
+
+
+/**
+ 
+ 'removeSourceUnit' reverts the current's sourceUnit status to normal and changes the direction type to both-ways.
+ 
+ */
+
 - (void)removeSourceUnit;
+
+
+/**
+ 
+ The method where the modification of the values of the objects' properties in the bindRelation takes place. This method is called after the delegation has finished. You may override it in your implementation of CREBindRelation to supply a custom value modification.
+ 
+ @param value The value to be used for modification.
+ 
+ @param
+ 
+ */
 
 - (void)mergeValue:(id)value toTarget:(CREBindingUnit*)target;
 

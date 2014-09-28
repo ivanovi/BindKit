@@ -28,7 +28,7 @@
 
 /**
  
- Provides only framework specific error descriptions based on domain and errorCode. If you'd like to extend to domains / errorMessage, you could do it in the file BindKitErrorMessage.plist and/or here or provide your implementation of this functionality.
+ Provides the framework specific error descriptions based on domain and errorCode. Extension requires adding messages and/or domains to BindKitErrorMessage.plist and here.
  
  */
 

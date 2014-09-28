@@ -28,6 +28,7 @@
 		<string>Remote Bind relation supports only JSON based API-s for now. </string>
 		<string>Remote Bind relation supports only one object parsing per request for now. That is, handling a list of JSON objects is not implementing and the requested API resource can return only an Image or an object with key-value pairs.</string>
 		<string>The method createRelationWithProperties:sourceObjects:relationClass: must receive a paramater &apos;className&apos; matching to existing classes.</string>
+		<string>Setting a bindingUnit as a source requires that this unit be already added to the bindRelation.</string>
 	</array>
 	<key>binderErrorLogicDomain</key>
 	<array>
