@@ -32,8 +32,17 @@
 typedef void (^CRERemoteBinderCallBack)(id newValue, CREBindingUnit *unit, NSError *error);
 
 
+
+/**
+ 
+ 'CRERemoteBindingRelation' fetches data stored in JSON or image format stored remotely. It uses NSURLRequest and NSURLConnection APIs. RemoteBindingRelation is not responsible for the creation of the request. Instead, you can set it via the 'remoteRequest' property.
+ 
+ 
+ */
+
+
 @interface CRERemoteBindingRelation : CREBindRelation <CREBindRelationRequestDelegate>{
-    // id remoteRequest;
+
      NSURL *urlContainer;
 }
 

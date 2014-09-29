@@ -30,6 +30,12 @@
 
 @interface CREValueTransformer : NSObject <CREValueTransformerProtocol>
 
+/**
+ 
+ Creates an instance responding to the ValueTransfromerProtocol. The Default base implementation will create an instance of the class passed with the parameter 'transformerClassName'. A class with this name must be already implemented.
+ 
+ */
+
 +(id <CREValueTransformerProtocol>)transformerWithName:(NSString *)transformerClassName;
 
 @end

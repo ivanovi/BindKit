@@ -198,7 +198,7 @@ typedef NS_ENUM(NSUInteger, CREBindingRelationDirection) {
 
 /**
  
- 'CREBindRelation' initialization follows the same logic as CREBinder with respect to the order of the objects and properties.
+ The 'CREBindRelation' initialization follows the same logic as CREBinder with respect to the order of the objects and properties.
  
  @param propertiesArray Holds the names of the properties of objects as listed in the parameter 'objectsArray.' The order of the properties' names must match the order of the objects listed in 'objectsArray'. For example, a property at index 0 in 'propertiesArray' is declared in the object at index 0 of 'objectsArray'.
  
@@ -251,7 +251,7 @@ typedef NS_ENUM(NSUInteger, CREBindingRelationDirection) {
 
 /**
  
- 'removeSourceUnit' reverts the current's sourceUnit status to normal and changes the binRelation's direction type to CREBindingRelationDirectionBothWays.
+ 'removeSourceUnit' reverts the current's sourceUnit status to normal and changes the bindRelation's direction type to CREBindingRelationDirectionBothWays.
  
  */
 

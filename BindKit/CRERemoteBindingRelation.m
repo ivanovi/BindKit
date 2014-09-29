@@ -161,7 +161,7 @@
     [self resolveRequestAdderss:requestAddress];
     
     
-    if ([_requestFactory conformsToProtocol:@protocol(CREBinderRequestFactory)])
+    if ([_requestFactory respondsToSelector:@selector(bindRelation:forURL:unit:parameters:)])
     {
         
       id receivedRequest = [_requestFactory bindRelation:self forURL:urlContainer unit:sourceUnit parameters:nil];
@@ -188,12 +188,7 @@
 
 -(id)requestWithRequest:(id)request{
     
-    if (_requestFactory)
-    {
-        
-        return _remoteRequest;
-        
-    }
+
     
     [self assertRequest:request];
 
@@ -231,7 +226,8 @@
             NSLog(@"Possibly unsupported API. %@", [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:106]);
             
         }
-        //this will extract only one key-value pair matching and the whole JSON object
+        
+        //this will extract only one key-value pair matching and not the whole JSON object
         newValue = [self parseReceivedObject:receivedObject target:targetUnit];
         
         

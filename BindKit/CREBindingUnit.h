@@ -31,7 +31,7 @@
 @class CREBindRelation;
 /**
  
- The smallest unit of abstraction, encapsulating a object, its property and context.
+ The smallest unit of abstraction, encapsulating a object, its property and other information.
  
  */
 
@@ -39,7 +39,7 @@
 
 /**
  
- 'CREBindingUnit' is initialiazed with an object and its property, that are to be subject to binding.
+ 'CREBindingUnit' is initialiazed with an object and its property.
  
  */
 
@@ -48,7 +48,7 @@
 
 /**
  
- BindKit addresses the bound objects properties and values via the bindingUnit class. The client has access to the object, the property and the corresponding current value. Setting the wrapped object's property value directly is not supported.
+ BindKit addresses the bound objects properties and values via the bindingUnit class. The client has access to the object, the property and the corresponding current value. Setting the property value directly is not supported.
  
  */
 
@@ -67,15 +67,21 @@
 
 /**
  
- 'isLocked'
+ 'isLocked' provides information about the current modification state of the bindingUnit.
  
  */
-
 
 @property (nonatomic, readonly) BOOL isLocked;
 
 
 -(BOOL)compareWithDict:(NSDictionary*)dictionary;
+
+
+/**
+ 
+ Sets isLocked to NO.
+ 
+ */
 
 -(void)unlock;
 
