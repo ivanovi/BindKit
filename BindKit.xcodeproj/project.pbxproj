@@ -16,8 +16,6 @@
 		0C6A435719D1D2D20069AA60 /* CRETestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6A435619D1D2D20069AA60 /* CRETestModel.m */; };
 		0C6A435B19D1D3730069AA60 /* CRENumberDateTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0C6A435919D1D3730069AA60 /* CRENumberDateTransformer.h */; };
 		0C6A435C19D1D3730069AA60 /* CRENumberDateTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6A435A19D1D3730069AA60 /* CRENumberDateTransformer.m */; };
-		0C9DB16019C181A6003548FC /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C9DB15F19C181A6003548FC /* Social.framework */; };
-		0C9DB16319C18D1C003548FC /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C9DB16219C18D1C003548FC /* Accounts.framework */; };
 		0CB7A32019ADC31D0020FBD5 /* BindKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CB7A31F19ADC31D0020FBD5 /* BindKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0CB7A35919ADED160020FBD5 /* CREBinder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CB7A35719ADED160020FBD5 /* CREBinder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0CB7A35A19ADED160020FBD5 /* CREBinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB7A35819ADED160020FBD5 /* CREBinder.m */; };
@@ -98,8 +96,6 @@
 		0C6A435619D1D2D20069AA60 /* CRETestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRETestModel.m; sourceTree = "<group>"; };
 		0C6A435919D1D3730069AA60 /* CRENumberDateTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRENumberDateTransformer.h; sourceTree = "<group>"; };
 		0C6A435A19D1D3730069AA60 /* CRENumberDateTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRENumberDateTransformer.m; sourceTree = "<group>"; };
-		0C9DB15F19C181A6003548FC /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		0C9DB16219C18D1C003548FC /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		0CB7A31A19ADC31D0020FBD5 /* BindKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BindKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CB7A31E19ADC31D0020FBD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0CB7A31F19ADC31D0020FBD5 /* BindKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BindKit.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -148,8 +144,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C9DB16319C18D1C003548FC /* Accounts.framework in Frameworks */,
-				0C9DB16019C181A6003548FC /* Social.framework in Frameworks */,
 				0CBB594219AE2FB900CED34E /* BindKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -249,8 +243,6 @@
 			isa = PBXGroup;
 			children = (
 				0CDED13F19CAF46F00F4ADD9 /* cc-logo.png */,
-				0C9DB16219C18D1C003548FC /* Accounts.framework */,
-				0C9DB15F19C181A6003548FC /* Social.framework */,
 				0CB7A32819ADC31D0020FBD5 /* Info.plist */,
 			);
 			name = "Supporting Files";

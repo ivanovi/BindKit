@@ -42,9 +42,10 @@
 
     }
 #endif
+
     
     return [UIImage imageWithData:(NSData *)value];
-    
+
 }
 
 @end

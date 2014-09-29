@@ -27,53 +27,58 @@
 #import "CREBindRelation.h"
 #import "CREMapperProtocol.h"
 
-@class CRERemoteBindingRelation;
-
-typedef void (^CRERemoteBinderCallBack)(id newValue, CREBindingUnit *unit, NSError *error);
-
 
 
 /**
  
- 'CRERemoteBindingRelation' fetches data stored in JSON or image format stored remotely, based on a URL contained in one of the object's property (currently the property and object at index 0). It uses NSURLRequest and NSURLConnection APIs. RemoteBindingRelation is not responsible for the creation of the request. Instead, you can set it via the 'remoteRequest' property or provide a requestFactory as per 'CREBindRelationRequestDelegate'.
+ 'CRERemoteBindingRelation' fetches data stored in JSON or image format from a remote host, based on an URL contained in one of the objects' property (assumed at index 0). It uses NSURLRequest and NSURLConnection APIs. 'RemoteBindingRelation' is not responsible for the creation of the request. Instead, you can set it via the 'remoteRequest' property or provide a requestFactory as per 'CREBindRelationRequestDelegate'.
  
  
- You initialise the RemoteBindingRelation normally as any other bindRelation. However, the current implementation assumes that URL containing object/property is passed at index 0 of the properties and objects arrays. Like this:
+ You initialise the RemoteBindingRelation normally as any other bindRelation. However, the URL containing object/property must be passed at index 0 of the properties and objects arrays, as shown in the example below. Alternatively you may set one of the bindingUnits as a source.
  
  
- MYPictureModel *aPicture = [aPicture new]; // dummy imaginary model object having property 'urlString' and 'imageData'
- [aPicture setUrlString:@"http://someValidURL"];
+         MYPictureModel *aPicture = [aPicture new]; // dummy imaginary model object having property 'urlString' and 'imageData'
+         [aPicture setUrlString:@"http://someValidURL"];
+         
+         CREBinder *aBinder = [CREBinder new];
+         CREBindRelation *remoteRelation = [aBinder createRelationWithProperties:@[@"urlString",@"imageData"]
+                                                                   sourceObjects:@[aPicture, aPicture]
+                                                                   relationClass:@"CRERemoteBindingRelation"];
  
- CREBinder *aBinder = [CREBinder new];
+         [remoteRelation setRequestFactory: [ServerClass defaultServer]] //some imaginary singleton server => he can handle authentication etc.
+         [aBinder addRelation: remoteRelation];
+         [aBinder bind]
+         
+ This above relation will now fetch the binary data of the image everytime the 'urlSting' value changes.
  
- // I want to bind the url property of aPicture to the imageData property of aPicture. This way everytime i set modify the url the RemoteBindingRelatio will fetch the binary data corresponding to the url. (performance can be be improved if there is a third property storing the url of the already downloaded image)
+ If you'd want to bind aPicture object from the above's example to an UIImage property, you may use the value transformers, like this:
  
- CREBindRelation *remoteRelation = [aBinder createRelationWithProperties:propertiesArray
-                                                           sourceObjects:objectsArray
-                                                           relationClass:@"myRelationClassName"];
- 
- 
- 
- 
- //UIImageView *aView = [[UIImageView alloc] initWithFrame:aFrame];
- 
- // now I want to bind the model object url with image propety of aView => i'll use value transformer
- 
- 
- 
- 
- 
- 
+ CREValueTransformer *dataToImage = [CREValueTransformer transformerWithName:@"CREDataImageTransformer"]; //note that 'valueTransformer' is weak property
+ [remoteRelation setValueTransformer: dataToImage];
  
  */
 
+
+@class CRERemoteBindingRelation;
+
+
+typedef void (^CRERemoteBinderCallBack)(id newValue, CREBindingUnit *unit, NSError *error);
 
 @interface CRERemoteBindingRelation : CREBindRelation <CREBindRelationRequestDelegate>{
 
      NSURL *urlContainer;
 }
-
+/**
+ 
+ 'callBack' is called after a response from the remote host has been recevied.
+ 
+ */
 @property (nonatomic, readwrite, copy) CRERemoteBinderCallBack callBack;
+
+/**
+ @see CREMapperProtocol
+ */
+
 @property (nonatomic, weak) id <CREMapperProtocol> remoteKeyMapper;
 @property (nonatomic, strong) id remoteRequest;
 

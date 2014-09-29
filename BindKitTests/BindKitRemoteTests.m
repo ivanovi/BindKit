@@ -83,6 +83,7 @@
     CREBindRelation * remoteRelation = [newBinder createRelationWithProperties:@[aProperty, bProperty]
                                                                  sourceObjects:@[aDictionary, bDictionary]
                                                                  relationClass:@"CRERemoteBindingRelation"];
+    
     [newBinder addRelation:remoteRelation];
     void (^callBack)(id newValue, CREBindingUnit *unit, NSError *error) = ^(id newValue, CREBindingUnit *unit, NSError *error)
     {
@@ -103,7 +104,6 @@
     [(CRERemoteBindingRelation*)remoteRelation setRemoteKeyMapper:helper];
     
     //Setting the url in the source unit => the first pair in the initialization
-    
     [aDictionary setValue:aTestValue forKey:aProperty];
 
     //calling bind after the remote test value has been fetched independently from the bindRelation

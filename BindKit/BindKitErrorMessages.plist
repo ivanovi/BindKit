@@ -16,6 +16,7 @@
 	<array>
 		<string>BindKit WARNING: Mandatory delegate method not implemented.</string>
 		<string>BindKit WARNING: BindRelation was asked to set value with instance equal to &apos;nil&apos;</string>
+		<string>BindKit WARNING: RemoteBindingRelation does not have either a requestFactory or remoteRequest before it is bound (called &apos;bind&apos; ).</string>
 	</array>
 	<key>binderErrorSetupErrorDomain</key>
 	<array>
@@ -38,7 +39,6 @@
 		<string>SocialServicesRelation could not validate passed request =&gt; request missing.</string>
 		<string>SocialServicesRelation supports request of type SLRequest only; the passed request is of different type.</string>
 		<string>RemoteBindingRelation must have a &apos;remoteKeyMapper&apos; set or the model class that will be merged must implement the &apos;CREMapperProtocol&apos;.</string>
-		<string>RemoteBindingRelation must have either a requestFactory or remoteRequest before it is bound (called &apos;bind&apos; ).</string>
 	</array>
 </dict>
 </plist>

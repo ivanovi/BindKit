@@ -58,13 +58,7 @@
     
     [self assertSource];
     
-    if ([self.valueTransformer respondsToSelector:@selector(bindRelation:willModify:withValue:)])
-    {
-        
-        value = [self.valueTransformer bindRelation:self willModify:target withValue:value];
-        
-    }
-    
+
     if (![target isEqual:sourceUnit])
     {
         
@@ -240,12 +234,16 @@
 
 -(void)setValue:(id)value forUnit:(CREBindingUnit *)bindingUnit{
     
-  //  dispatch_async(dispatch_get_main_queue(), ^{
+    if ([self.valueTransformer respondsToSelector:@selector(bindRelation:willModify:withValue:)])
+    {
+        
+        value = [self.valueTransformer bindRelation:self willModify:bindingUnit withValue:value];
+        
+    }
+    
 
         [bindingUnit setValue:value];
-        
-  //  });
-    
+
 }
 
 -(id)parseReceivedObject:(id)object target:(CREBindingUnit*)unit{
@@ -297,19 +295,16 @@
 
 -(void)bind{
     
-    NSAssert( (_remoteRequest || _requestFactory), @"Could not bind remote bindRelation. %@", [NSError errorDescriptionForDomain:kCREBinderErrorLogic code:2006]);
     
+    if ( ! (_remoteRequest || _requestFactory) ) {
+          NSLog(@"%@", [NSError errorDescriptionForDomain:kCREBinderWarningsDomain code:1002]);
+    }
+  
     [super bind];
     
 }
 
 
-
-//-(CREBindingRelationDirection)directionType{
-//    
-//    return CREBindingRelationDirectionOneWay;
-//    
-//}
 
 
 @end

@@ -187,6 +187,19 @@ typedef NS_ENUM(NSUInteger, CREBindingRelationDirection) {
      CREBindingUnit * sourceUnit;
     
 }
+
+
+/**
+ 
+ 'bindingUnits' returns an array of the current binding units ordered by the means their adding. For example:
+ 
+ CREBindRelation *aRelation = [[CREBindRelation alloc] initWithProperties:@[@“text”, @"name”] //name is a property of the class Person
+                                                            sourceObjects:@[aLabel, aPerson]];
+ 
+ CREBindingUnit *aLabelTextUnit = aRelation.bindingUnits [0]; // the binding unit containing the label's text property is at index 0 because it was passed first.
+ 
+ 
+ */
 @property (nonatomic, readonly) NSArray * bindingUnits; //immediate/current units
 @property (nonatomic, readonly) CREBindingRelationDirection directionType;
 @property (nonatomic, weak) id <CREValueTransformerProtocol> valueTransformer;
