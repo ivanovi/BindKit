@@ -90,8 +90,9 @@
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
     
-   if (self.isLocked) //protect against infinite loop when both ways binding
+   if (self.isLocked)
     {
+        [self unlock];
         return;
     }
 
@@ -342,11 +343,8 @@
     
     if (value)
     {
-        
-        
+    
         [target setValue:value];
-        
-         //   [target.boundObject setValue:value forKeyPath:target.boundObjectProperty];
         
     }else
     {
@@ -447,7 +445,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.isLocked == YES"];
     NSArray *lockedUnits = [holderArray filteredArrayUsingPredicate:predicate];
     
-    if ( (lockedUnits.count - 1) == holderArray.count)
+    if ( (lockedUnits.count + 1) == holderArray.count)
     {
         
         return YES;

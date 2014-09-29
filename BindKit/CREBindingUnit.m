@@ -90,7 +90,8 @@
 
 -(void)setValue:(id)value{
     
-    if (![self.value isEqual:value])
+    if (![self.value isEqual:value] &&
+        !_isLocked)
     {
         
         _isLocked = YES;
@@ -104,12 +105,7 @@
 
 -(void)unlock{
     
-    if (_isLocked)
-    {
-        
-        _isLocked = NO;
-        
-    }
+    _isLocked = NO;
     
 }
 @end

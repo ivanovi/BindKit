@@ -39,20 +39,41 @@
 
 /**
  
- 'CREBindingUnit' is initialiazed with a NSDictionary, which
+ 'CREBindingUnit' is initialiazed with an object and its property, that are to be subject to binding.
  
  */
 
 -(instancetype)initWithObject:(id)object property:(NSString*)keyPath;
 
-@property (nonatomic, weak) id boundObject;
-@property (nonatomic, weak) id boundObjectProperty;
-@property (nonatomic, weak) id remoteProperty;
+
+/**
+ 
+ BindKit addresses the bound objects properties and values via the bindingUnit class. The client has access to the object, the property and the corresponding current value. Setting the wrapped object's property value directly is not supported.
+ 
+ */
+
+@property (nonatomic, readonly) id boundObject;
+@property (nonatomic, readonly) id boundObjectProperty;
 @property (nonatomic, weak) id value;
+
+/**
+ 
+ 'relation' represents the bindRelation holding the bindingUnit.
+ 
+ */
+
+
 @property (nonatomic, weak) CREBindRelation *relation;
+
+/**
+ 
+ 'isLocked'
+ 
+ */
+
+
 @property (nonatomic, readonly) BOOL isLocked;
 
-//@property (nonatomic, strong) NSDictionary *bindOptionsDictionary; // redo with enumeration
 
 -(BOOL)compareWithDict:(NSDictionary*)dictionary;
 
