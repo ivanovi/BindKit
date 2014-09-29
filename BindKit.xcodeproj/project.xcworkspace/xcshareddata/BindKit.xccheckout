@@ -5,15 +5,13 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>AD5DBC84-EC20-4166-8672-AB9CB534B1A5</string>
+	<string>5F6276AC-2C2F-475F-A234-3332ADBB749D</string>
 	<key>IDESourceControlProjectName</key>
 	<string>BindKit</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>31CE94327CC45B4629FCD99B24582BFE91E48BF3</key>
-		<string>https://dev.creatub.com:8443/scm/bin/bind.git</string>
-		<key>74A60EAE240036E46BA38BE9112C40EABA8CE7D4</key>
-		<string>https://dev.creatub.com:8443/scm/on/onefacebook.git</string>
+		<string>https://github.com/ivanovi/BindKit.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>BindKit.xcodeproj</string>
@@ -21,11 +19,9 @@
 	<dict>
 		<key>31CE94327CC45B4629FCD99B24582BFE91E48BF3</key>
 		<string>../..</string>
-		<key>74A60EAE240036E46BA38BE9112C40EABA8CE7D4</key>
-		<string>../../../oneFace/onefacebook</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://dev.creatub.com:8443/scm/bin/bind.git</string>
+	<string>https://github.com/ivanovi/BindKit.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
@@ -39,14 +35,6 @@
 			<string>31CE94327CC45B4629FCD99B24582BFE91E48BF3</string>
 			<key>IDESourceControlWCCName</key>
 			<string>BindKit</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>74A60EAE240036E46BA38BE9112C40EABA8CE7D4</string>
-			<key>IDESourceControlWCCName</key>
-			<string>onefacebook</string>
 		</dict>
 	</array>
 </dict>
