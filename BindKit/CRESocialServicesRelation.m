@@ -34,11 +34,7 @@
 
 -(id)requestWithRequest:(id)request{
     
-    if (self.requestFactory) {
-        
-        return self.remoteRequest;
-        
-    }
+
     
     [self assertRequest:request];
     

@@ -11,6 +11,21 @@
 #import <Accounts/Accounts.h>
 #import "CRERemoteBindingRelation.h"
 
+/**
+ 
+ 'CRESocialServicesRelation' is an extenstion of remoteBindingRelation used for communication with social APIs supported natively by Apple's API, like
+  
+    - facebook
+    - twitter
+    - weibo etc.
+ 
+ 
+ You use like remoteBindingRelation, yet instead you supply a valid SLRequest (not a NSURLRequest) from your 'requestFactory'.
+ 
+ 
+ 
+ */
+
 @interface CRESocialServicesRelation : CRERemoteBindingRelation
 
 @end
