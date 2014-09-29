@@ -73,7 +73,7 @@
 
 /**
  
- The 'CREBindRelationFactory' is an interface used to create instances of CREBindRelation. The CREBinder class has a default implementation, but you also have the freedom to implement it as per your needs. If you declare your CREBindRelation classes you may also use the CREBinder for their creation in order to reduce your code's (concrete) dependencies (i.e. like factory method design pattern). Due to Apple's KVC, CREBinder does not need to know about your sub-classes of CREBindRelation, just create the bindRelation by passing a string holding the name of your class, like this:
+ The 'CREBindRelationFactory' provides an interface to create instances of CREBindRelation. The CREBinder class has a default implementation, but you also have the freedom to implement it as per your needs. If you declare your CREBindRelation classes you may also use the CREBinder for their creation in order to reduce your code's (concrete) dependencies (i.e. like factory method design pattern). Due to Apple's KVC, CREBinder does not need to know about your sub-classes of CREBindRelation, just create the bindRelation by passing a string holding the name of your class, like this:
  
     CREBinder *aBinder = [CREBinder new];
     CREBindRelation *myConcreteRelation = [aBinder createRelationWithProperties:propertiesArray 

@@ -295,6 +295,14 @@
 }
 
 
+-(void)bind{
+    
+    NSAssert( (_remoteRequest || _requestFactory), @"Could not bind remote bindRelation. %@", [NSError errorDescriptionForDomain:kCREBinderErrorLogic code:2006]);
+    
+    [super bind];
+    
+}
+
 
 
 //-(CREBindingRelationDirection)directionType{

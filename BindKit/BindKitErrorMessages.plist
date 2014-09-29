@@ -38,6 +38,7 @@
 		<string>SocialServicesRelation could not validate passed request =&gt; request missing.</string>
 		<string>SocialServicesRelation supports request of type SLRequest only; the passed request is of different type.</string>
 		<string>RemoteBindingRelation must have a &apos;remoteKeyMapper&apos; set or the model class that will be merged must implement the &apos;CREMapperProtocol&apos;.</string>
+		<string>RemoteBindingRelation must have either a requestFactory or remoteRequest before it is bound (called &apos;bind&apos; ).</string>
 	</array>
 </dict>
 </plist>

@@ -35,7 +35,34 @@ typedef void (^CRERemoteBinderCallBack)(id newValue, CREBindingUnit *unit, NSErr
 
 /**
  
- 'CRERemoteBindingRelation' fetches data stored in JSON or image format stored remotely. It uses NSURLRequest and NSURLConnection APIs. RemoteBindingRelation is not responsible for the creation of the request. Instead, you can set it via the 'remoteRequest' property.
+ 'CRERemoteBindingRelation' fetches data stored in JSON or image format stored remotely, based on a URL contained in one of the object's property (currently the property and object at index 0). It uses NSURLRequest and NSURLConnection APIs. RemoteBindingRelation is not responsible for the creation of the request. Instead, you can set it via the 'remoteRequest' property or provide a requestFactory as per 'CREBindRelationRequestDelegate'.
+ 
+ 
+ You initialise the RemoteBindingRelation normally as any other bindRelation. However, the current implementation assumes that URL containing object/property is passed at index 0 of the properties and objects arrays. Like this:
+ 
+ 
+ MYPictureModel *aPicture = [aPicture new]; // dummy imaginary model object having property 'urlString' and 'imageData'
+ [aPicture setUrlString:@"http://someValidURL"];
+ 
+ CREBinder *aBinder = [CREBinder new];
+ 
+ // I want to bind the url property of aPicture to the imageData property of aPicture. This way everytime i set modify the url the RemoteBindingRelatio will fetch the binary data corresponding to the url. (performance can be be improved if there is a third property storing the url of the already downloaded image)
+ 
+ CREBindRelation *remoteRelation = [aBinder createRelationWithProperties:propertiesArray
+                                                           sourceObjects:objectsArray
+                                                           relationClass:@"myRelationClassName"];
+ 
+ 
+ 
+ 
+ //UIImageView *aView = [[UIImageView alloc] initWithFrame:aFrame];
+ 
+ // now I want to bind the model object url with image propety of aView => i'll use value transformer
+ 
+ 
+ 
+ 
+ 
  
  
  */
