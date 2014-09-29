@@ -36,11 +36,11 @@
  
   As of 0.1, BindKit provides 3 layers that encapsulate different aspects of the data binding structure and execution flow:
     
-    - CREBinder is holder / collection of binding related objects, such as CREBindRelation (and other binder objects). Subclasses are expected to hold some contextual information relevant to the structure of its bindings. This class is used by the clients to bind or unbind the (owned) object's properties.
+    - CREBinder is holder / collection of binding related objects, such as CREBindRelation (and other binder objects). Subclasses are expected to hold some contextual information relevant to the structure of their bindings. This class is used by the clients to bind or unbind the (registered) object's properties.
  
-    - CREBindRelation represents the actual binding. It is the class resposible for the actual linking of the objects and for the value manipulation.
+    - CREBindRelation represents the actual binding. It is the class resposible for the linking of the objects and for the value manipulation.
  
-    - CREBindingUnit is a wrapper for an object and its property. CREBindRelation holds such objects to store the object's property and other relevant information for the binding states (i.e. isLocked).
+    - CREBindingUnit is a wrapper for an object and its property. CREBindRelation holds such objects to store an object's property and other relevant information for the binding state/operation (i.e. isLocked).
  
  ## Use
  
@@ -106,17 +106,36 @@
 @property (nonatomic, readonly) CREBinder * superBinder;
 @property (nonatomic, readonly) NSArray * childBinders;
 @property (nonatomic, readonly) NSArray * relations;
-
-//TODO: unit test isLocked race condition
-//@property (nonatomic, readonly) BOOL isLocked;
-//TODO: unit test
 @property (nonatomic, readonly) BOOL isBound;
 
 #pragma mark - Initialization
+
+
+/**
+ 
+ 'CREBinder' initialization requires that the objects and the properties' names be passed in corresponding order.
+ 
+ @param propertiesArray Holds the names of the properties of objects as listed in the parameter 'objectsArray.' The order of the properties' names must match the order of the objects listed in 'objectsArray'. For example, a property at index 0 in 'propertiesArray' is declared in the object at index 0 of 'objectsArray'.
+ 
+ @param objectsArray Holds a listing of the objects mapped against their properties in 'propertiesArray'.
+ 
+ 
+ Example:
+
+ UILabel *aLabel = [[UILabel alloc] initWithFrame:aFrame];
+ Person *aPerson = [Person new]; //an example model object
+ 
+ CREBinder *aBinder = [[CREBindRelation alloc] initWithProperties:@[@“text”, @"name”] //name is a property of the class Person
+                                                    sourceObjects:@[aLabel, aPerson]];
+ [aBinder bind];
+ 
+ */
+
 +(instancetype)binderWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
 -(instancetype)initWithProperties:(NSArray*)propertiesArray sourceObjects:(NSArray*)objectsArray;
 
 #pragma mark - Setup
+
 -(void)addRelation:(CREBindRelation*)bindRelation;
 -(void)removeRelation:(CREBindRelation*)removeRelation;
 

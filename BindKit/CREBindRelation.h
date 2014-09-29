@@ -32,13 +32,13 @@
  
  ## CREBindRelation Overview
  
- The CREBindRelation class executes the actual linking and value transfer between bound objects and properties. It sets itself as an observer for KVO notifications, so that when a change in observed's object property occurs it gets a notification (as in KVO). The actual value transfer is handled in the 'mergeValue:toTarget:' method. The binding is effected via the 'bind' method and unbinding via the 'unbind' method (CREBindProtocol), called by the owning CREBinder instance.
+ The CREBindRelation class executes the actual linking and value transfer between bound objects and properties. It sets itself as an observer for KVO notifications, so that when a change in observed's object property occurs it gets a notification (as in KVO). The actual value transfer is handled in the 'mergeValue:toTarget:' method. The binding/linking is effected via the 'bind', called by the owning CREBinder instance.
  
- 'CREBindRelation' holds CREBindingUnits which are just a wrapper of the object-property pair.
+ 'CREBindRelation' holds CREBindingUnits which are a wrapper of the object-property pair.
  
  ## Configuration
  
-To an CREBindRelation you can add or remove CREBindingUnits, set a sourceUnit (this implies a one-way setup), or add/remove objects that implement the delegate interfaces/functionality. 
+You can add or remove bindingUnits, set a sourceUnit (this implies a one-way setup), or add/remove objects that implement the delegated functionalities.
  
  ## Extension
  
@@ -57,7 +57,7 @@ The main entry point for extension is the 'mergeValue:toTarget:' method. It is c
  
  ## Purpose
  
- 'CREBindRelationDelegate' provides hooks for inserting dynamic behavior within delegate methods. Both methods are called after a KVO notification about a value change (within the 'observeValueForKeyPath:ofObject:change:context:' implementation). The mandatory method is called before the optional method.
+ 'CREBindRelationDelegate' provides the capability of adding dynamic behavior just before a value is 'transfered' from one object/property to another. Both methods are called after the KVO notification (within the 'observeValueForKeyPath:ofObject:change:context:' implementation). The mandatory method is called before the optional method.
  
  */
 
@@ -81,7 +81,7 @@ The main entry point for extension is the 'mergeValue:toTarget:' method. It is c
 
 /**
  
- This method is called only if the mandatory method returns 'bindRelation:shouldSetValue:forKeyPath:' YES or no delegate has been set. It does not interfere with the remaining execution. If the 'value' object is mutable you use this call to change it.
+ This method is called only if the mandatory method returns 'bindRelation:shouldSetValue:forKeyPath:' YES or no delegate has been set. It does not interfere with the remaining execution. If the 'value' object is mutable you may use this call to make modifications.
  
  */
 
@@ -94,11 +94,11 @@ The main entry point for extension is the 'mergeValue:toTarget:' method. It is c
 
 /**
  
- Provides the option to change the value just before it is set. N.B. : It is called in the 'mergeValue:toTarget:', so if you'd like to preserve this delegation you could call super or match the functionality. BindKit provides off-the-shelf value transformers that can be used directly via the convienence factory method of 'CREValueTransformer' - 'transformerWithName:'.
+ Provides the option to change the value just before it is set. It is called in the 'mergeValue:toTarget:', so if you'd like to preserve this delegation you could call super or match the functionality. BindKit provides off-the-shelf value transformers that can be used directly via the convienence factory method of 'CREValueTransformer' - 'transformerWithName:'.
  
- @param relation This the relation which has received the KVO notification.
+ @param relation This the CREBindRelation which has received the KVO notification.
  @param unit The bindingUnit that is going to be addressed with setValue: 
- @param value The actual value that is intented for setting the new value of object's property presented by the CREBindingUnit (unit).
+ @param value The actual value that will be used for setting as the new value of the object's property (presented by the CREBindingUnit (unit) ).
 
  @return The modified/tranformed value after the corresponding transformation has been made.
  
@@ -132,7 +132,7 @@ The main entry point for extension is the 'mergeValue:toTarget:' method. It is c
 
 
 /**
- 'CREPlaceholderProtocol' provides placeholder value at the initial bind operation if no value has been available to any bindingUnit in a CREBindRelatiom. This method is called only once (at the 'bind' call) before adding the CREBindRelation as observer of notifications.
+ 'CREPlaceholderProtocol' provides placeholder value at the initial bind operation, if no value has been available to any bindingUnit. This method is called only once (at the 'bind' call) before adding the CREBindRelation as observer of notifications.
  
  */
 
@@ -144,8 +144,7 @@ The main entry point for extension is the 'mergeValue:toTarget:' method. It is c
 
 /**
  
- 'CREBinderRequestFactory' can be used for asynchronous data loading/reading. It is currently only called only in Remote Resource binding context.  A possible pattern is to set your server / networking operation classes to be a requestFactory; this can be done in a the factory method 'createRelationWithProperties:sourceObjects:relationClass:'.
- 
+ 'CREBinderRequestFactory' can be used for asynchronous data loading/reading. It is currently only called in CRERemoteBindingRelation.  One possible pattern is to set your server / networking operation classes as a requestFactory.
  @see CRERemoteBindingRelation
  
  */
@@ -170,7 +169,7 @@ Two binding directions are supported (in 0.1 version):
   
     - CREBindingRelationDirectionBothWays: Any object can have impact on the remaining object's properties in a bindRelation. That is, when an object's property is changed all remaining object's properties are changed accordingly. This is the default binding direction.
  
-    - CREBindingRelationDirectionOneWay: One object's property is the source for the remaining objects. The transition to such configuration is done implicitly by seting one of the bindingUnits as source (@see setSourceBindingUnit:), this leads automatically to modifying the bindRelation's type to 'CREBindingRelationDirectionOneWay'. The
+    - CREBindingRelationDirectionOneWay: One object's property is the source for the remaining objects. The transition to such configuration is done implicitly by seting one of the bindingUnits as source (@see setSourceBindingUnit:), this leads automatically to modifying the bindRelation's type to 'CREBindingRelationDirectionOneWay'. At the opposite, removing a sourceUnit results in setting the bindRelation's type to 'CREBindingRelationDirectionBothWays'.
 
  
  */
@@ -194,7 +193,6 @@ typedef NS_ENUM(NSUInteger, CREBindingRelationDirection) {
 @property (nonatomic, weak) id <CREPlaceholderProtocol> placeholder; 
 @property (nonatomic, weak) id <CREBindRelationDelegate> delegate;
 @property (nonatomic, readonly) CREBindingUnit *sourceUnit;
-//TODO: unit test isLocked - race condition
 @property (nonatomic, readonly) BOOL isLocked;
 @property (nonatomic, readonly) BOOL isBound;
 
@@ -224,7 +222,7 @@ typedef NS_ENUM(NSUInteger, CREBindingRelationDirection) {
 
 /**
  
- Adding an object's property to a CREBindiRelation is possible also as Dictionary, where the key represents the property name and the value the object.
+ Adding an object's property to a CREBindiRelation is possible also as NSDictionary, where the key represents the property name and the value the object.
  
  */
 
@@ -232,7 +230,7 @@ typedef NS_ENUM(NSUInteger, CREBindingRelationDirection) {
 
 /**
  
- You can add or remove more objects' properties via a bindingUnit instance.
+ You can add or remove more objects' properties also via a bindingUnit instance.
  
  */
 
@@ -242,7 +240,7 @@ typedef NS_ENUM(NSUInteger, CREBindingRelationDirection) {
 
 /**
  
- 'setSourceBindingUnit:' sets the passed sourceUnit as a source and changes the direction type to one-way.
+ 'setSourceBindingUnit:' sets the passed sourceUnit as a source and changes the direction type to CREBindingRelationDirectionOneWay.
  
  @param sourceUnit This is the unit (an object's property wrapped in CREBindingUnit) that will modify the remaining bindingUnits in the bindRelation. It must have already been added to relation (@see addBindingUnit:).
  
@@ -253,7 +251,7 @@ typedef NS_ENUM(NSUInteger, CREBindingRelationDirection) {
 
 /**
  
- 'removeSourceUnit' reverts the current's sourceUnit status to normal and changes the direction type to both-ways.
+ 'removeSourceUnit' reverts the current's sourceUnit status to normal and changes the binRelation's direction type to CREBindingRelationDirectionBothWays.
  
  */
 
@@ -262,11 +260,11 @@ typedef NS_ENUM(NSUInteger, CREBindingRelationDirection) {
 
 /**
  
- The method where the modification of the values of the objects' properties in the bindRelation takes place. This method is called after the delegation has finished. You may override it in your implementation of CREBindRelation to supply a custom value modification.
+ This is the method where the modification of the values of the objects' properties in the bindRelation takes place. This method is called after the delegation has finished and after a KVO notification. You may override it to supply a custom value modification routine.
  
  @param value The value to be used for modification.
  
- @param
+ @param target The unit which will be modified.
  
  */
 

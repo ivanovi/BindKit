@@ -32,14 +32,16 @@
 //@synthesize value = _value;
 
 
--(instancetype)initWithDictionary:(NSDictionary *)bindingMappingDictionary{
-    NSAssert(bindingMappingDictionary.count == 1, @"%s %@",__PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:102]);
+-(instancetype)initWithObject:(id)object property:(NSString *)keyPath{
+    NSAssert([keyPath isKindOfClass:[NSString class]], @"%s %@",__PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:102]);
+    NSAssert(object, @"%s %@",__PRETTY_FUNCTION__, [NSError errorDescriptionForDomain:kCREBinderErrorSetupDomain code:102]);
+    
     self = [super init];
     
     if (self) {
         
-        _boundObject = bindingMappingDictionary.allValues.lastObject;
-        _boundObjectProperty = bindingMappingDictionary.allKeys.lastObject;
+        _boundObject = object;
+        _boundObjectProperty = keyPath;
 
         if (![_boundObject isKindOfClass:[NSDictionary class]]) { //unit tests use dictionary
             

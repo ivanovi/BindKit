@@ -280,6 +280,10 @@
         
         remoteKey = [_remoteKeyMapper remoteKeyForLocalKey:targetProperty inLocalClass: targetClassName ];
         
+        NSAssert(remoteKey,
+                 @"RemoteKeyMapper cannot return nil %@. %@", unit, [NSError errorDescriptionForDomain:kCREBinderErrorLogic code:2005]);
+
+        
     }else if ([targetObject respondsToSelector:remoteMappingSelector]){
         
         remoteKey = [targetObject remoteKeyForLocalKey:targetProperty inLocalClass:targetClassName];

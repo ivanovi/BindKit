@@ -70,7 +70,7 @@
 - (void)testBindingDefintionAddBindingUnit{
     
     CREBindRelation *aRelation = [CREBindRelation new];
-    CREBindingUnit *bindingUnit = [[CREBindingUnit alloc] initWithDictionary:@{cProperty: cDictionary}];
+    CREBindingUnit *bindingUnit = [[CREBindingUnit alloc] initWithObject:cDictionary property:cProperty];
     [aRelation addBindingUnit:bindingUnit];
     
     for (CREBindingUnit *aBindingUnit in aRelation.bindingUnits)
@@ -80,7 +80,7 @@
         
     }
     
-    CREBindingUnit *secondUnit = [[CREBindingUnit alloc]initWithDictionary:@{aProperty:aDictionary}];
+    CREBindingUnit *secondUnit = [[CREBindingUnit alloc]initWithObject:aDictionary property:aProperty];
     [aRelation addBindingUnit:secondUnit];
     
     NSSet *helpSet = [NSSet setWithObjects:secondUnit,bindingUnit, nil];

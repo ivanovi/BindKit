@@ -37,7 +37,13 @@
 
 @interface CREBindingUnit : NSObject
 
--(instancetype)initWithDictionary:(NSDictionary*)bindingMappingDictionary;
+/**
+ 
+ 'CREBindingUnit' is initialiazed with a NSDictionary, which
+ 
+ */
+
+-(instancetype)initWithObject:(id)object property:(NSString*)keyPath;
 
 @property (nonatomic, weak) id boundObject;
 @property (nonatomic, weak) id boundObjectProperty;

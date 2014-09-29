@@ -68,7 +68,7 @@
             NSString *property = propertiesArray [i];
             id sourceObject = objectsArray [i];
             
-            CREBindingUnit *aUnit = [[CREBindingUnit alloc] initWithDictionary:@{property : sourceObject}];
+            CREBindingUnit *aUnit = [[CREBindingUnit alloc]initWithObject:sourceObject property:property];
             
             [self addBindingUnit:aUnit];
             
@@ -206,7 +206,7 @@
     if (!newBinderUnit)
     {
         
-        newBinderUnit = [[CREBindingUnit alloc] initWithDictionary:propertyTargetDict];
+        newBinderUnit = [[CREBindingUnit alloc] initWithObject:propertyTargetDict.allValues.lastObject property:propertyTargetDict.allKeys.lastObject];
         [holderArray addObject:newBinderUnit];
         [newBinderUnit setRelation:self];
 
