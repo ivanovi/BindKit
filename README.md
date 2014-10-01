@@ -24,7 +24,7 @@ Key features of BindKit
 
 The key features of BindKit:
 
-- Created with the idea of extension. Three layers of abstraction allowing the modification of different aspects of the binding independently:
+- Created with the idea of extension. A structure consisting of three layers of abstraction allow the modification of different aspects of the binding independently:
 
    - CREBinder represents a collection like class, which holds bindings (CREBindRelation) or other CREBinder instances. It may hold some additional contextual information (if extended).
 
