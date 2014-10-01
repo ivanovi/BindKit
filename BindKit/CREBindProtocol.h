@@ -26,7 +26,7 @@
 
 /**
  
-    'CREBindProtocol' defines the methods that implement the binding and unbinding operations. In general, 'bind' may be called to establish a link between objects and 'unbind' to reverse those states.
+    'CREBindProtocol' defines the methods that implement the binding and unbinding operations. In general, 'bind' may be called to establish a link between objects and 'unbind' to reverse this.
  
  */
 

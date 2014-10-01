@@ -27,7 +27,7 @@
 
 /**
  
- 'CREMapperProtocol' establishes a mapping between two properties. As of version 0.1 the CREMapperProtocol is used only in CRERemoteBindingRelation. When a response from a remote API is received the 'remoteKeyForLocalKey:inLocalClass:' is called to establish which of the received (remote) keys correspond to the local properties/keys. A real world implementation may take place in your model classes, where a mapping dictionary (e.g. localKey=>remoteKey) can be coded and consulted when needed.
+ 'CREMapperProtocol' establishes a mapping between two properties. As of version 1.0 the CREMapperProtocol is used only in CRERemoteBindingRelation. When a response from a remote API is received the 'remoteKeyForLocalKey:inLocalClass:' is called to establish which of the received (remote) keys correspond to the local keys. A real world implementation may take place in your model classes, where a mapping dictionary (e.g. localKey=>remoteKey) can be employed.
  
  */
 

@@ -32,9 +32,9 @@
  
  ## Extension
  
-  You may wish to extend this class in case a specific structure is needed or to include more detailed context. The 'CREBinder' implements a factory method that can be used for the creation of a CREBindRelation instance (CREBindRelationFactory). 
+  You may wish to extend this class in case a specific structure is needed or to add more contextual information. The 'CREBinder' implements also a factory method that can be used for the creation of a CREBindRelation instance (CREBindRelationFactory).
  
-  As of 0.1, BindKit provides 3 layers that encapsulate different aspects of the data binding structure and execution flow:
+  As of 1.0, BindKit provides 3 layers that encapsulate different aspects of the data binding structure and execution flow:
     
     - CREBinder is holder / collection of binding related objects, such as CREBindRelation (and other binder objects). Subclasses are expected to hold some contextual information relevant to the structure of their bindings. This class is used by the clients to bind or unbind the (registered) object's properties.
  
@@ -73,7 +73,7 @@
 
 /**
  
- The 'CREBindRelationFactory' provides an interface to create instances of CREBindRelation. The CREBinder class has a default implementation, but you also have the freedom to implement it as per your needs. If you declare your CREBindRelation classes you may also use the CREBinder for their creation in order to reduce your code's (concrete) dependencies (i.e. like factory method design pattern). Due to Apple's KVC, CREBinder does not need to know about your sub-classes of CREBindRelation, just create the bindRelation by passing a string holding the name of your class, like this:
+ The 'CREBindRelationFactory' provides an interface to create instances of CREBindRelation. The CREBinder class has a default implementation, but you also have the freedom to implement it as per your needs. If you declare your CREBindRelation classes you may also use the CREBinder for their creation in order to reduce your code's dependencies. Due to Apple's KVC, CREBinder does not need to know about your sub-classes of CREBindRelation, just create the bindRelation by passing a string holding the name of your class, like this:
  
     CREBinder *aBinder = [CREBinder new];
     CREBindRelation *myConcreteRelation = [aBinder createRelationWithProperties:propertiesArray 

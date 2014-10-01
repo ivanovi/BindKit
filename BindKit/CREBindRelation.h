@@ -165,7 +165,7 @@ The main entry point for extension is the 'mergeValue:toTarget:' method. It is c
 
 /**
  
-Two binding directions are supported (in 0.1 version):
+Two binding directions are supported (in 1.0 version):
   
     - CREBindingRelationDirectionBothWays: Any object can have impact on the remaining object's properties in a bindRelation. That is, when an object's property is changed all remaining object's properties are changed accordingly. This is the default binding direction.
  
