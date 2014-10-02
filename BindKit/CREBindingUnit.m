@@ -90,15 +90,19 @@
 
 -(void)setValue:(id)value{
     
-    if (![self.value isEqual:value] &&
-        !_isLocked)
-    {
+    @synchronized(value){
         
-        _isLocked = YES;
-        [_boundObject setValue:value forKeyPath:_boundObjectProperty];
+        if (![self.value isEqual:value] &&
+            !_isLocked)
+        {
+            
+            _isLocked = YES;
+            [_boundObject setValue:value forKeyPath:_boundObjectProperty];
+            
+        }
+        
         
     }
-    
     
 }
 

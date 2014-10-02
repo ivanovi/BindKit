@@ -42,7 +42,6 @@
  You use like remoteBindingRelation, yet instead you supply a valid SLRequest (not a NSURLRequest) from your 'requestFactory'.
  
  
- 
  */
 
 @interface CRESocialServicesRelation : CRERemoteBindingRelation
